@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JLH9GD9SVR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JLH9GD9SVR');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[정선군청] 북해도 일자리창출·노인일자리·마을기업 선진지견학</title>
+
+    <meta name="description" content="정선군청 경제과 북해도 일자리창출·노인일자리·마을기업 선진지견학 3박4일 스마트 가이드북">
+    <meta property="og:title" content="[정선군청] 북해도 일자리·마을기업 선진지견학">
+    <meta property="og:description" content="정선군청 경제과 맞춤형 북해도 3박4일 연수 — 노인일자리·마을기업·일자리창출 벤치마킹">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://indadady.github.io/261020_1027_Hokkaido/assets/images/og-thumb.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image:alt" content="홋카이도 풍경">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <style>
+        :root { --tm: #004098; --tm-dark: #002d6b; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.72)), url('assets/images/hero.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        @media (max-width: 768px){ .hero-bg { background-attachment: scroll; } }
+        #map { height: 360px; width: 100%; border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); z-index: 10; }
+        @media (min-width: 1024px) { #map { height: 560px; } }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        section { scroll-margin-top: 70px; }
+        .schedule-thumb { width: 100%; height: 160px; object-fit: cover; border-radius: 0.75rem; }
+        .timeline-dot {
+            position: absolute; left: -25px; top: 4px; width: 16px; height: 16px;
+            border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px var(--tw-ring-color);
+            background-color: var(--tw-bg-color);
+        }
+        @media (max-width: 1023px) {
+            .timeline-dot { left: -20px; top: 6px; width: 14px; height: 14px; border-width: 2px; }
+        }
+        @media screen { #print-area { display: none !important; } }
+        @media print {
+            @page { size: A4 portrait; margin: 12mm 10mm; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            body { background: white !important; color: black !important; }
+            header, footer, section:not(#print-area), .no-print, #toast { display: none !important; }
+            main, body { padding: 0 !important; margin: 0 !important; width: 100% !important; background: white !important; }
+            #print-area { display: block !important; width: 100%; }
+            .print-header-top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #004098; padding-bottom: 10px; margin-bottom: 15px; }
+            .print-header-top img { height: 35px; }
+            .print-title { text-align: center; font-size: 20px; font-weight: bold; margin-bottom: 12px; font-family: 'Nanum Myeongjo', serif; }
+            .print-overview { display: flex; justify-content: space-between; background: #f8fafc !important; border: 1px solid #94a3b8 !important; border-radius: 6px; padding: 10px 15px; margin-bottom: 12px; font-size: 12px; gap: 12px; }
+            .tm-table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; border: 2px solid #1e293b !important; }
+            .tm-table th { border: 1px solid #1e293b !important; background: #f8fafc !important; font-weight: bold; text-align: center; padding: 6px !important; }
+            .tm-table td { border: 1px solid #1e293b !important; padding: 6px 8px !important; vertical-align: top; word-break: keep-all; }
+            .tm-col-date { width: 12%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle; }
+            .tm-col-route { width: 14%; text-align: center; vertical-align: middle; font-size: 10px; }
+            .tm-col-desc { width: 58%; }
+            .tm-col-meal { width: 16%; text-align: center; vertical-align: middle; font-size: 10px; }
+            tr { page-break-inside: avoid; }
+            .print-footer-area { margin-top: 12px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 11px; border-top: 1px solid #ccc; padding-top: 10px; }
+        }
+    </style>
+</head>
+<body class="antialiased pb-20 md:pb-0 print:bg-white relative">
+
+    <header class="bg-white/95 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300 no-print border-b-2 border-blue-700">
+        <nav class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="http://tourmaker.kr" target="_blank" rel="noopener">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker" class="h-8">
+                </a>
+                <span id="d-day-badge" class="bg-blue-600 text-white text-[10px] px-2.5 py-1 rounded-full font-bold shadow-sm animate-pulse">상태 계산중</span>
+            </div>
+            <div class="flex-1 overflow-x-auto no-scrollbar ml-4 md:ml-8">
+                <div class="flex items-center space-x-1 md:space-x-4 whitespace-nowrap pr-4">
+                    <a href="#home" class="px-3 py-2 text-sm font-bold text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">홈</a>
+                    <a href="#purpose" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">연수목적</a>
+                    <a href="#highlights" class="px-3 py-2 text-sm font-bold text-blue-600 hover:bg-blue-50 rounded-lg">핵심포인트</a>
+                    <a href="#flight" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">항공/수속</a>
+                    <a href="#map-section" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">여행동선</a>
+                    <a href="#schedule" class="px-3 py-2 text-sm font-bold text-blue-600 hover:bg-slate-50 rounded-lg">상세일정</a>
+                    <a href="#hotel" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">숙소정보</a>
+                    <a href="#check" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">준비물</a>
+                    <a href="#contact" class="px-3 py-2 text-sm font-bold text-red-600 hover:bg-red-50 rounded-lg">비상연락망</a>
+                </div>
+            </div>
+            <button onclick="shareLink()" class="shrink-0 p-2 text-slate-500 hover:text-blue-600 ml-2" title="일정표 공유하기"><i class="fa-solid fa-share-nodes text-xl"></i></button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section id="home" class="hero-bg min-h-[68vh] flex items-center justify-center text-center px-4 relative">
+            <div class="animate-fade-in-up text-white z-10 w-full max-w-5xl">
+                <div class="bg-white p-2 rounded-xl shadow-2xl mb-6 inline-block">
+                    <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F421%2F2022%2F08%2F04%2F0006259853_001_20220804152901552.jpg&type=a340" alt="정선군청" class="h-12 md:h-16 object-contain">
+                </div>
+                <span class="bg-blue-600/90 text-white px-6 py-2 rounded-full text-sm md:text-base font-bold mb-6 inline-block border border-white/20 shadow-lg tracking-widest">
+                    <i class="fa-solid fa-briefcase mr-2"></i>경제과 맞춤형 국외출장 제안
+                </span>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-2xl font-[Nanum_Myeongjo] leading-tight">
+                    북해도 일자리창출 · 노인일자리<br>
+                    <span class="text-sky-300">마을기업 선진지견학</span>
+                </h1>
+                <div class="bg-black/50 backdrop-blur-sm inline-block px-8 py-4 rounded-3xl mt-4 border border-white/20 shadow-2xl text-center">
+                    <p class="text-lg md:text-xl text-white font-black tracking-widest border-b border-white/20 pb-2 mb-3">
+                        정선군청 경제과 | 기수당 14명(+1TG)
+                    </p>
+                    <div class="flex flex-col gap-2 text-left inline-block">
+                        <p class="text-md text-sky-200 font-bold"><span class="bg-blue-600 text-white px-2 py-0.5 rounded text-sm mr-2">1차</span> 2026.10.20(화) ~ 10.23(금)</p>
+                        <p class="text-md text-sky-200 font-bold"><span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-sm mr-2">2차</span> 2026.10.27(화) ~ 10.30(금)</p>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-3">청주공항 출발 · 에어로케이(RF) · 신치토세</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Purpose -->
+        <section id="purpose" class="py-16 bg-white -mt-10 rounded-t-3xl relative z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
+            <div class="container mx-auto px-4 max-w-4xl text-center">
+                <span class="text-blue-600 font-black tracking-widest text-xs uppercase bg-blue-50 px-3 py-1 rounded-full">PURPOSE</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-4 mb-6">연수 목적</h2>
+                <p class="text-slate-600 leading-relaxed text-base md:text-lg max-w-3xl mx-auto">
+                    정선군의 당면 과제인 <strong class="text-blue-700">일자리 창출, 노인일자리, 마을기업(지역공동체)</strong> 정책을
+                    북해도 현장 사례와 대조·학습하여, 단순 관광이 아닌
+                    <strong class="text-blue-700">경제과 업무에 바로 적용 가능한 선진지견학</strong>으로 기획했습니다.
+                </p>
+                <div class="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-5 text-left max-w-3xl mx-auto">
+                    <p class="text-sm text-amber-900 font-bold mb-1"><i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> 공식방문지 안내</p>
+                    <p class="text-sm text-amber-800 leading-relaxed">
+                        노인일자리(시니어클럽 등)·지역공동체운영기업 등 <strong>공식방문지는 확정 컨펌 후</strong> 기관명·방문 포인트·질의 가이드를 상세 업데이트합니다.
+                        현재 일정에는 벤치마킹 슬롯이 확보되어 있습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights -->
+        <section id="highlights" class="py-16 bg-white border-t border-slate-100">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="text-blue-600 font-black tracking-widest text-xs uppercase">BENCHMARKING INSIGHT</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2">정선군 일자리·마을기업을 위한<br class="md:hidden"> 3가지 연수 핵심 포인트</h2>
+                    <p class="text-slate-500 mt-3 text-sm md:text-base">오사카 지역화폐 연수에서 이어진 경제과 맞춤형 기획 — 테마를 북해도 일자리·공동체 모델로 전환했습니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform text-3xl">👴</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">노인일자리 · 시니어클럽</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            일본의 <strong class="text-blue-700">시니어클럽·실버인재센터형 노인일자리</strong> 운영 체계를 공식방문으로 시찰합니다.
+                            정선형 노인일자리 사업의 참여율·역할 설계·민간 연계 방안을 현장 질의로 도출합니다.
+                        </p>
+                        <span class="inline-block border border-blue-600 text-blue-700 text-xs px-3 py-1.5 rounded-full font-bold">시니어 고용 &amp; 사회참여</span>
+                    </div>
+
+                    <div class="bg-emerald-50 p-8 rounded-3xl border border-emerald-100 shadow-sm hover:shadow-lg transition-all duration-300 group ring-2 ring-emerald-400 relative">
+                        <div class="absolute -top-3 -right-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">핵심 테마</div>
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform text-3xl">🏘️</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">마을기업 · 지역공동체</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            <strong class="text-emerald-700">지역공동체운영기업(마을기업)</strong>의 수익모델·거버넌스·일자리 창출 구조를 벤치마킹합니다.
+                            로컬 자원(관광·공예·농식품)을 일자리와 연결하는 일본 현장 노하우를 수집합니다.
+                        </p>
+                        <span class="inline-block border border-emerald-600 text-emerald-700 text-xs px-3 py-1.5 rounded-full font-bold">마을기업 &amp; 로컬 경제</span>
+                    </div>
+
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform text-3xl">📈</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">관광·로컬산업 일자리 파급</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            도야 온천관광, 오타루 공예·상권, 삿포로 맥주박물관 등
+                            <strong class="text-slate-800">관광·6차산업이 고용을 만드는 구조</strong>를 체감하고
+                            정선 관광·특산물 일자리 정책에 적용 가능한 시사점을 정리합니다.
+                        </p>
+                        <span class="inline-block border border-slate-600 text-slate-700 text-xs px-3 py-1.5 rounded-full font-bold">일자리창출 &amp; 관광산업</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flight -->
+        <section id="flight" class="py-12 bg-slate-50 border-t border-slate-200">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-8">
+                    <span class="text-slate-500 font-black tracking-widest text-xs uppercase">FLIGHT SCHEDULE</span>
+                    <h2 class="text-3xl font-bold text-slate-800 mt-2">기수별 항공편 안내</h2>
+                    <p class="text-slate-500 mt-2 text-sm">청주공항(CJJ) ↔ 신치토세(CTS) · 에어로케이(RF) · 1·2차 공통 스케줄</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto mb-8">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-md p-6">
+                        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                            <div class="bg-blue-50 border border-blue-100 rounded-xl p-5 w-full md:w-1/2 text-center relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 text-blue-100 opacity-50"><i class="fa-solid fa-plane-departure text-6xl"></i></div>
+                                <span class="text-xs bg-blue-600 text-white px-3 py-1 rounded-full font-bold mb-3 inline-block relative z-10">출국 (1차 10.20 / 2차 10.27)</span>
+                                <p class="font-black text-xl text-slate-800 mb-1 relative z-10">에어로케이 RF352</p>
+                                <p class="text-slate-600 font-medium text-lg relative z-10">청주 08:25 <i class="fa-solid fa-arrow-right text-blue-400 mx-2"></i> 신치토세 10:55</p>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 w-full md:w-1/2 text-center relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 text-slate-200 opacity-50"><i class="fa-solid fa-plane-arrival text-6xl"></i></div>
+                                <span class="text-xs bg-slate-600 text-white px-3 py-1 rounded-full font-bold mb-3 inline-block relative z-10">귀국 (1차 10.23 / 2차 10.30)</span>
+                                <p class="font-black text-xl text-slate-800 mb-1 relative z-10">에어로케이 RF351</p>
+                                <p class="text-slate-600 font-medium text-lg relative z-10">신치토세 11:55 <i class="fa-solid fa-arrow-right text-slate-400 mx-2"></i> 청주 14:45</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 grid sm:grid-cols-2 gap-3 text-center text-sm">
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl py-3 px-4"><span class="font-bold text-blue-700">1차</span> · 2026.10.20(화) ~ 10.23(금)</div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl py-3 px-4"><span class="font-bold text-blue-700">2차</span> · 2026.10.27(화) ~ 10.30(금)</div>
+                        </div>
+                        <div class="mt-4 text-center text-xs text-red-500 bg-red-50 p-3 rounded-lg font-medium">
+                            * 그룹 항공 스케줄·요금은 항공사 사정 및 예약 시점에 따라 변동될 수 있습니다. (견적 기준 그룹가 참고)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-md p-6">
+                    <h3 class="font-bold text-slate-800 text-lg mb-5 flex items-center gap-2"><i class="fa-solid fa-building-user text-green-600"></i> 청주공항 이용 안내</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="bg-green-50 rounded-2xl p-4 border border-green-100">
+                            <i class="fa-solid fa-clock text-2xl text-green-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800 text-sm">여유 있게 집결</h4>
+                            <p class="text-xs text-slate-600 mt-1">단체 수속 대비<br>인솔자 안내 시간 준수</p>
+                        </div>
+                        <div class="bg-green-50 rounded-2xl p-4 border border-green-100">
+                            <i class="fa-solid fa-passport text-2xl text-green-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800 text-sm">여권 확인</h4>
+                            <p class="text-xs text-slate-600 mt-1">유효기간 6개월 이상<br>필수 확인</p>
+                        </div>
+                        <div class="bg-green-50 rounded-2xl p-4 border border-green-100">
+                            <i class="fa-solid fa-plug text-2xl text-green-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800 text-sm">일본 전원</h4>
+                            <p class="text-xs text-slate-600 mt-1">100V · 돼지코<br>(변환 어댑터) 지참</p>
+                        </div>
+                        <div class="bg-green-50 rounded-2xl p-4 border border-green-100">
+                            <i class="fa-solid fa-ban text-2xl text-green-600 mb-2"></i>
+                            <h4 class="font-bold text-slate-800 text-sm">온천 유의사항</h4>
+                            <p class="text-xs text-slate-600 mt-1">타투·문신 시<br>대욕장 입장 제한</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map + Schedule -->
+        <section id="map-section" class="py-16 bg-white border-t border-slate-100">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4 border-b border-slate-200 pb-6">
+                    <div id="schedule">
+                        <span class="text-blue-600 font-black tracking-widest text-xs uppercase">ROUTING MAP &amp; ITINERARY</span>
+                        <h2 class="text-3xl font-bold text-slate-800 mt-2">스마트 동선 및 상세 일정</h2>
+                        <p class="text-slate-500 mt-2 text-sm">일자별 버튼을 눌러 이동 동선을 확인하세요. 공식방문지 상세는 확정 후 업데이트됩니다.</p>
+                    </div>
+                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold py-2.5 px-6 rounded-xl shadow-md transition-all flex items-center gap-2 no-print">
+                        <i class="fa-solid fa-print"></i> 일정표 인쇄
+                    </button>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 items-start">
+                    <div class="lg:col-span-5 lg:sticky lg:top-24">
+                        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 md:flex-wrap md:justify-center mb-4" id="map-controls">
+                            <button onclick="changeMapAndTab('all')" class="map-tab-btn px-4 py-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 text-sm font-bold shrink-0">전체동선</button>
+                            <button onclick="changeMapAndTab('day1')" class="map-tab-btn active px-4 py-2 rounded-full border border-blue-600 bg-blue-600 text-white text-sm font-bold shadow-sm shrink-0">1일차</button>
+                            <button onclick="changeMapAndTab('day2')" class="map-tab-btn px-4 py-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 text-sm font-bold shrink-0">2일차</button>
+                            <button onclick="changeMapAndTab('day3')" class="map-tab-btn px-4 py-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 text-sm font-bold shrink-0">3일차</button>
+                            <button onclick="changeMapAndTab('day4')" class="map-tab-btn px-4 py-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 text-sm font-bold shrink-0">4일차</button>
+                        </div>
+                        <div class="border border-slate-200 rounded-2xl p-1 shadow-lg bg-white relative">
+                            <div id="map"></div>
+                        </div>
+                        <p id="map-hint" class="text-center text-xs text-slate-500 mt-3">📍 1일차: 신치토세 → 노보리베츠 → 도야 온천</p>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-slate-50 rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+                        <!-- Day 1 -->
+                        <div id="day1" class="schedule-content p-6 md:p-8 animate-fade-in-up">
+                            <div class="flex items-center gap-4 mb-6 border-b pb-4">
+                                <div class="bg-blue-600 text-white text-xl font-bold w-12 h-12 rounded-xl flex items-center justify-center shrink-0">1일</div>
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">입국 · 노보리베츠 · 도야 온천</h3>
+                                    <p class="text-blue-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 청주 → 신치토세 → 노보리베츠 → 도야</p>
+                                    <span class="text-xs font-bold text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 mt-2 inline-block">중: 시대촌 · 석: 호텔 뷔페 · ♨온천</span>
+                                </div>
+                            </div>
+                            <img src="assets/images/day1-jigokudani.jpg" alt="노보리베츠 온천" class="schedule-thumb mb-5 shadow-sm">
+                            <div class="bg-blue-100/50 border border-blue-200 p-4 rounded-xl mb-6">
+                                <p class="text-sm text-blue-800 font-bold"><i class="fa-solid fa-lightbulb text-blue-600 mr-1"></i> 투어메이커 플래너 노트</p>
+                                <p class="text-xs text-blue-900 mt-2 leading-relaxed">도착 당일 노보리베츠 지옥계곡·다테 시대촌을 거쳐 도야 온천으로 이동합니다. 온천관광 지역의 고용·서비스 인프라를 첫날부터 체감합니다.</p>
+                            </div>
+                            <div class="relative border-l-2 border-blue-200 ml-4 pl-8 space-y-6">
+                                <div class="relative">
+                                    <div class="timeline-dot bg-blue-600 ring-blue-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🛫 08:25 청주 출발 / 10:55 신치토세 도착</h4>
+                                    <p class="text-slate-600 text-sm mt-1 leading-relaxed">에어로케이(RF352). 입국 수속 후 스루가이드·전용차량 미팅 → 노보리베츠 이동(약 1시간 10분)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-orange-500 ring-orange-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">♨️ 노보리베츠 지옥계곡</h4>
+                                    <p class="text-slate-600 text-sm mt-1">연기가 끊임없이 뿜어져 나오는 노보리베츠의 상징 지열 경관 시찰</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-amber-500 ring-amber-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏯 다테 시대촌 관광</h4>
+                                    <p class="text-slate-600 text-sm mt-1">중식(시대촌) 후 도야로 이동(약 1시간)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-slate-500 ring-slate-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏨 도야 썬팔레스호텔 체크인 · 석식 · 온천욕</h4>
+                                    <p class="text-slate-600 text-sm mt-1">또는 동급 / 2인1실 / 호텔 뷔페식</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Day 2 -->
+                        <div id="day2" class="schedule-content hidden p-6 md:p-8 animate-fade-in-up">
+                            <div class="flex items-center gap-4 mb-6 border-b pb-4">
+                                <div class="bg-emerald-600 text-white text-xl font-bold w-12 h-12 rounded-xl flex items-center justify-center shrink-0">2일</div>
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">도야 호수 · 공식방문 · 삿포로</h3>
+                                    <p class="text-emerald-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 도야 → 삿포로(오도리·스스키노)</p>
+                                    <span class="text-xs font-bold text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 mt-2 inline-block">조: 호텔식 · 중: 가리비정식 · 석: 야기니쿠 · ♨온천</span>
+                                </div>
+                            </div>
+                            <img src="assets/images/day2-toya.jpg" alt="도야호수" class="schedule-thumb mb-5 shadow-sm">
+                            <div class="bg-emerald-100/60 border border-emerald-200 p-4 rounded-xl mb-6">
+                                <p class="text-sm text-emerald-900 font-bold"><i class="fa-solid fa-building-columns text-emerald-700 mr-1"></i> 경제과 핵심 — 공식방문 (확정 후 상세 안내)</p>
+                                <p class="text-xs text-emerald-900 mt-2 leading-relaxed">
+                                    <strong>노인일자리(시니어클럽 등)</strong> · <strong>지역공동체운영기업(마을기업)</strong> 벤치마킹 슬롯.
+                                    기관 확정 컨펌 후 방문지명·질의 포인트·통역 동선을 업데이트합니다. (통역비 포함)
+                                </p>
+                            </div>
+                            <div class="relative border-l-2 border-emerald-200 ml-4 pl-8 space-y-6">
+                                <div class="relative">
+                                    <div class="timeline-dot bg-emerald-600 ring-emerald-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🌊 도야호수 유람선 · 쇼와신잔 · 사이로 전망대</h4>
+                                    <p class="text-slate-600 text-sm mt-1">호텔 조식 후 도야 일대 자연·관광자원 시찰 → 삿포로 이동(약 1시간 15분)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-red-500 ring-red-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏛️ &lt;공식방문&gt; 노인일자리 · 지역공동체운영기업</h4>
+                                    <p class="text-slate-600 text-sm mt-1">시니어클럽 등 노인일자리 모델 / 마을기업·공동체 운영 사례 (상세 확정 후 공유)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-blue-500 ring-blue-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🌳 오도리 공원 · 스스키노 번화가</h4>
+                                    <p class="text-slate-600 text-sm mt-1">북해도 최대 시민공원 · 삿포로 최대 번화가 상권 분위기 시찰</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-slate-500 ring-slate-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏨 아파리조트 삿포로 투숙 · 석식 · 온천욕</h4>
+                                    <p class="text-slate-600 text-sm mt-1">또는 동급 / 2인1실</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Day 3 -->
+                        <div id="day3" class="schedule-content hidden p-6 md:p-8 animate-fade-in-up">
+                            <div class="flex items-center gap-4 mb-6 border-b pb-4">
+                                <div class="bg-orange-500 text-white text-xl font-bold w-12 h-12 rounded-xl flex items-center justify-center shrink-0">3일</div>
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">오타루 상권 · 공식방문 · 맥주박물관</h3>
+                                    <p class="text-orange-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 삿포로 → 오타루 → 삿포로</p>
+                                    <span class="text-xs font-bold text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 mt-2 inline-block">조: 호텔식 · 중: 스시세트 · 석: 3대게뷔페+샤브 · ♨온천</span>
+                                </div>
+                            </div>
+                            <img src="assets/images/day3-otaru.jpg" alt="오타루" class="schedule-thumb mb-5 shadow-sm">
+                            <div class="bg-orange-50 border border-orange-200 p-4 rounded-xl mb-6">
+                                <p class="text-sm text-orange-900 font-bold"><i class="fa-solid fa-building-columns text-orange-600 mr-1"></i> 경제과 핵심 — 공식방문 (확정 후 상세 안내)</p>
+                                <p class="text-xs text-orange-900 mt-2 leading-relaxed">2일차와 연계한 <strong>노인일자리·마을기업</strong> 추가 시찰 슬롯. 오타루 공예·상권은 로컬 일자리·관광 상품화 관점으로 관찰합니다.</p>
+                            </div>
+                            <div class="relative border-l-2 border-orange-200 ml-4 pl-8 space-y-6">
+                                <div class="relative">
+                                    <div class="timeline-dot bg-orange-500 ring-orange-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🚤 오타루 운하 · 오르골당 · 과자거리 · 기타이치 가라스</h4>
+                                    <p class="text-slate-600 text-sm mt-1">호텔 조식 후 오타루 이동(약 1시간). 창고·유리공예·로컬 상권 도보 시찰 후 삿포로 귀환</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-red-500 ring-red-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏛️ &lt;공식방문&gt; 노인일자리 · 지역공동체운영기업</h4>
+                                    <p class="text-slate-600 text-sm mt-1">확정 기관 방문 및 통역 동행 (상세 확정 후 공유)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-amber-600 ring-amber-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🍺 삿포로 맥주박물관 (시음 포함)</h4>
+                                    <p class="text-slate-600 text-sm mt-1">지역 특화산업의 전시·체험형 6차산업화 및 고용 구조 관찰</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-slate-500 ring-slate-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏨 아파리조트 삿포로 연박 · 석식 · 온천욕</h4>
+                                    <p class="text-slate-600 text-sm mt-1">또는 동급 / 2인1실</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Day 4 -->
+                        <div id="day4" class="schedule-content hidden p-6 md:p-8 animate-fade-in-up">
+                            <div class="flex items-center gap-4 mb-6 border-b pb-4">
+                                <div class="bg-slate-700 text-white text-xl font-bold w-12 h-12 rounded-xl flex items-center justify-center shrink-0">4일</div>
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">시계탑 · 면세 · 귀국</h3>
+                                    <p class="text-slate-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 삿포로 → 신치토세 → 청주</p>
+                                    <span class="text-xs font-bold text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 mt-2 inline-block">조: 호텔식</span>
+                                </div>
+                            </div>
+                            <img src="assets/images/day4-clock.jpg" alt="삿포로 시내" class="schedule-thumb mb-5 shadow-sm">
+                            <div class="relative border-l-2 border-slate-300 ml-4 pl-8 space-y-6">
+                                <div class="relative">
+                                    <div class="timeline-dot bg-slate-600 ring-slate-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🏛️ 홋카이도 시계탑 (차창 관람)</h4>
+                                    <p class="text-slate-600 text-sm mt-1">호텔 조식·체크아웃 후 이동 중 상징 건축물 관람</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-indigo-500 ring-indigo-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🛍️ 면세점 1회 · 공항 이동</h4>
+                                    <p class="text-slate-600 text-sm mt-1">전일정 스루가이드 동행 + 쇼핑 1회(면세점) 포함</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-blue-600 ring-blue-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🛬 11:55 신치토세 출발 / 14:45 청주 도착</h4>
+                                    <p class="text-slate-600 text-sm mt-1">에어로케이(RF351) 탑승 · 정선군청 경제과 연수 일정 마무리</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotels -->
+        <section id="hotel" class="py-16 bg-white border-t border-slate-200">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-10">
+                    <span class="text-indigo-600 font-black tracking-widest text-xs uppercase">ACCOMMODATION &amp; TRANSPORT</span>
+                    <h2 class="text-3xl font-bold text-slate-800 mt-2">숙소 및 이동 차량 안내</h2>
+                    <p class="text-sm text-slate-500 mt-2">2인1실 기준 · 수배 상황에 따라 동급 호텔로 변경될 수 있습니다.</p>
+                </div>
+
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
+                        <div class="h-48 bg-slate-200 relative overflow-hidden">
+                            <img src="assets/images/hotel-toya.jpg" alt="도야 썬팔레스호텔" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <div class="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-md font-bold">1일차 숙박 · 온천</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-slate-800 text-lg">도야 썬팔레스호텔</h4>
+                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">도야호수 인근 온천 호텔. 도착일 피로 회복을 위한 <strong>온천욕</strong>과 뷔페 석식을 제공합니다. (또는 동급)</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
+                        <div class="h-48 bg-slate-200 relative overflow-hidden">
+                            <img src="assets/images/hotel-sapporo.jpg" alt="아파리조트 삿포로" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <div class="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-md font-bold">2·3일차 숙박 · 온천</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-slate-800 text-lg">아파리조트 삿포로</h4>
+                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">삿포로 시내 접근성이 좋은 리조트형 숙소로, 공식방문·오타루 일정 후 휴식과 <strong>온천욕</strong>이 가능합니다. (또는 동급)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-2xl max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-3xl shrink-0">
+                        <i class="fa-solid fa-bus"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-indigo-900 text-lg mb-1">중형 전용버스 &amp; 스루가이드 · 통역(2회)</h4>
+                        <p class="text-sm text-indigo-800 leading-relaxed">
+                            기수당 14명(+1TG) 규모에 맞춘 <strong>중형 전용버스</strong>와 전일정 <strong>스루가이드</strong>가 동행합니다.
+                            공식방문 일정에는 <strong>통역 2회</strong>가 포함되며, 일본 관광법에 따라 차량은 하루 10시간 이내 운행됩니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video -->
+        <section id="video" class="py-16 bg-slate-900 no-print">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-10 text-white">
+                    <span class="inline-block bg-white/20 text-white text-xs px-3 py-1 rounded-full font-bold mb-3 border border-white/30">PREVIEW</span>
+                    <h2 class="text-3xl font-bold">🎬 영상으로 미리 만나는 홋카이도</h2>
+                    <p class="text-slate-400 text-sm mt-3">도야·오타루·삿포로 일대의 분위기를 미리 확인해 보세요.</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black relative">
+                        <iframe class="w-full h-full absolute top-0 left-0" src="https://www.youtube.com/embed/JozGMWkF5ZM" title="Hokkaido Travel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist -->
+        <section id="check" class="py-16 bg-white border-t border-slate-100">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-10">
+                    <span class="text-blue-600 font-black tracking-widest text-xs uppercase">CHECKLIST</span>
+                    <h2 class="text-3xl font-bold text-slate-800 mt-2">출장 전 준비물 체크리스트</h2>
+                    <p class="text-sm text-slate-500 mt-2">체크 내용은 본인 스마트폰에 자동 저장됩니다.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-lg text-blue-900"><i class="fa-solid fa-suitcase mr-2"></i>필수 준비물</h3>
+                            <button onclick="resetChecklist()" class="text-xs text-slate-500 underline hover:text-red-500 bg-white px-2 py-1 rounded border border-slate-200">[초기화]</button>
+                        </div>
+                        <div id="checklist-container" class="space-y-2"></div>
+                    </div>
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 shadow-sm flex flex-col">
+                        <h3 class="font-bold text-lg mb-4 text-amber-800"><i class="fa-solid fa-pen-clip mr-2"></i>벤치마킹 메모장</h3>
+                        <textarea id="travel-memo" class="flex-1 w-full min-h-[220px] bg-white p-4 rounded-xl border border-amber-200 text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-inner" placeholder="노인일자리·마을기업 운영 방식, 질의 내용, 정선 적용 아이디어를 기록해 두세요."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-16 bg-slate-50 border-t border-slate-200">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-10">
+                    <span class="text-red-600 font-black tracking-widest text-xs uppercase">EMERGENCY &amp; SAFETY</span>
+                    <h2 class="text-3xl font-bold text-slate-800 mt-2">비상 연락망</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-2">투어메이커 상황실</h4>
+                        <p class="text-sm text-slate-600">이재명 대표 : <a href="tel:010-9443-7881" class="text-blue-600 font-bold">010-9443-7881</a></p>
+                        <p class="text-sm text-slate-600 mt-1">조혁 이사 : <a href="tel:010-4249-4026" class="text-blue-600 font-bold">010-4249-4026</a></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-2">주삿포로 대한민국 총영사관</h4>
+                        <p class="text-sm text-slate-600">대표전화: <a href="tel:+81112180288" class="text-blue-600 font-bold">+81-11-218-0288</a></p>
+                        <p class="text-sm text-slate-500 mt-1">긴급 시 투어메이커 상황실과 병행 연락</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ESG -->
+        <section id="esg" class="py-16 bg-blue-900 text-white border-t border-blue-950 no-print">
+            <div class="container mx-auto px-4 text-center">
+                <span class="inline-block bg-blue-800 text-blue-200 text-xs px-3 py-1 rounded-full font-bold mb-3 border border-blue-700">
+                    <i class="fa-solid fa-leaf"></i> Eco-Friendly Tour
+                </span>
+                <h2 class="text-3xl font-bold mb-6">정선군청과 함께하는 종이 없는 친환경 출장</h2>
+                <p class="text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    본 디지털 가이드북으로 인쇄물을 대체하여 탄소·자원 절감 효과를 달성합니다.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <div class="bg-blue-800/50 rounded-2xl p-6 border border-blue-700">
+                        <h4 class="text-blue-300 text-sm font-bold mb-2">종이 절감</h4>
+                        <p class="text-4xl font-black">40<span class="text-lg font-medium text-blue-400 ml-1">장</span></p>
+                    </div>
+                    <div class="bg-blue-800/50 rounded-2xl p-6 border border-blue-700">
+                        <h4 class="text-blue-300 text-sm font-bold mb-2">탄소 배출 감소</h4>
+                        <p class="text-4xl font-black">188<span class="text-lg font-medium text-blue-400 ml-1">g</span></p>
+                    </div>
+                    <div class="bg-blue-800/50 rounded-2xl p-6 border border-blue-700">
+                        <h4 class="text-blue-300 text-sm font-bold mb-2">물 절약</h4>
+                        <p class="text-4xl font-black">400<span class="text-lg font-medium text-blue-400 ml-1">L</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#f8f9fa] py-12 border-t border-slate-200 text-center no-print">
+        <div class="container mx-auto px-4">
+            <p class="text-[12px] md:text-[13px] text-[#6c757d] font-normal mb-8 max-w-2xl mx-auto leading-relaxed">
+                [System Powered by TOURMAKER] 본 스마트 가이드북은 <strong class="text-slate-700">정선군청 경제과</strong>의 기획과
+                <a href="http://tourmaker.kr" target="_blank" class="font-bold text-[#6c757d] hover:text-blue-600 underline underline-offset-2">투어메이커</a>의 트래블 테크 기술 제휴로 제작되었습니다.
+            </p>
+            <div class="mb-6">
+                <a href="http://tourmaker.kr" target="_blank" class="inline-block border border-slate-300 rounded-xl px-6 py-3 bg-white text-slate-700 font-bold hover:bg-slate-50 shadow-sm text-sm">
+                    <i class="fa-solid fa-home mr-1"></i> 투어메이커 공식 홈페이지
+                </a>
+            </div>
+            <p class="text-[10px] text-slate-400">&copy; 2026 Tourmaker Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Print Area -->
+    <div id="print-area">
+        <div class="print-header-top">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker">
+            <div class="text-right text-xs text-slate-600">제안·진행: 투어메이커<br>담당: 이재명 대표 010-9443-7881</div>
+        </div>
+        <h1 class="print-title">[정선군청 경제과] 북해도 일자리창출·노인일자리·마을기업 선진지견학 일정표</h1>
+        <div class="print-overview">
+            <div>
+                <p><strong>일정:</strong> [1차] 2026.10.20(화)~10.23(금) / [2차] 10.27(화)~10.30(금)</p>
+                <p class="mt-1"><strong>인원:</strong> 기수당 14명(+1TG) · 2인1실 · 중형버스</p>
+                <p class="mt-1"><strong>목적:</strong> 노인일자리(시니어클럽)·마을기업·일자리창출 벤치마킹</p>
+            </div>
+            <div class="text-right">
+                <p><strong>항공:</strong> 에어로케이 RF352 / RF351</p>
+                <p class="mt-1"><strong>구간:</strong> 청주 ↔ 신치토세</p>
+            </div>
+        </div>
+        <table class="tm-table">
+            <thead>
+                <tr>
+                    <th class="tm-col-date">일자</th>
+                    <th class="tm-col-route">지역/교통</th>
+                    <th class="tm-col-desc">세부 일정 내역</th>
+                    <th class="tm-col-meal">식사</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tm-col-date">1일차<br><span style="font-weight:400;font-size:10px">1차 10.20(화)<br>2차 10.27(화)</span></td>
+                    <td class="tm-col-route">청주<br>신치토세<br>노보리베츠<br>도야<br>RF352</td>
+                    <td class="tm-col-desc">
+                        <strong>08:25 청주 출발 → 10:55 신치토세 도착</strong><br>
+                        ▶ 입국 수속 후 스루가이드·전용차량 미팅, 노보리베츠 이동(약 1시간 10분)<br>
+                        ▶ 노보리베츠 지옥계곡 시찰<br>
+                        ▶ 다테 시대촌 관광 후 도야 이동(약 1시간)<br>
+                        ▶ 호텔 체크인·석식·온천욕 (도야 썬팔레스호텔 또는 동급)
+                    </td>
+                    <td class="tm-col-meal">[조] -<br>[중] 시대촌<br>[석] 호텔 뷔페</td>
+                </tr>
+                <tr>
+                    <td class="tm-col-date">2일차<br><span style="font-weight:400;font-size:10px">1차 10.21(수)<br>2차 10.28(수)</span></td>
+                    <td class="tm-col-route">도야<br>삿포로<br>전용차량</td>
+                    <td class="tm-col-desc">
+                        ▶ 호텔 조식 후 도야 일대 시찰 — 도야호수(유람선), 쇼와신잔, 사이로 전망대<br>
+                        ▶ 삿포로 이동(약 1시간 15분)<br>
+                        ▶ <strong>&lt;공식방문&gt; 노인일자리(시니어클럽 등), 지역공동체운영기업</strong> ※확정 후 상세<br>
+                        ▶ 오도리 공원 · 스스키노 거리<br>
+                        ▶ 석식 후 호텔 투숙·온천욕 (아파리조트 삿포로 또는 동급)
+                    </td>
+                    <td class="tm-col-meal">[조] 호텔식<br>[중] 가리비정식<br>[석] 야기니쿠</td>
+                </tr>
+                <tr>
+                    <td class="tm-col-date">3일차<br><span style="font-weight:400;font-size:10px">1차 10.22(목)<br>2차 10.29(목)</span></td>
+                    <td class="tm-col-route">삿포로<br>오타루<br>삿포로<br>전용차량</td>
+                    <td class="tm-col-desc">
+                        ▶ 호텔 조식 후 오타루 이동(약 1시간)<br>
+                        ▶ 오타루 운하 · 오르골당 · 과자거리 · 기타이치 가라스 공방거리<br>
+                        ▶ 삿포로 귀환 후 <strong>&lt;공식방문&gt; 노인일자리·지역공동체운영기업</strong> ※확정 후 상세<br>
+                        ▶ 삿포로 맥주박물관(시음 포함)<br>
+                        ▶ 석식 후 호텔 연박·온천욕
+                    </td>
+                    <td class="tm-col-meal">[조] 호텔식<br>[중] 스시세트<br>[석] 3대게뷔페<br>+샤브</td>
+                </tr>
+                <tr>
+                    <td class="tm-col-date">4일차<br><span style="font-weight:400;font-size:10px">1차 10.23(금)<br>2차 10.30(금)</span></td>
+                    <td class="tm-col-route">삿포로<br>신치토세<br>청주<br>RF351</td>
+                    <td class="tm-col-desc">
+                        ▶ 호텔 조식 후 체크아웃<br>
+                        ▶ 홋카이도 시계탑(차창) · 면세점 1회 · 공항 이동<br>
+                        ▶ <strong>11:55 신치토세 출발 → 14:45 청주 도착</strong>
+                    </td>
+                    <td class="tm-col-meal">[조] 호텔식<br>[중] -<br>[석] -</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="print-footer-area">
+            <div>※ 일정·공식방문지는 항공·현지 사정 및 기관 컨펌에 따라 변경될 수 있습니다.</div>
+            <div class="manager">투어메이커 · 조혁 이사 010-4249-4026</div>
+        </div>
+    </div>
+
+    <script>
+        function shareLink(){
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: '[정선군청 경제과] 북해도 선진지견학',
+                    text: '일자리창출·노인일자리·마을기업 북해도 3박4일 스마트 가이드북',
+                    url
+                }).catch(()=>{});
+            } else {
+                navigator.clipboard?.writeText(url).then(()=>alert('가이드북 링크가 복사되었습니다.'));
+            }
+        }
+
+        const CHECK_KEY = 'jeongseon_economy_hokkaido_chk_v1';
+        const MEMO_KEY = 'jeongseon_economy_hokkaido_memo_v1';
+        const CHECK_ITEMS = [
+            '여권 (유효기간 6개월 이상 필수 확인)',
+            '기관 명함 및 정선군 경제·일자리 관련 소개자료 (교류용)',
+            '필기도구 및 벤치마킹 수첩',
+            '돼지코 (일본 100V 전원 변환 어댑터)',
+            '작은 우산 또는 휴대용 우비',
+            '개인 상비약 (소화제, 두통약 등)',
+            '편안한 운동화 (오타루·상권 도보 시찰 대비)',
+            '온천용 간단 세면도구 (칫솔·치약 등)',
+            '스마트폰 보조배터리',
+        ];
+
+        function renderChecklist(){
+            const container = document.getElementById('checklist-container');
+            if(!container) return;
+            const saved = JSON.parse(localStorage.getItem(CHECK_KEY) || '{}');
+            container.innerHTML = CHECK_ITEMS.map((label, idx) => {
+                const id = `chk_${idx}`;
+                const checked = saved[id] ? 'checked' : '';
+                return `<label class="flex items-center gap-3 bg-white border border-blue-50 rounded-xl px-4 py-3 cursor-pointer hover:bg-blue-50 transition shadow-sm">
+                    <input type="checkbox" id="${id}" ${checked} class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 border-slate-300">
+                    <span class="text-sm font-medium text-slate-700">${label}</span>
+                </label>`;
+            }).join('');
+            container.querySelectorAll('input[type=checkbox]').forEach(cb => {
+                cb.addEventListener('change', () => {
+                    const current = JSON.parse(localStorage.getItem(CHECK_KEY) || '{}');
+                    current[cb.id] = cb.checked;
+                    localStorage.setItem(CHECK_KEY, JSON.stringify(current));
+                });
+            });
+        }
+        function resetChecklist(){
+            if(confirm('체크리스트를 초기화하시겠습니까?')){
+                localStorage.removeItem(CHECK_KEY);
+                renderChecklist();
+            }
+        }
+        renderChecklist();
+
+        (function(){
+            const memo = document.getElementById('travel-memo');
+            if(!memo) return;
+            memo.value = localStorage.getItem(MEMO_KEY) || '';
+            memo.addEventListener('input', () => localStorage.setItem(MEMO_KEY, memo.value));
+        })();
+
+        // D-day
+        (function(){
+            const badge = document.getElementById('d-day-badge');
+            if(!badge) return;
+            const first = new Date('2026-10-20T00:00:00+09:00');
+            const second = new Date('2026-10-27T00:00:00+09:00');
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const d1 = Math.ceil((first - today) / 86400000);
+            const d2 = Math.ceil((second - today) / 86400000);
+            if (d1 > 0) badge.textContent = `1차 D-${d1}`;
+            else if (d1 === 0) badge.textContent = '1차 D-DAY';
+            else if (d2 > 0) badge.textContent = `2차 D-${d2}`;
+            else if (d2 === 0) badge.textContent = '2차 D-DAY';
+            else badge.textContent = '연수 완료';
+        })();
+
+        // Map
+        const places = {
+            cts: { name: '신치토세공항', coords: [42.7752, 141.6925], color: '#004098' },
+            jigoku: { name: '노보리베츠 지옥계곡', coords: [42.4933, 141.1606], color: '#ea580c' },
+            jidaimura: { name: '다테 시대촌', coords: [42.5128, 140.9083], color: '#d97706' },
+            toya: { name: '도야 썬팔레스', coords: [42.5736, 140.8286], color: '#0ea5e9' },
+            showa: { name: '쇼와신잔', coords: [42.5422, 140.8647], color: '#dc2626' },
+            silo: { name: '사이로 전망대', coords: [42.5610, 140.8240], color: '#16a34a' },
+            odori: { name: '오도리 공원', coords: [43.0597, 141.3469], color: '#2563eb' },
+            susukino: { name: '스스키노', coords: [43.0555, 141.3534], color: '#7c3aed' },
+            hotelSapporo: { name: '아파리조트 삿포로', coords: [43.0550, 141.3400], color: '#475569' },
+            otaru: { name: '오타루 운하', coords: [43.1985, 141.0066], color: '#0284c7' },
+            beer: { name: '삿포로 맥주박물관', coords: [43.0714, 141.3686], color: '#b45309' },
+            clock: { name: '홋카이도 시계탑', coords: [43.0627, 141.3535], color: '#334155' },
+        };
+
+        const routes = {
+            all: ['cts','jigoku','jidaimura','toya','showa','silo','odori','susukino','otaru','beer','clock','cts'],
+            day1: ['cts','jigoku','jidaimura','toya'],
+            day2: ['toya','showa','silo','odori','susukino','hotelSapporo'],
+            day3: ['hotelSapporo','otaru','beer','hotelSapporo'],
+            day4: ['clock','cts'],
+        };
+        const hints = {
+            all: '📍 전체: 신치토세 → 노보리베츠·도야 → 삿포로·오타루 → 귀국',
+            day1: '📍 1일차: 신치토세 → 노보리베츠 → 도야 온천',
+            day2: '📍 2일차: 도야 → 공식방문 → 오도리·스스키노',
+            day3: '📍 3일차: 오타루 상권 → 공식방문 → 맥주박물관',
+            day4: '📍 4일차: 시계탑 → 신치토세 공항 귀국',
+        };
+
+        let map, markersLayer, lineLayer;
+        function makeIcon(color, label){
+            return L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="background:${color};color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)">${label}</div>`,
+                iconSize: [28,28], iconAnchor: [14,14]
+            });
+        }
+
+        function initMap(){
+            map = L.map('map', { scrollWheelZoom: false }).setView([42.9, 141.2], 8);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap', maxZoom: 18
+            }).addTo(map);
+            markersLayer = L.layerGroup().addTo(map);
+            lineLayer = L.layerGroup().addTo(map);
+            changeMapRoute('day1');
+            setTimeout(() => map.invalidateSize(), 200);
+        }
+
+        function changeMapRoute(key){
+            if(!map) return;
+            markersLayer.clearLayers();
+            lineLayer.clearLayers();
+            const keys = routes[key] || routes.all;
+            const latlngs = [];
+            keys.forEach((k, i) => {
+                const p = places[k];
+                if(!p) return;
+                latlngs.push(p.coords);
+                L.marker(p.coords, { icon: makeIcon(p.color, i + 1) })
+                    .bindPopup(`<strong>${p.name}</strong>`)
+                    .addTo(markersLayer);
+            });
+            if(latlngs.length > 1){
+                L.polyline(latlngs, { color: '#004098', weight: 3, opacity: 0.75, dashArray: '6 8' }).addTo(lineLayer);
+                map.fitBounds(L.latLngBounds(latlngs).pad(0.25));
+            } else if(latlngs.length === 1){
+                map.setView(latlngs[0], 11);
+            }
+            const hint = document.getElementById('map-hint');
+            if(hint) hint.textContent = hints[key] || hints.all;
+        }
+
+        function changeMapAndTab(day){
+            document.querySelectorAll('.map-tab-btn').forEach(btn => {
+                btn.classList.remove('active','bg-blue-600','text-white','border-blue-600','shadow-sm');
+                btn.classList.add('bg-white','text-slate-600','border-slate-300');
+            });
+            const activeBtn = document.querySelector(`.map-tab-btn[onclick*="'${day}'"]`);
+            if(activeBtn){
+                activeBtn.classList.add('active','bg-blue-600','text-white','border-blue-600','shadow-sm');
+                activeBtn.classList.remove('bg-white','text-slate-600','border-slate-300');
+            }
+            document.querySelectorAll('.schedule-content').forEach(el => el.classList.add('hidden'));
+            if(day !== 'all'){
+                document.getElementById(day)?.classList.remove('hidden');
+            } else {
+                document.getElementById('day1')?.classList.remove('hidden');
+            }
+            changeMapRoute(day);
+        }
+
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>
