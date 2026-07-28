@@ -52,6 +52,14 @@
         @media (max-width: 1023px) {
             .timeline-dot { left: -20px; top: 6px; width: 14px; height: 14px; border-width: 2px; }
         }
+        .custom-icon div {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .custom-icon div:hover {
+            transform: scale(1.1);
+            z-index: 100;
+        }
         @media screen { #print-area { display: none !important; } }
         @media print {
             @page { size: A4 portrait; margin: 12mm 10mm; }
@@ -95,6 +103,7 @@
                     <a href="#map-section" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">여행동선</a>
                     <a href="#schedule" class="px-3 py-2 text-sm font-bold text-blue-600 hover:bg-slate-50 rounded-lg">상세일정</a>
                     <a href="#hotel" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">숙소정보</a>
+                    <a href="#video" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">홍보영상</a>
                     <a href="#check" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">준비물</a>
                     <a href="#contact" class="px-3 py-2 text-sm font-bold text-red-600 hover:bg-red-50 rounded-lg">비상연락망</a>
                 </div>
@@ -363,7 +372,7 @@
                                 </div>
                                 <div class="relative">
                                     <div class="timeline-dot bg-slate-500 ring-slate-100"></div>
-                                    <h4 class="font-bold text-base text-slate-800">🏨 아파리조트 삿포로 투숙 · 석식 · 온천욕</h4>
+                                    <h4 class="font-bold text-base text-slate-800">🏨 APA 호텔 &amp; 리조트 삿포로 투숙 · 석식 · 온천욕</h4>
                                     <p class="text-slate-600 text-sm mt-1">또는 동급 / 2인1실</p>
                                 </div>
                             </div>
@@ -402,7 +411,7 @@
                                 </div>
                                 <div class="relative">
                                     <div class="timeline-dot bg-slate-500 ring-slate-100"></div>
-                                    <h4 class="font-bold text-base text-slate-800">🏨 아파리조트 삿포로 연박 · 석식 · 온천욕</h4>
+                                    <h4 class="font-bold text-base text-slate-800">🏨 APA 호텔 &amp; 리조트 삿포로 연박 · 석식 · 온천욕</h4>
                                     <p class="text-slate-600 text-sm mt-1">또는 동급 / 2인1실</p>
                                 </div>
                             </div>
@@ -453,23 +462,27 @@
 
                 <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
-                        <div class="h-48 bg-slate-200 relative overflow-hidden">
-                            <img src="assets/images/hotel-toya.jpg" alt="도야 썬팔레스호텔" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="h-52 bg-slate-200 relative overflow-hidden">
+                            <img src="https://www.toyasunpalace.co.jp/wordpress/wp-content/themes/sunpalace/img/top/main_pc.jpg" alt="洞爺サンパレスリゾート＆スパ 외관" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src='assets/images/hotel-toya.jpg'">
                             <div class="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-md font-bold">1일차 숙박 · 온천</div>
+                            <div class="absolute top-2 right-2 bg-white/90 text-slate-700 text-[10px] px-2 py-1 rounded font-medium">공식 이미지</div>
                         </div>
                         <div class="p-6">
-                            <h4 class="font-bold text-slate-800 text-lg">도야 썬팔레스호텔</h4>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">도야호수 인근 온천 호텔. 도착일 피로 회복을 위한 <strong>온천욕</strong>과 뷔페 석식을 제공합니다. (또는 동급)</p>
+                            <h4 class="font-bold text-slate-800 text-lg">도야 썬팔레스 리조트 &amp; 스파</h4>
+                            <p class="text-xs text-blue-600 font-bold mb-2"><a href="https://www.toyasunpalace.co.jp/" target="_blank" rel="noopener" class="hover:underline">洞爺サンパレスリゾート＆スパ 公式</a></p>
+                            <p class="text-sm text-slate-500 leading-relaxed">도야호수 온천 리조트. 전 객실 레이크뷰·대욕장·뷔페 석식. (또는 동급)</p>
                         </div>
                     </div>
                     <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
-                        <div class="h-48 bg-slate-200 relative overflow-hidden">
-                            <img src="assets/images/hotel-sapporo.jpg" alt="아파리조트 삿포로" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
-                            <div class="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-md font-bold">2·3일차 숙박 · 온천</div>
+                        <div class="h-52 bg-slate-200 relative overflow-hidden">
+                            <img src="https://pix8.agoda.net/hotelImages/159/159799/159799_16042513510041733814.jpg?ca=6&amp;ce=1&amp;s=1024x768" alt="アパホテル＆リゾート〈札幌〉外観" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.src='assets/images/hotel-sapporo.jpg'">
+                            <div class="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-md font-bold">2·3일차 숙박 · 대욕장</div>
+                            <div class="absolute top-2 right-2 bg-white/90 text-slate-700 text-[10px] px-2 py-1 rounded font-medium">APA 공식 숙소</div>
                         </div>
                         <div class="p-6">
-                            <h4 class="font-bold text-slate-800 text-lg">아파리조트 삿포로</h4>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">삿포로 시내 접근성이 좋은 리조트형 숙소로, 공식방문·오타루 일정 후 휴식과 <strong>온천욕</strong>이 가능합니다. (또는 동급)</p>
+                            <h4 class="font-bold text-slate-800 text-lg">APA 호텔 &amp; 리조트 삿포로</h4>
+                            <p class="text-xs text-blue-600 font-bold mb-2"><a href="https://www.apahotel.com/resort/sapporo/" target="_blank" rel="noopener" class="hover:underline">アパホテル＆リゾート〈札幌〉 公式</a></p>
+                            <p class="text-sm text-slate-500 leading-relaxed">삿포로 남구 카와조에. 대욕장·실내수영장·조식 뷔페 보유 아 urban resort. (견적서 표기: 아파리조트 삿포로 또는 동급)</p>
                         </div>
                     </div>
                 </div>
@@ -493,15 +506,28 @@
         <section id="video" class="py-16 bg-slate-900 no-print">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-10 text-white">
-                    <span class="inline-block bg-white/20 text-white text-xs px-3 py-1 rounded-full font-bold mb-3 border border-white/30">PREVIEW</span>
-                    <h2 class="text-3xl font-bold">🎬 영상으로 미리 만나는 홋카이도</h2>
-                    <p class="text-slate-400 text-sm mt-3">도야·오타루·삿포로 일대의 분위기를 미리 확인해 보세요.</p>
+                    <span class="inline-block bg-white/20 text-white text-xs px-3 py-1 rounded-full font-bold mb-3 border border-white/30">HOKKAIDO LOVE! OFFICIAL</span>
+                    <h2 class="text-3xl font-bold">🎬 홋카이도 공식 홍보영상</h2>
+                    <p class="text-slate-400 text-sm mt-3">北海道観光振興機構(HOKKAIDO LOVE!) 공식 영상 · visit-hokkaido.jp 동영상 라이브러리</p>
                 </div>
-                <div class="max-w-4xl mx-auto">
-                    <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black relative">
-                        <iframe class="w-full h-full absolute top-0 left-0" src="https://www.youtube.com/embed/JozGMWkF5ZM" title="Hokkaido Travel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="max-w-5xl mx-auto grid md:grid-cols-1 gap-8">
+                    <div>
+                        <p class="text-sky-300 text-sm font-bold mb-3 text-center md:text-left">▶ HOKKAIDO, THE ISLANDS OF ADVENTURE (Green Season)</p>
+                        <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black relative">
+                            <iframe class="w-full h-full absolute top-0 left-0" src="https://www.youtube.com/embed/j7D5SDFfjmM" title="HOKKAIDO, THE ISLANDS OF ADVENTURE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sky-300 text-sm font-bold mb-3 text-center md:text-left">▶ 北海道に酔いしれて【道北篇】— 북해도 공식 관광 캠페인</p>
+                        <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-black relative">
+                            <iframe class="w-full h-full absolute top-0 left-0" src="https://www.youtube.com/embed/wvdshvRe7-I" title="北海道に酔いしれて 道北篇" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        </div>
                     </div>
                 </div>
+                <p class="text-center text-slate-500 text-xs mt-6">
+                    출처: <a href="https://www.visit-hokkaido.jp/movie/" target="_blank" rel="noopener" class="text-sky-400 hover:underline">HOKKAIDO LOVE! 動画ライブラリー</a>
+                    · <a href="https://www.youtube.com/@hokkaidolove" target="_blank" rel="noopener" class="text-sky-400 hover:underline">公式YouTube</a>
+                </p>
             </div>
         </section>
 
@@ -644,7 +670,7 @@
                         ▶ 삿포로 이동(약 1시간 15분)<br>
                         ▶ <strong>&lt;공식방문&gt; 노인일자리(시니어클럽 등), 지역공동체운영기업</strong> ※확정 후 상세<br>
                         ▶ 오도리 공원 · 스스키노 거리<br>
-                        ▶ 석식 후 호텔 투숙·온천욕 (아파리조트 삿포로 또는 동급)
+                        ▶ 석식 후 호텔 투숙·온천욕 (APA 호텔 &amp; 리조트 삿포로 또는 동급)
                     </td>
                     <td class="tm-col-meal">[조] 호텔식<br>[중] 가리비정식<br>[석] 야기니쿠</td>
                 </tr>
@@ -758,93 +784,143 @@
             else badge.textContent = '연수 완료';
         })();
 
-        // Map
-        const places = {
-            cts: { name: '신치토세공항', coords: [42.7752, 141.6925], color: '#004098' },
-            jigoku: { name: '노보리베츠 지옥계곡', coords: [42.4933, 141.1606], color: '#ea580c' },
-            jidaimura: { name: '다테 시대촌', coords: [42.5128, 140.9083], color: '#d97706' },
-            toya: { name: '도야 썬팔레스', coords: [42.5736, 140.8286], color: '#0ea5e9' },
-            showa: { name: '쇼와신잔', coords: [42.5422, 140.8647], color: '#dc2626' },
-            silo: { name: '사이로 전망대', coords: [42.5610, 140.8240], color: '#16a34a' },
-            odori: { name: '오도리 공원', coords: [43.0597, 141.3469], color: '#2563eb' },
-            susukino: { name: '스스키노', coords: [43.0555, 141.3534], color: '#7c3aed' },
-            hotelSapporo: { name: '아파리조트 삿포로', coords: [43.0550, 141.3400], color: '#475569' },
-            otaru: { name: '오타루 운하', coords: [43.1985, 141.0066], color: '#0284c7' },
-            beer: { name: '삿포로 맥주박물관', coords: [43.0714, 141.3686], color: '#b45309' },
-            clock: { name: '홋카이도 시계탑', coords: [43.0627, 141.3535], color: '#334155' },
+        // Map — Osaka guidebook 동일 품질 (Carto 타일 · 이모지 마커 · 일자별 컬러 동선 · 애니메이션)
+        let map;
+        let mapLayers = [];
+
+        const spots = {
+            cts: { coords: [42.7752, 141.6925], title: '신치토세 국제공항', color: '#64748b', icon: '✈️', isSub: false },
+            jigoku: { coords: [42.4908, 141.1425], title: '노보리베츠 지옥계곡', color: '#ea580c', icon: '♨️', isSub: true },
+            jidaimura: { coords: [42.5186, 141.0203], title: '다테 시대촌', color: '#d97706', icon: '🏯', isSub: true },
+            hotel_toya: { coords: [42.5764, 140.8328], title: '도야 썬팔레스 리조트&스파', color: '#0ea5e9', icon: '🏨', isSub: true },
+            toya_lake: { coords: [42.5618, 140.8445], title: '도야호수 유람선', color: '#0284c7', icon: '🚢', isSub: true },
+            showa: { coords: [42.5494, 140.8678], title: '쇼와신잔', color: '#dc2626', icon: '🌋', isSub: true },
+            silo: { coords: [42.5522, 140.8756], title: '사이로 전망대', color: '#16a34a', icon: '🔭', isSub: true },
+            visit_day2: { coords: [43.0642, 141.3469], title: '<공식방문> 노인일자리·마을기업', color: '#b91c1c', icon: '🏛️', isSub: false },
+            odori: { coords: [43.0598, 141.3469], title: '오도리 공원', color: '#2563eb', icon: '🌳', isSub: true },
+            susukino: { coords: [43.0547, 141.3545], title: '스스키노 번화가', color: '#7c3aed', icon: '🌃', isSub: true },
+            hotel_sapporo: { coords: [43.0029, 141.3682], title: 'APA 호텔 & 리조트 삿포로', color: '#1e293b', icon: '🏨', isSub: true },
+            otaru: { coords: [43.1978, 141.0052], title: '오타루 운하·오르골당', color: '#0891b2', icon: '🎵', isSub: false },
+            visit_day3: { coords: [43.0680, 141.3520], title: '<공식방문> 지역공동체운영기업', color: '#b91c1c', icon: '🏘️', isSub: false },
+            beer: { coords: [43.0717, 141.3687], title: '삿포로 맥주박물관', color: '#b45309', icon: '🍺', isSub: true },
+            clock: { coords: [43.0628, 141.3537], title: '홋카이도 시계탑', color: '#475569', icon: '🕰️', isSub: true },
         };
 
         const routes = {
-            all: ['cts','jigoku','jidaimura','toya','showa','silo','odori','susukino','otaru','beer','clock','cts'],
-            day1: ['cts','jigoku','jidaimura','toya'],
-            day2: ['toya','showa','silo','odori','susukino','hotelSapporo'],
-            day3: ['hotelSapporo','otaru','beer','hotelSapporo'],
-            day4: ['clock','cts'],
+            all: {
+                points: ['cts','jigoku','jidaimura','hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo','otaru','visit_day3','beer','clock','cts'],
+                lines: [
+                    { latlngs: [spots.cts.coords, spots.jigoku.coords, spots.jidaimura.coords, spots.hotel_toya.coords], color: '#64748b', dash: '' },
+                    { latlngs: [spots.hotel_toya.coords, spots.toya_lake.coords, spots.showa.coords, spots.silo.coords, spots.visit_day2.coords, spots.odori.coords, spots.susukino.coords, spots.hotel_sapporo.coords], color: '#2563eb', dash: '' },
+                    { latlngs: [spots.hotel_sapporo.coords, spots.otaru.coords, spots.visit_day3.coords, spots.beer.coords, spots.hotel_sapporo.coords], color: '#ea580c', dash: '' },
+                    { latlngs: [spots.hotel_sapporo.coords, spots.clock.coords, spots.cts.coords], color: '#64748b', dash: '6, 8' },
+                ]
+            },
+            day1: {
+                points: ['cts','jigoku','jidaimura','hotel_toya'],
+                lines: [
+                    { latlngs: [spots.cts.coords, spots.jigoku.coords, spots.jidaimura.coords, spots.hotel_toya.coords], color: '#64748b', dash: '' },
+                ]
+            },
+            day2: {
+                points: ['hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo'],
+                lines: [
+                    { latlngs: [spots.hotel_toya.coords, spots.toya_lake.coords, spots.showa.coords, spots.silo.coords, spots.visit_day2.coords, spots.odori.coords, spots.susukino.coords, spots.hotel_sapporo.coords], color: '#2563eb', dash: '' },
+                ]
+            },
+            day3: {
+                points: ['hotel_sapporo','otaru','visit_day3','beer','hotel_sapporo'],
+                lines: [
+                    { latlngs: [spots.hotel_sapporo.coords, spots.otaru.coords, spots.visit_day3.coords, spots.beer.coords, spots.hotel_sapporo.coords], color: '#ea580c', dash: '' },
+                ]
+            },
+            day4: {
+                points: ['hotel_sapporo','clock','cts'],
+                lines: [
+                    { latlngs: [spots.hotel_sapporo.coords, spots.clock.coords, spots.cts.coords], color: '#64748b', dash: '' },
+                ]
+            },
         };
+
         const hints = {
-            all: '📍 전체: 신치토세 → 노보리베츠·도야 → 삿포로·오타루 → 귀국',
-            day1: '📍 1일차: 신치토세 → 노보리베츠 → 도야 온천',
-            day2: '📍 2일차: 도야 → 공식방문 → 오도리·스스키노',
+            all: '📍 전체: 신치토세 → 노보리베츠·도야 → 삿포로 공식방문 → 오타루 → 귀국',
+            day1: '📍 1일차: 신치토세 입국 → 지옥계곡 → 시대촌 → 도야 온천',
+            day2: '📍 2일차: 도야호수 → 공식방문(노인일자리·마을기업) → 오도리·스스키노',
             day3: '📍 3일차: 오타루 상권 → 공식방문 → 맥주박물관',
             day4: '📍 4일차: 시계탑 → 신치토세 공항 귀국',
         };
 
-        let map, markersLayer, lineLayer;
-        function makeIcon(color, label){
-            return L.divIcon({
-                className: 'custom-icon',
-                html: `<div style="background:${color};color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)">${label}</div>`,
-                iconSize: [28,28], iconAnchor: [14,14]
-            });
-        }
+        function drawMap(routeKey) {
+            if (!map) return;
+            mapLayers.forEach(layer => map.removeLayer(layer));
+            mapLayers = [];
 
-        function initMap(){
-            map = L.map('map', { scrollWheelZoom: false }).setView([42.9, 141.2], 8);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap', maxZoom: 18
-            }).addTo(map);
-            markersLayer = L.layerGroup().addTo(map);
-            lineLayer = L.layerGroup().addTo(map);
-            changeMapRoute('day1');
-            setTimeout(() => map.invalidateSize(), 200);
-        }
+            const routeData = routes[routeKey] || routes.all;
 
-        function changeMapRoute(key){
-            if(!map) return;
-            markersLayer.clearLayers();
-            lineLayer.clearLayers();
-            const keys = routes[key] || routes.all;
-            const latlngs = [];
-            keys.forEach((k, i) => {
-                const p = places[k];
-                if(!p) return;
-                latlngs.push(p.coords);
-                L.marker(p.coords, { icon: makeIcon(p.color, i + 1) })
-                    .bindPopup(`<strong>${p.name}</strong>`)
-                    .addTo(markersLayer);
+            routeData.lines.forEach((lineDef) => {
+                const polyline = L.polyline(lineDef.latlngs, {
+                    color: lineDef.color,
+                    weight: 4,
+                    opacity: 0.85,
+                    dashArray: lineDef.dash
+                }).addTo(map);
+
+                setTimeout(() => {
+                    const path = polyline.getElement();
+                    if (path && lineDef.dash === '') {
+                        const length = path.getTotalLength();
+                        path.style.transition = 'none';
+                        path.style.strokeDasharray = length + ' ' + length;
+                        path.style.strokeDashoffset = length;
+                        path.getBoundingClientRect();
+                        path.style.transition = 'stroke-dashoffset 2s ease-in-out';
+                        path.style.strokeDashoffset = '0';
+                    }
+                }, 50);
+
+                mapLayers.push(polyline);
             });
-            if(latlngs.length > 1){
-                L.polyline(latlngs, { color: '#004098', weight: 3, opacity: 0.75, dashArray: '6 8' }).addTo(lineLayer);
-                map.fitBounds(L.latLngBounds(latlngs).pad(0.25));
-            } else if(latlngs.length === 1){
-                map.setView(latlngs[0], 11);
+
+            let currentBounds = L.latLngBounds();
+            routeData.points.forEach(key => {
+                const spot = spots[key];
+                if (!spot) return;
+                const size = spot.isSub ? 28 : 36;
+                const fontSize = spot.isSub ? 13 : 16;
+                const icon = L.divIcon({
+                    className: 'custom-icon',
+                    html: `<div style="background-color:${spot.color};width:${size}px;height:${size}px;border-radius:50%;border:2px solid white;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:${fontSize}px;">${spot.icon}</div>`,
+                    iconSize: [size, size]
+                });
+                const marker = L.marker(spot.coords, { icon }).addTo(map).bindPopup(`<b>${spot.title}</b>`);
+                mapLayers.push(marker);
+                currentBounds.extend(spot.coords);
+            });
+
+            if (currentBounds.isValid()) {
+                map.fitBounds(currentBounds, { padding: [50, 50], maxZoom: routeKey === 'day4' ? 11 : 10 });
             }
+
             const hint = document.getElementById('map-hint');
-            if(hint) hint.textContent = hints[key] || hints.all;
+            if (hint) hint.textContent = hints[routeKey] || hints.all;
         }
 
-        function changeMapAndTab(day){
+        function changeMapRoute(dayKey) {
             document.querySelectorAll('.map-tab-btn').forEach(btn => {
-                btn.classList.remove('active','bg-blue-600','text-white','border-blue-600','shadow-sm');
-                btn.classList.add('bg-white','text-slate-600','border-slate-300');
+                btn.classList.remove('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
             });
-            const activeBtn = document.querySelector(`.map-tab-btn[onclick*="'${day}'"]`);
-            if(activeBtn){
-                activeBtn.classList.add('active','bg-blue-600','text-white','border-blue-600','shadow-sm');
-                activeBtn.classList.remove('bg-white','text-slate-600','border-slate-300');
+            const activeBtn = document.querySelector(`.map-tab-btn[onclick*="'${dayKey}'"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm');
+                activeBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
             }
+            drawMap(dayKey);
+        }
+
+        function changeMapAndTab(day) {
             document.querySelectorAll('.schedule-content').forEach(el => el.classList.add('hidden'));
-            if(day !== 'all'){
+            if (day !== 'all') {
                 document.getElementById(day)?.classList.remove('hidden');
             } else {
                 document.getElementById('day1')?.classList.remove('hidden');
@@ -852,7 +928,31 @@
             changeMapRoute(day);
         }
 
-        document.addEventListener('DOMContentLoaded', initMap);
+        let mapInited = false;
+        function initMap() {
+            if (mapInited || !window.L) return;
+            mapInited = true;
+
+            map = L.map('map', { scrollWheelZoom: false });
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                maxZoom: 19
+            }).addTo(map);
+
+            drawMap('day1');
+            setTimeout(() => map.invalidateSize(), 300);
+        }
+
+        const mapObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                initMap();
+                mapObserver.disconnect();
+            }
+        }, { threshold: 0.1 });
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapSection = document.getElementById('map-section');
+            if (mapSection) mapObserver.observe(mapSection);
+        });
     </script>
 </body>
 </html>
