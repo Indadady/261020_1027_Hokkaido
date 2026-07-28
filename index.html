@@ -113,14 +113,30 @@
                 font-weight: bold; text-align: center; padding: 7px 6px !important; font-size: 12px;
             }
             .tm-table td {
-                border: 1px solid #1e293b !important; padding: 8px 9px !important;
-                vertical-align: top; word-break: keep-all; line-height: 1.45;
+                border: 1px solid #1e293b !important; padding: 0 !important;
+                vertical-align: stretch; word-break: keep-all; line-height: 1.4;
             }
             .tm-table tbody tr { height: 25%; page-break-inside: avoid; }
-            .tm-col-date { width: 12%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle !important; font-size: 12px; }
-            .tm-col-route { width: 13%; text-align: center; vertical-align: middle !important; font-size: 11px; line-height: 1.35; }
-            .tm-col-desc { width: 59%; font-size: 11.5px; }
-            .tm-col-meal { width: 16%; text-align: center; vertical-align: middle !important; font-size: 11px; line-height: 1.4; }
+            .tm-col-date { width: 12%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle !important; font-size: 12px; padding: 8px 6px !important; }
+            .tm-col-route { width: 13%; text-align: center; vertical-align: middle !important; font-size: 11px; line-height: 1.45; padding: 8px 6px !important; }
+            .tm-col-desc { width: 59%; font-size: 12px; height: 100%; }
+            .tm-col-meal { width: 16%; text-align: center; vertical-align: middle !important; font-size: 11.5px; line-height: 1.5; padding: 8px 6px !important; }
+            /* 세부일정: 칸 높이 전체에 줄 간격을 균등 분배해 아래 공백 제거 */
+            .tm-desc-fill {
+                height: 100%;
+                min-height: 100%;
+                box-sizing: border-box;
+                padding: 10px 11px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 2px;
+            }
+            .tm-desc-fill > span {
+                flex: 1 1 auto;
+                display: flex;
+                align-items: center;
+            }
             .print-footer-area {
                 margin-top: 8px; display: flex; justify-content: space-between; align-items: flex-end;
                 font-size: 10.5px; border-top: 1px solid #94a3b8; padding-top: 6px; flex-shrink: 0;
@@ -902,11 +918,13 @@
                     <td class="tm-col-date">1일차<br><span style="font-weight:400;font-size:10px">1차 10.20(화)<br>2차 10.27(화)</span></td>
                     <td class="tm-col-route">청주<br>신치토세<br>노보리베츠<br>도야<br>RF352</td>
                     <td class="tm-col-desc">
-                        <strong>08:25 청주 출발 → 10:55 신치토세 도착</strong><br>
-                        ▶ 입국 수속 후 가이드·전용차량 미팅, 노보리베츠 이동(약 1시간 10분)<br>
-                        ▶ 노보리베츠 지옥계곡 시찰<br>
-                        ▶ 다테 시대촌 관광 후 도야 이동(약 1시간)<br>
-                        ▶ 호텔 체크인·석식·온천욕 (도야 썬팔레스 리조트&amp;스파 또는 동급)
+                        <div class="tm-desc-fill">
+                            <span><strong>08:25 청주 출발 → 10:55 신치토세 도착</strong></span>
+                            <span>▶ 입국 수속 후 가이드·전용차량 미팅, 노보리베츠 이동(약 1시간 10분)</span>
+                            <span>▶ 노보리베츠 지옥계곡 시찰</span>
+                            <span>▶ 다테 시대촌 관광 후 도야 이동(약 1시간)</span>
+                            <span>▶ 호텔 체크인·석식·온천욕 (도야 썬팔레스 리조트&amp;스파 또는 동급)</span>
+                        </div>
                     </td>
                     <td class="tm-col-meal">[조] -<br>[중] 시대촌<br>[석] 호텔 뷔페</td>
                 </tr>
@@ -914,11 +932,13 @@
                     <td class="tm-col-date">2일차<br><span style="font-weight:400;font-size:10px">1차 10.21(수)<br>2차 10.28(수)</span></td>
                     <td class="tm-col-route">도야<br>삿포로<br>전용차량</td>
                     <td class="tm-col-desc">
-                        ▶ 호텔 조식 후 도야 일대 시찰 — 도야호수(유람선), 쇼와신잔, 사이로 전망대<br>
-                        ▶ 삿포로 이동(약 1시간 15분)<br>
-                        ▶ <strong>&lt;공식방문&gt; 노인일자리(시니어클럽 등), 지역공동체운영기업</strong> ※확정 후 상세<br>
-                        ▶ 오도리 공원 · 스스키노 거리<br>
-                        ▶ 석식 후 호텔 투숙·온천욕 (APA 호텔 &amp; 리조트 삿포로 또는 동급)
+                        <div class="tm-desc-fill">
+                            <span>▶ 호텔 조식 후 도야 일대 시찰 — 도야호수(유람선), 쇼와신잔, 사이로 전망대</span>
+                            <span>▶ 삿포로 이동(약 1시간 15분)</span>
+                            <span>▶ <strong>&lt;공식방문&gt; 노인일자리(시니어클럽 등), 지역공동체운영기업</strong> ※확정 후 상세</span>
+                            <span>▶ 오도리 공원 · 스스키노 거리</span>
+                            <span>▶ 석식 후 호텔 투숙·온천욕 (APA 호텔 &amp; 리조트 삿포로 또는 동급)</span>
+                        </div>
                     </td>
                     <td class="tm-col-meal">[조] 호텔식<br>[중] 가리비정식<br>[석] 야기니쿠</td>
                 </tr>
@@ -926,11 +946,13 @@
                     <td class="tm-col-date">3일차<br><span style="font-weight:400;font-size:10px">1차 10.22(목)<br>2차 10.29(목)</span></td>
                     <td class="tm-col-route">삿포로<br>오타루<br>삿포로<br>전용차량</td>
                     <td class="tm-col-desc">
-                        ▶ 호텔 조식 후 오타루 이동(약 1시간)<br>
-                        ▶ 오타루 운하 · 오르골당 · 과자거리 · 기타이치 가라스 공방거리<br>
-                        ▶ 삿포로 귀환 후 <strong>&lt;공식방문&gt; 노인일자리·지역공동체운영기업</strong> ※확정 후 상세<br>
-                        ▶ 삿포로 맥주박물관(시음 포함)<br>
-                        ▶ 석식 후 호텔 연박·온천욕
+                        <div class="tm-desc-fill">
+                            <span>▶ 호텔 조식 후 오타루 이동(약 1시간)</span>
+                            <span>▶ 오타루 운하 · 오르골당 · 과자거리 · 기타이치 가라스 공방거리</span>
+                            <span>▶ 삿포로 귀환 후 <strong>&lt;공식방문&gt; 노인일자리·지역공동체운영기업</strong> ※확정 후 상세</span>
+                            <span>▶ 삿포로 맥주박물관(시음 포함)</span>
+                            <span>▶ 석식 후 호텔 연박·온천욕</span>
+                        </div>
                     </td>
                     <td class="tm-col-meal">[조] 호텔식<br>[중] 스시세트<br>[석] 3대게뷔페<br>+샤브</td>
                 </tr>
@@ -938,9 +960,11 @@
                     <td class="tm-col-date">4일차<br><span style="font-weight:400;font-size:10px">1차 10.23(금)<br>2차 10.30(금)</span></td>
                     <td class="tm-col-route">삿포로<br>신치토세<br>청주<br>RF351</td>
                     <td class="tm-col-desc">
-                        ▶ 호텔 조식 후 체크아웃<br>
-                        ▶ 홋카이도 시계탑(차창) · 면세점 1회 · 공항 이동<br>
-                        ▶ <strong>11:55 신치토세 출발 → 14:45 청주 도착</strong>
+                        <div class="tm-desc-fill">
+                            <span>▶ 호텔 조식 후 체크아웃</span>
+                            <span>▶ 홋카이도 시계탑(차창) · 면세점 1회 · 공항 이동</span>
+                            <span>▶ <strong>11:55 신치토세 출발 → 14:45 청주 도착</strong></span>
+                        </div>
                     </td>
                     <td class="tm-col-meal">[조] 호텔식<br>[중] -<br>[석] -</td>
                 </tr>
