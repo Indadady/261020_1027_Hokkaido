@@ -62,18 +62,17 @@
         }
         @media screen { #print-area { display: none !important; } }
         @media print {
-            @page { size: A4 portrait; margin: 8mm 7mm; }
+            @page { size: A4 portrait; margin: 10mm 9mm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            html, body { background: white !important; color: black !important; height: 100%; }
+            html, body { background: white !important; color: black !important; }
             header, footer, section:not(#print-area), .no-print, #toast, #phrase-modal { display: none !important; }
             main, body { padding: 0 !important; margin: 0 !important; width: 100% !important; background: white !important; }
-            /* A4 인쇄 가능 높이(약 281mm)에 맞춰 한 장 가득 채움 */
             #print-area {
                 display: flex !important;
                 flex-direction: column;
                 width: 100%;
-                height: 281mm;
-                max-height: 281mm;
+                height: 277mm;
+                max-height: 277mm;
                 overflow: hidden;
                 box-sizing: border-box;
             }
@@ -82,61 +81,50 @@
                 border-bottom: 2.5px solid #004098; padding-bottom: 6px; margin-bottom: 8px;
                 flex-shrink: 0;
             }
-            .print-header-top img { height: 32px; }
+            .print-header-top img { height: 30px; }
             .print-title {
-                text-align: center; font-size: 16px; font-weight: bold; margin: 0 0 8px;
-                font-family: 'Nanum Myeongjo', serif; line-height: 1.4; flex-shrink: 0;
+                text-align: center; font-weight: 900; margin: 0 0 8px;
+                font-family: 'Nanum Myeongjo', serif; line-height: 1.35; flex-shrink: 0;
+                border-bottom: 2px solid #1e293b; padding-bottom: 8px;
             }
-            .print-title .print-title-main { display: block; font-size: 16.5px; letter-spacing: -0.02em; }
-            .print-title .print-title-sub { display: block; margin-top: 3px; font-size: 15px; color: #0f172a; }
+            .print-title .print-title-main { display: block; font-size: 16px; letter-spacing: -0.02em; }
+            .print-title .print-title-sub { display: block; margin-top: 3px; font-size: 15px; }
             .print-overview {
-                display: flex; justify-content: space-between; align-items: stretch;
-                background: #f1f5f9 !important; border: 1px solid #64748b !important;
-                border-radius: 4px; padding: 8px 12px; margin-bottom: 8px;
-                font-size: 11.5px; gap: 10px; line-height: 1.45; flex-shrink: 0;
+                display: flex; justify-content: space-between; align-items: flex-end;
+                margin-bottom: 8px; font-size: 12px; font-weight: 700; line-height: 1.45; flex-shrink: 0;
             }
-            .tm-table-wrap {
-                flex: 1 1 auto;
-                min-height: 0;
-                display: flex;
-                flex-direction: column;
+            .print-overview .label { color: #004098; margin-right: 4px; }
+            .tm-table-wrap { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+            #print-table {
+                width: 100% !important; height: 100%;
+                table-layout: fixed !important; border-collapse: collapse !important;
+                word-break: keep-all !important; font-size: 12px;
             }
-            .tm-table {
-                width: 100%; height: 100%;
-                border-collapse: collapse; font-size: 12px; table-layout: fixed;
+            #print-table colgroup col:nth-child(1) { width: 11% !important; }
+            #print-table colgroup col:nth-child(2) { width: 74% !important; }
+            #print-table colgroup col:nth-child(3) { width: 15% !important; }
+            #print-table th, #print-table td {
                 border: 2px solid #1e293b !important;
+                padding: 10px 8px !important;
             }
-            .tm-table thead { display: table-header-group; }
-            .tm-table tbody { height: 100%; }
-            .tm-table th {
-                border: 1px solid #1e293b !important; background: #e2e8f0 !important;
-                font-weight: bold; text-align: center; padding: 7px 6px !important; font-size: 12px;
+            #print-table th {
+                background-color: #004098 !important; color: white !important;
+                font-weight: bold; text-align: center; font-size: 13px;
             }
-            .tm-table td {
-                border: 1px solid #1e293b !important; padding: 0 !important;
-                vertical-align: stretch; word-break: keep-all; line-height: 1.4;
+            #print-table tbody tr { height: 25%; page-break-inside: avoid; }
+            #print-table td:nth-child(1) {
+                text-align: center; vertical-align: top;
+                background-color: #f8fafc !important; font-weight: bold; font-size: 12px;
             }
-            .tm-table tbody tr { height: 25%; page-break-inside: avoid; }
-            .tm-col-date { width: 12%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle !important; font-size: 12px; padding: 8px 6px !important; }
-            .tm-col-route { width: 13%; text-align: center; vertical-align: middle !important; font-size: 11px; line-height: 1.45; padding: 8px 6px !important; }
-            .tm-col-desc { width: 59%; font-size: 12px; height: 100%; }
-            .tm-col-meal { width: 16%; text-align: center; vertical-align: middle !important; font-size: 11.5px; line-height: 1.5; padding: 8px 6px !important; }
-            /* 세부일정: 칸 높이 전체에 줄 간격을 균등 분배해 아래 공백 제거 */
-            .tm-desc-fill {
-                height: 100%;
-                min-height: 100%;
-                box-sizing: border-box;
-                padding: 10px 11px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                gap: 2px;
+            #print-table td:nth-child(2) {
+                vertical-align: top; line-height: 1.65; font-size: 12px;
             }
-            .tm-desc-fill > span {
-                flex: 1 1 auto;
-                display: flex;
-                align-items: center;
+            #print-table td:nth-child(3) {
+                text-align: center; vertical-align: middle; font-size: 11.5px; line-height: 1.35;
             }
+            #print-table .spot { color: #004098 !important; font-weight: 700; }
+            #print-table .flight { color: #c23b3b !important; font-weight: 700; }
+            #print-table .hotel-line { margin-top: 4px; font-weight: 700; }
             .print-footer-area {
                 margin-top: 8px; display: flex; justify-content: space-between; align-items: flex-end;
                 font-size: 10.5px; border-top: 1px solid #94a3b8; padding-top: 6px; flex-shrink: 0;
@@ -882,11 +870,11 @@
         </div>
     </div>
 
-    <!-- Print Area -->
+    <!-- Print Area (Okdong Osaka quality) -->
     <div id="print-area">
         <div class="print-header-top">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker">
-            <div class="text-right text-xs text-slate-600">제안·진행: 투어메이커<br>담당: 이재명 대표 010-9443-7881</div>
+            <div class="text-right text-xs text-slate-600">진행 및 수배: 투어메이커<br>비상연락: 이재명 대표 (010-9443-7881)</div>
         </div>
         <h1 class="print-title">
             <span class="print-title-main">[정선군청 경제과] 북해도 일자리창출 · 노인일자리 · 마을기업</span>
@@ -894,82 +882,94 @@
         </h1>
         <div class="print-overview">
             <div>
-                <p><strong>일정:</strong> [1차] 2026.10.20(화)~10.23(금) / [2차] 10.27(화)~10.30(금)</p>
-                <p class="mt-1"><strong>인원:</strong> 기수당 14명(+1TG) · 2인1실</p>
-                <p class="mt-1"><strong>목적:</strong> 노인일자리(시니어클럽)·마을기업·일자리창출 벤치마킹</p>
+                <p><span class="label">일 정</span> [1차] 2026.10.20(화)~10.23(금) / [2차] 10.27(화)~10.30(금) [3박4일]</p>
+                <p class="mt-1"><span class="label">인 원</span> 기수당 14명(+1TG) · 2인1실</p>
+                <p class="mt-1"><span class="label">출발지</span> 청주국제공항 (에어로케이 직항)</p>
             </div>
             <div class="text-right">
-                <p><strong>항공:</strong> 에어로케이 RF352 / RF351</p>
-                <p class="mt-1"><strong>구간:</strong> 청주 ↔ 신치토세</p>
+                <p><span class="label">항공</span> RF352 / RF351</p>
+                <p class="mt-1"><span class="label">목적</span> 노인일자리·마을기업 벤치마킹</p>
             </div>
         </div>
         <div class="tm-table-wrap">
-        <table class="tm-table">
-            <thead>
-                <tr>
-                    <th class="tm-col-date">일자</th>
-                    <th class="tm-col-route">지역/교통</th>
-                    <th class="tm-col-desc">세부 일정 내역</th>
-                    <th class="tm-col-meal">식사</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="tm-col-date">1일차<br><span style="font-weight:400;font-size:10px">1차 10.20(화)<br>2차 10.27(화)</span></td>
-                    <td class="tm-col-route">청주<br>신치토세<br>노보리베츠<br>도야<br>RF352</td>
-                    <td class="tm-col-desc">
-                        <div class="tm-desc-fill">
-                            <span><strong>08:25 청주 출발 → 10:55 신치토세 도착</strong></span>
-                            <span>▶ 입국 수속 후 가이드·전용차량 미팅, 노보리베츠 이동(약 1시간 10분)</span>
-                            <span>▶ 노보리베츠 지옥계곡 시찰</span>
-                            <span>▶ 다테 시대촌 관광 후 도야 이동(약 1시간)</span>
-                            <span>▶ 호텔 체크인·석식·온천욕 (도야 썬팔레스 리조트&amp;스파 또는 동급)</span>
-                        </div>
-                    </td>
-                    <td class="tm-col-meal">[조] -<br>[중] 시대촌<br>[석] 호텔 뷔페</td>
-                </tr>
-                <tr>
-                    <td class="tm-col-date">2일차<br><span style="font-weight:400;font-size:10px">1차 10.21(수)<br>2차 10.28(수)</span></td>
-                    <td class="tm-col-route">도야<br>삿포로<br>전용차량</td>
-                    <td class="tm-col-desc">
-                        <div class="tm-desc-fill">
-                            <span>▶ 호텔 조식 후 도야 일대 시찰 — 도야호수(유람선), 쇼와신잔, 사이로 전망대</span>
-                            <span>▶ 삿포로 이동(약 1시간 15분)</span>
-                            <span>▶ <strong>&lt;공식방문&gt; 노인일자리(시니어클럽 등), 지역공동체운영기업</strong> ※확정 후 상세</span>
-                            <span>▶ 오도리 공원 · 스스키노 거리</span>
-                            <span>▶ 석식 후 호텔 투숙·온천욕 (APA 호텔 &amp; 리조트 삿포로 또는 동급)</span>
-                        </div>
-                    </td>
-                    <td class="tm-col-meal">[조] 호텔식<br>[중] 가리비정식<br>[석] 야기니쿠</td>
-                </tr>
-                <tr>
-                    <td class="tm-col-date">3일차<br><span style="font-weight:400;font-size:10px">1차 10.22(목)<br>2차 10.29(목)</span></td>
-                    <td class="tm-col-route">삿포로<br>오타루<br>삿포로<br>전용차량</td>
-                    <td class="tm-col-desc">
-                        <div class="tm-desc-fill">
-                            <span>▶ 호텔 조식 후 오타루 이동(약 1시간)</span>
-                            <span>▶ 오타루 운하 · 오르골당 · 과자거리 · 기타이치 가라스 공방거리</span>
-                            <span>▶ 삿포로 귀환 후 <strong>&lt;공식방문&gt; 노인일자리·지역공동체운영기업</strong> ※확정 후 상세</span>
-                            <span>▶ 삿포로 맥주박물관(시음 포함)</span>
-                            <span>▶ 석식 후 호텔 연박·온천욕</span>
-                        </div>
-                    </td>
-                    <td class="tm-col-meal">[조] 호텔식<br>[중] 스시세트<br>[석] 3대게뷔페<br>+샤브</td>
-                </tr>
-                <tr>
-                    <td class="tm-col-date">4일차<br><span style="font-weight:400;font-size:10px">1차 10.23(금)<br>2차 10.30(금)</span></td>
-                    <td class="tm-col-route">삿포로<br>신치토세<br>청주<br>RF351</td>
-                    <td class="tm-col-desc">
-                        <div class="tm-desc-fill">
-                            <span>▶ 호텔 조식 후 체크아웃</span>
-                            <span>▶ 홋카이도 시계탑(차창) · 면세점 1회 · 공항 이동</span>
-                            <span>▶ <strong>11:55 신치토세 출발 → 14:45 청주 도착</strong></span>
-                        </div>
-                    </td>
-                    <td class="tm-col-meal">[조] 호텔식<br>[중] -<br>[석] -</td>
-                </tr>
-            </tbody>
-        </table>
+            <table id="print-table">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>일차</th>
+                        <th>상세 일정</th>
+                        <th>비고/식사</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1일차<br><span style="font-weight:400;font-size:10px">1차 10.20(화)<br>2차 10.27(화)</span></td>
+                        <td>
+                            ■ 청주국제공항 출발 (에어로케이 RF352 08:25) ✈ 신치토세 도착 (10:55)<br>
+                            ■ 입국 수속 및 가이드 미팅 후 노보리베츠로 이동 (약 1시간 10분)<br>
+                            ■ <span class="spot">노보리베츠 지옥계곡</span> 시찰<br>
+                            ■ <span class="spot">다테 시대촌</span> 관광 후 도야로 이동 (약 1시간)<br>
+                            ■ 석식 진행 및 호텔 투숙 · 온천욕<br>
+                            <div class="hotel-line">*HOTEL: 도야 썬팔레스 리조트&amp;스파 (또는 동급)</div>
+                        </td>
+                        <td>
+                            [조] -<br><br>
+                            [중] 시대촌<br><br>
+                            [석] 호텔 뷔페
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2일차<br><span style="font-weight:400;font-size:10px">1차 10.21(수)<br>2차 10.28(수)</span></td>
+                        <td>
+                            ■ 호텔 조식 후 도야 일대 시찰 — <span class="spot">도야호수(유람선)</span>, <span class="spot">쇼와신잔</span>, <span class="spot">사이로 전망대</span><br>
+                            ■ 삿포로 이동 (약 1시간 15분)<br>
+                            ■ <span class="spot">&lt;공식방문&gt; 노인일자리(시니어클럽 등) · 지역공동체운영기업</span> ※확정 후 상세<br>
+                            ■ <span class="spot">오도리 공원</span> · <span class="spot">스스키노</span> 거리 시찰<br>
+                            ■ 석식 후 호텔 투숙 · 온천욕<br>
+                            <div class="hotel-line">*HOTEL: APA 호텔 &amp; 리조트 삿포로 (또는 동급)</div>
+                        </td>
+                        <td>
+                            [조] 호텔식<br><br>
+                            [중] 가리비정식<br><br>
+                            [석] 야기니쿠
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3일차<br><span style="font-weight:400;font-size:10px">1차 10.22(목)<br>2차 10.29(목)</span></td>
+                        <td>
+                            ■ 호텔 조식 후 오타루 이동 (약 1시간)<br>
+                            ■ <span class="spot">오타루 운하</span> · <span class="spot">오르골당</span> · 과자거리 · <span class="spot">기타이치 가라스</span> 공방거리<br>
+                            ■ 삿포로 귀환 후 <span class="spot">&lt;공식방문&gt; 노인일자리 · 지역공동체운영기업</span> ※확정 후 상세<br>
+                            ■ <span class="spot">삿포로 맥주박물관</span> (시음 포함)<br>
+                            ■ 석식 후 호텔 연박 · 온천욕<br>
+                            <div class="hotel-line">*HOTEL: APA 호텔 &amp; 리조트 삿포로 (또는 동급)</div>
+                        </td>
+                        <td>
+                            [조] 호텔식<br><br>
+                            [중] 스시세트<br><br>
+                            [석] 3대게뷔페+샤브
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4일차<br><span style="font-weight:400;font-size:10px">1차 10.23(금)<br>2차 10.30(금)</span></td>
+                        <td>
+                            ■ 호텔 조식 후 체크아웃<br>
+                            ■ <span class="spot">홋카이도 시계탑</span> (차창 관람) · 면세점 1회 · 공항 이동<br>
+                            ■ <span class="flight">신치토세 출발 (에어로케이 RF351 11:55) ✈ 청주국제공항 도착 (14:45)</span><br>
+                            ■ 청주공항 도착 후 안전하게 전원 해산
+                        </td>
+                        <td>
+                            [조] 호텔식<br><br>
+                            [중] -<br><br>
+                            [석] -
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="print-footer-area">
             <div>※ 일정·공식방문지는 항공·현지 사정 및 기관 컨펌에 따라 변경될 수 있습니다.</div>
