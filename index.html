@@ -62,25 +62,68 @@
         }
         @media screen { #print-area { display: none !important; } }
         @media print {
-            @page { size: A4 portrait; margin: 12mm 10mm; }
+            @page { size: A4 portrait; margin: 8mm 7mm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            body { background: white !important; color: black !important; }
+            html, body { background: white !important; color: black !important; height: 100%; }
             header, footer, section:not(#print-area), .no-print, #toast, #phrase-modal { display: none !important; }
             main, body { padding: 0 !important; margin: 0 !important; width: 100% !important; background: white !important; }
-            #print-area { display: block !important; width: 100%; }
-            .print-header-top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #004098; padding-bottom: 10px; margin-bottom: 15px; }
-            .print-header-top img { height: 35px; }
-            .print-title { text-align: center; font-size: 20px; font-weight: bold; margin-bottom: 12px; font-family: 'Nanum Myeongjo', serif; }
-            .print-overview { display: flex; justify-content: space-between; background: #f8fafc !important; border: 1px solid #94a3b8 !important; border-radius: 6px; padding: 10px 15px; margin-bottom: 12px; font-size: 12px; gap: 12px; }
-            .tm-table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; border: 2px solid #1e293b !important; }
-            .tm-table th { border: 1px solid #1e293b !important; background: #f8fafc !important; font-weight: bold; text-align: center; padding: 6px !important; }
-            .tm-table td { border: 1px solid #1e293b !important; padding: 6px 8px !important; vertical-align: top; word-break: keep-all; }
-            .tm-col-date { width: 12%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle; }
-            .tm-col-route { width: 14%; text-align: center; vertical-align: middle; font-size: 10px; }
-            .tm-col-desc { width: 58%; }
-            .tm-col-meal { width: 16%; text-align: center; vertical-align: middle; font-size: 10px; }
-            tr { page-break-inside: avoid; }
-            .print-footer-area { margin-top: 12px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 11px; border-top: 1px solid #ccc; padding-top: 10px; }
+            /* A4 인쇄 가능 높이(약 281mm)에 맞춰 한 장 가득 채움 */
+            #print-area {
+                display: flex !important;
+                flex-direction: column;
+                width: 100%;
+                height: 281mm;
+                max-height: 281mm;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+            .print-header-top {
+                display: flex; justify-content: space-between; align-items: flex-end;
+                border-bottom: 2.5px solid #004098; padding-bottom: 6px; margin-bottom: 8px;
+                flex-shrink: 0;
+            }
+            .print-header-top img { height: 32px; }
+            .print-title {
+                text-align: center; font-size: 17px; font-weight: bold; margin: 0 0 8px;
+                font-family: 'Nanum Myeongjo', serif; line-height: 1.35; flex-shrink: 0;
+            }
+            .print-overview {
+                display: flex; justify-content: space-between; align-items: stretch;
+                background: #f1f5f9 !important; border: 1px solid #64748b !important;
+                border-radius: 4px; padding: 8px 12px; margin-bottom: 8px;
+                font-size: 11.5px; gap: 10px; line-height: 1.45; flex-shrink: 0;
+            }
+            .tm-table-wrap {
+                flex: 1 1 auto;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .tm-table {
+                width: 100%; height: 100%;
+                border-collapse: collapse; font-size: 12px; table-layout: fixed;
+                border: 2px solid #1e293b !important;
+            }
+            .tm-table thead { display: table-header-group; }
+            .tm-table tbody { height: 100%; }
+            .tm-table th {
+                border: 1px solid #1e293b !important; background: #e2e8f0 !important;
+                font-weight: bold; text-align: center; padding: 7px 6px !important; font-size: 12px;
+            }
+            .tm-table td {
+                border: 1px solid #1e293b !important; padding: 8px 9px !important;
+                vertical-align: top; word-break: keep-all; line-height: 1.45;
+            }
+            .tm-table tbody tr { height: 25%; page-break-inside: avoid; }
+            .tm-col-date { width: 12%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle !important; font-size: 12px; }
+            .tm-col-route { width: 13%; text-align: center; vertical-align: middle !important; font-size: 11px; line-height: 1.35; }
+            .tm-col-desc { width: 59%; font-size: 11.5px; }
+            .tm-col-meal { width: 16%; text-align: center; vertical-align: middle !important; font-size: 11px; line-height: 1.4; }
+            .print-footer-area {
+                margin-top: 8px; display: flex; justify-content: space-between; align-items: flex-end;
+                font-size: 10.5px; border-top: 1px solid #94a3b8; padding-top: 6px; flex-shrink: 0;
+            }
+            .print-footer-area .manager { font-weight: bold; border-left: 3px solid #004098; padding-left: 8px; }
         }
     </style>
 </head>
@@ -831,7 +874,7 @@
         <div class="print-overview">
             <div>
                 <p><strong>일정:</strong> [1차] 2026.10.20(화)~10.23(금) / [2차] 10.27(화)~10.30(금)</p>
-                <p class="mt-1"><strong>인원:</strong> 기수당 14명(+1TG) · 2인1실 · 중형버스</p>
+                <p class="mt-1"><strong>인원:</strong> 기수당 14명(+1TG) · 2인1실</p>
                 <p class="mt-1"><strong>목적:</strong> 노인일자리(시니어클럽)·마을기업·일자리창출 벤치마킹</p>
             </div>
             <div class="text-right">
@@ -839,6 +882,7 @@
                 <p class="mt-1"><strong>구간:</strong> 청주 ↔ 신치토세</p>
             </div>
         </div>
+        <div class="tm-table-wrap">
         <table class="tm-table">
             <thead>
                 <tr>
@@ -854,10 +898,10 @@
                     <td class="tm-col-route">청주<br>신치토세<br>노보리베츠<br>도야<br>RF352</td>
                     <td class="tm-col-desc">
                         <strong>08:25 청주 출발 → 10:55 신치토세 도착</strong><br>
-                        ▶ 입국 수속 후 스루가이드·전용차량 미팅, 노보리베츠 이동(약 1시간 10분)<br>
+                        ▶ 입국 수속 후 가이드·전용차량 미팅, 노보리베츠 이동(약 1시간 10분)<br>
                         ▶ 노보리베츠 지옥계곡 시찰<br>
                         ▶ 다테 시대촌 관광 후 도야 이동(약 1시간)<br>
-                        ▶ 호텔 체크인·석식·온천욕 (도야 썬팔레스호텔 또는 동급)
+                        ▶ 호텔 체크인·석식·온천욕 (도야 썬팔레스 리조트&amp;스파 또는 동급)
                     </td>
                     <td class="tm-col-meal">[조] -<br>[중] 시대촌<br>[석] 호텔 뷔페</td>
                 </tr>
@@ -897,6 +941,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
         <div class="print-footer-area">
             <div>※ 일정·공식방문지는 항공·현지 사정 및 기관 컨펌에 따라 변경될 수 있습니다.</div>
             <div class="manager">투어메이커 · 조혁 이사 010-4249-4026</div>
