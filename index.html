@@ -190,7 +190,7 @@
                     <a href="#flight" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">항공/수속</a>
                     <a href="#visitjapan" class="px-3 py-2 text-sm font-bold text-amber-700 hover:bg-amber-50 rounded-lg">비짓재팬</a>
                     <a href="#map-section" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">여행동선</a>
-                    <a href="#living" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">물가/회화</a>
+                    <a href="#living" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">날씨/환율</a>
                     <a href="#schedule" class="px-3 py-2 text-sm font-bold text-blue-600 hover:bg-slate-50 rounded-lg">상세일정</a>
                     <a href="#hotel" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">숙소정보</a>
                     <a href="#video" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg">홍보영상</a>
@@ -255,7 +255,7 @@
                 <div class="text-center mb-12">
                     <span class="text-blue-600 font-black tracking-widest text-xs uppercase">BENCHMARKING INSIGHT</span>
                     <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2">정선군 일자리·마을기업을 위한<br class="md:hidden"> 3가지 연수 핵심 포인트</h2>
-                    <p class="text-slate-500 mt-3 text-sm md:text-base">오사카 지역화폐 연수에서 이어진 경제과 맞춤형 기획 — 테마를 북해도 일자리·공동체 모델로 전환했습니다.</p>
+                    <p class="text-slate-500 mt-3 text-sm md:text-base">노인일자리·마을기업 벤치마킹을 중심으로 한 경제과 맞춤형 북해도 선진지견학입니다.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -689,18 +689,38 @@
             </div>
         </section>
 
-        <!-- Living: FX / Prices / Phrases -->
+        <!-- Living: Weather / FX / Prices / Phrases -->
         <section id="living" class="py-16 bg-slate-50 border-t border-slate-200">
             <div class="container mx-auto px-4 max-w-6xl">
                 <div class="text-center mb-10">
                     <span class="text-pink-600 font-black tracking-widest text-xs uppercase">LOCAL LIFE GUIDE</span>
-                    <h2 class="text-3xl font-bold text-slate-800 mt-2">현지 물가 비교 · 환율 · 생활 일본어</h2>
-                    <p class="text-slate-500 mt-2 text-sm">북해도 연수 중 체감할 물가와 바로 쓸 수 있는 회화 표현입니다.</p>
+                    <h2 class="text-3xl font-bold text-slate-800 mt-2">현지 날씨 · 환율 · 물가 · 생활 일본어</h2>
+                    <p class="text-slate-500 mt-2 text-sm">삿포로·도야 연수 일정에 맞춘 실시간 정보와 바로 쓸 수 있는 회화입니다.</p>
+                </div>
+
+                <!-- Real-time weather (Sapporo) -->
+                <div class="bg-gradient-to-br from-sky-600 to-blue-800 rounded-3xl p-6 md:p-8 text-white shadow-lg mb-8">
+                    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+                        <div>
+                            <p class="text-sky-200 text-xs font-bold tracking-widest uppercase mb-1">Open-Meteo · Asia/Tokyo</p>
+                            <h3 class="font-bold text-xl md:text-2xl"><i class="fa-solid fa-cloud-sun-rain mr-2 text-sky-200"></i>삿포로 주간 날씨</h3>
+                            <p class="text-sky-100 text-xs mt-1">숙박·시찰 거점(삿포로) 기준 · 도야·오타루도 비슷한 기온대</p>
+                        </div>
+                        <span id="weather-updated" class="text-[11px] text-sky-200/90 font-medium">실시간 연동 중…</span>
+                    </div>
+                    <div id="weather-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-5">
+                        <div class="col-span-full text-center text-sky-100 text-sm py-6"><i class="fa-solid fa-spinner fa-spin mr-2"></i>기상 정보를 불러오는 중입니다…</div>
+                    </div>
+                    <div id="clothing-recommendation" class="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/15">
+                        <p class="text-sm text-sky-50 leading-relaxed"><i class="fa-solid fa-shirt mr-2 text-sky-200"></i><span>옷차림 추천을 준비하는 중입니다…</span></p>
+                    </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                     <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-                        <h3 class="font-bold text-slate-800 mb-4"><i class="fa-solid fa-won-sign text-pink-500 mr-1"></i> 체감 환율기 (JPY)</h3>
+                        <h3 class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-won-sign text-pink-500 mr-1"></i> 실시간 체감 환율 (JPY)</h3>
+                        <p id="exchange-rate-display" class="text-sm font-bold text-pink-600 mb-1">¥100 = 불러오는 중…</p>
+                        <p class="text-[10px] text-slate-400 mb-3">※ 기준환율 + 수수료(1.5%) 가산 · 환전·카드사에 따라 다를 수 있음</p>
                         <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-4">
                             <div class="relative flex-1 min-w-0">
                                 <input type="number" id="fx-input" placeholder="엔화 입력" oninput="calcKRW()" class="w-full bg-slate-50 border border-slate-200 text-sm font-bold rounded-lg px-2 py-2.5 text-right focus:ring-1 focus:ring-pink-500 outline-none" value="1000">
@@ -711,7 +731,6 @@
                                 <span id="krw-output">0</span> 원
                             </div>
                         </div>
-                        <p class="text-[10px] text-slate-400 text-right mb-3">※ 참고 환율 약 9.5원/엔 · 환전·카드 수수료에 따라 변동</p>
                         <div class="flex flex-wrap gap-2">
                             <button type="button" onclick="setFx(100)" class="text-xs bg-slate-100 hover:bg-pink-50 text-slate-600 px-2.5 py-1 rounded-lg font-bold">¥100</button>
                             <button type="button" onclick="setFx(500)" class="text-xs bg-slate-100 hover:bg-pink-50 text-slate-600 px-2.5 py-1 rounded-lg font-bold">¥500</button>
@@ -746,7 +765,7 @@
                 <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
                     <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <h3 class="font-bold text-slate-800 text-lg"><i class="fa-solid fa-scale-balanced text-blue-600 mr-2"></i>한국 ↔ 일본(홋카이도) 체감 물가 비교</h3>
-                        <span class="text-[11px] text-slate-400 font-medium">참고용 평균가 · 체감 가이드</span>
+                        <span class="text-[11px] text-slate-400 font-medium">실시간 환율 반영 · 참고용</span>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
@@ -1124,8 +1143,9 @@
             else badge.textContent = '연수 완료';
         })();
 
-        // FX / Price / Phrases
-        const JPY_TO_KRW = 9.5;
+        // FX / Weather / Price / Phrases — live APIs
+        let JPY_TO_KRW = 9.5 * 1.015; // fallback until API loads (base × 1.5% fee)
+
         function calcKRW(){
             const yen = parseFloat(document.getElementById('fx-input')?.value || '0') || 0;
             const el = document.getElementById('krw-output');
@@ -1134,6 +1154,105 @@
         function setFx(n){
             const input = document.getElementById('fx-input');
             if(input){ input.value = n; calcKRW(); }
+        }
+
+        async function fetchExchangeRate(){
+            const display = document.getElementById('exchange-rate-display');
+            try {
+                let baseRate = null;
+                try {
+                    const res = await fetch('https://open.er-api.com/v6/latest/JPY');
+                    const data = await res.json();
+                    if (data?.rates?.KRW) baseRate = data.rates.KRW;
+                } catch (_) { /* fallback below */ }
+                if (!baseRate) {
+                    const res = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json');
+                    const data = await res.json();
+                    baseRate = data?.jpy?.krw;
+                }
+                if (!baseRate || !(baseRate > 0)) throw new Error('no rate');
+                JPY_TO_KRW = baseRate * 1.015;
+                const per100 = Math.round(100 * JPY_TO_KRW).toLocaleString('ko-KR');
+                if (display) display.innerHTML = `¥100 = 약 <span class="text-pink-700">${per100}원</span> <span class="text-[11px] font-medium text-slate-400">(수수료 포함)</span>`;
+                calcKRW();
+                renderPrices();
+            } catch (err) {
+                console.error('환율 정보를 불러올 수 없습니다:', err);
+                if (display) display.textContent = '¥100 = 약 965원 (예상 · 오프라인)';
+                calcKRW();
+                renderPrices();
+            }
+        }
+
+        async function fetchWeather(){
+            const container = document.getElementById('weather-container');
+            const clothEl = document.querySelector('#clothing-recommendation p');
+            const updated = document.getElementById('weather-updated');
+            try {
+                // Sapporo (tour hub) — Open-Meteo
+                const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=43.0618&longitude=141.3545&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=7');
+                const data = await response.json();
+                const weatherCodes = {
+                    0: { icon: 'fa-sun', color: 'text-amber-300', desc: '맑음' },
+                    1: { icon: 'fa-cloud-sun', color: 'text-amber-200', desc: '대체로 맑음' },
+                    2: { icon: 'fa-cloud-sun', color: 'text-sky-100', desc: '가끔 구름' },
+                    3: { icon: 'fa-cloud', color: 'text-slate-200', desc: '흐림' },
+                    45: { icon: 'fa-smog', color: 'text-slate-300', desc: '안개' },
+                    48: { icon: 'fa-smog', color: 'text-slate-300', desc: '안개' },
+                    51: { icon: 'fa-cloud-rain', color: 'text-blue-200', desc: '이슬비' },
+                    61: { icon: 'fa-cloud-showers-heavy', color: 'text-blue-200', desc: '비' },
+                    71: { icon: 'fa-snowflake', color: 'text-sky-100', desc: '눈' },
+                    73: { icon: 'fa-snowflake', color: 'text-sky-100', desc: '눈' },
+                    75: { icon: 'fa-snowflake', color: 'text-white', desc: '폭설' },
+                    95: { icon: 'fa-bolt', color: 'text-purple-200', desc: '뇌우' }
+                };
+                let html = '';
+                let totalMax = 0, totalMin = 0;
+                for (let i = 0; i < 7; i++) {
+                    const dateObj = new Date(data.daily.time[i] + 'T12:00:00');
+                    const dayName = ['일','월','화','수','목','금','토'][dateObj.getDay()];
+                    const monthDay = `${dateObj.getMonth()+1}/${dateObj.getDate()}`;
+                    let code = data.daily.weathercode[i];
+                    let wInfo = weatherCodes[code] || { icon: 'fa-cloud', color: 'text-slate-200', desc: '구름많음' };
+                    if (code >= 51 && code <= 67) wInfo = weatherCodes[61];
+                    if (code >= 71 && code <= 77) wInfo = weatherCodes[71];
+                    if (code >= 80 && code <= 82) wInfo = weatherCodes[61];
+                    if (code >= 85 && code <= 86) wInfo = weatherCodes[71];
+                    if (code >= 95) wInfo = weatherCodes[95];
+                    const maxT = Math.round(data.daily.temperature_2m_max[i]);
+                    const minT = Math.round(data.daily.temperature_2m_min[i]);
+                    totalMax += maxT; totalMin += minT;
+                    html += `<div class="bg-white/10 rounded-2xl px-2 py-3 text-center border border-white/10">
+                        <p class="text-[11px] text-sky-100 font-bold mb-1">${monthDay}(${dayName})</p>
+                        <i class="fa-solid ${wInfo.icon} ${wInfo.color} text-xl mb-1"></i>
+                        <p class="text-[10px] text-sky-50 mb-1">${wInfo.desc}</p>
+                        <p class="text-xs font-bold">${minT}° <span class="text-sky-200/70">/</span> ${maxT}°</p>
+                    </div>`;
+                }
+                if (container) container.innerHTML = html;
+                if (updated) {
+                    const now = new Date();
+                    updated.textContent = `업데이트 ${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+                }
+                const avgMax = Math.round(totalMax / 7);
+                const avgMin = Math.round(totalMin / 7);
+                let cloth = `이번 주 삿포로는 평균 최저 ${avgMin}°C ~ 최고 ${avgMax}°C로 예측됩니다. `;
+                if (avgMax <= 8 || avgMin <= 2) {
+                    cloth += `초겨울에 가까운 쌀쌀한 기온입니다. <strong>패딩·니트·목도리</strong>를 챙기고, 도야 온천·야외 시찰용으로 방풍 겉옷을 준비하세요.`;
+                } else if (avgMax <= 15) {
+                    cloth += `10월 북해도 전형적인 가을 날씨입니다. 낮에는 가디건·얇은 패딩, 저녁에는 <strong>보온 겉옷</strong>이 필요합니다. 걷기 편한 운동화 필수.`;
+                } else if (avgMax <= 22) {
+                    cloth += `선선한 가을입니다. 긴팔·얇은 겉옷 중심으로 준비하고, 일교차에 대비해 <strong>겹쳐 입기</strong>를 권장합니다.`;
+                } else {
+                    cloth += `비교적 온화합니다. 기본 긴팔에 가벼운 겉옷만 있어도 충분합니다.`;
+                }
+                if (clothEl) clothEl.innerHTML = `<i class="fa-solid fa-shirt mr-2 text-sky-200"></i><span>${cloth}</span>`;
+            } catch (err) {
+                console.error('날씨 정보를 불러올 수 없습니다:', err);
+                if (container) container.innerHTML = `<div class="col-span-full text-center text-sky-100 text-sm py-6">날씨 정보를 일시적으로 불러오지 못했습니다. 잠시 후 새로고침 해주세요.</div>`;
+                if (clothEl) clothEl.innerHTML = `<i class="fa-solid fa-shirt mr-2 text-sky-200"></i><span>10월 북해도는 낮 선선·저녁 쌀쌀합니다. 가디건·얇은 패딩을 권장합니다.</span>`;
+                if (updated) updated.textContent = '오프라인 · 재시도 필요';
+            }
         }
 
         const PRICE_ITEMS = [
@@ -1168,6 +1287,8 @@
         }
         renderPrices();
         calcKRW();
+        fetchExchangeRate();
+        fetchWeather();
 
         function openPhraseModal(){
             const m = document.getElementById('phrase-modal');
