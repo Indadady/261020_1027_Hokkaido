@@ -36,8 +36,15 @@
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         @media (max-width: 768px){ .hero-bg { background-attachment: scroll; } }
+        #map-wrap { position: relative; }
         #map { height: 360px; width: 100%; border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); z-index: 10; }
         @media (min-width: 1024px) { #map { height: 560px; } }
+        #map-leg { position: absolute; top: 12px; left: 12px; z-index: 500; display: none; background: rgba(255,255,255,.94); border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 800; color: #004098; box-shadow: 0 4px 12px rgba(15,23,42,.12); pointer-events: none; max-width: calc(100% - 24px); }
+        .map-vehicle { font-size: 26px; line-height: 1; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 2px 3px rgba(0,0,0,.35)); }
+        .traveler-icon { background: none !important; border: none !important; }
+        .map-marker-bubble { background: #fff; border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,.3); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; opacity: 0; }
+        body.event-day section { scroll-margin-top: 112px; }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 80% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
@@ -65,7 +72,7 @@
             @page { size: A4 portrait; margin: 12mm 10mm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             html, body { background: white !important; color: #1e293b !important; }
-            header, footer, section:not(#print-area), .no-print, #toast, #phrase-modal { display: none !important; }
+            header, footer, section:not(#print-area), .no-print, #toast, #phrase-modal, #event-day-bar { display: none !important; }
             main, body { padding: 0 !important; margin: 0 !important; width: 100% !important; background: white !important; }
             #print-area {
                 display: block !important;
@@ -200,6 +207,12 @@
             </div>
             <button onclick="shareLink()" class="shrink-0 p-2 text-slate-500 hover:text-blue-600 ml-2" title="일정표 공유하기"><i class="fa-solid fa-share-nodes text-xl"></i></button>
         </nav>
+        <div id="event-day-bar" class="hidden bg-blue-700 text-white">
+            <div class="container mx-auto px-4 py-2 flex items-center justify-center gap-2">
+                <button type="button" onclick="goToTodaySchedule()" class="inline-flex items-center gap-2 bg-white text-blue-800 font-extrabold text-sm px-4 py-2 rounded-full shadow-sm">오늘의 일정</button>
+                <button type="button" onclick="goToTodayRoute()" class="inline-flex items-center gap-2 bg-white/15 border border-white/40 text-white font-extrabold text-sm px-4 py-2 rounded-full">당일 동선</button>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -441,7 +454,7 @@
                     <div id="schedule">
                         <span class="text-blue-600 font-black tracking-widest text-xs uppercase">ROUTING MAP &amp; ITINERARY</span>
                         <h2 class="text-3xl font-bold text-slate-800 mt-2">스마트 동선 및 상세 일정</h2>
-                        <p class="text-slate-500 mt-2 text-sm">일자별 버튼을 눌러 이동 동선을 확인하세요. 공식방문지 상세는 확정 후 업데이트됩니다.</p>
+                        <p class="text-slate-500 mt-2 text-sm">일자별 버튼을 누르면 실제 도로 동선이 순서대로 그려집니다.</p>
                     </div>
                     <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold py-2.5 px-6 rounded-xl shadow-md transition-all flex items-center gap-2 no-print">
                         <i class="fa-solid fa-print"></i> 일정표 인쇄
@@ -457,10 +470,11 @@
                             <button onclick="changeMapAndTab('day3')" class="map-tab-btn px-4 py-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 text-sm font-bold shrink-0">3일차</button>
                             <button onclick="changeMapAndTab('day4')" class="map-tab-btn px-4 py-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 text-sm font-bold shrink-0">4일차</button>
                         </div>
-                        <div class="border border-slate-200 rounded-2xl p-1 shadow-lg bg-white relative">
+                        <div id="map-wrap" class="border border-slate-200 rounded-2xl p-1 shadow-lg bg-white relative">
                             <div id="map"></div>
+                            <div id="map-leg"></div>
                         </div>
-                        <p id="map-hint" class="text-center text-xs text-slate-500 mt-3">📍 1일차: 신치토세 → 노보리베츠 → 도야 온천</p>
+                        <p id="map-hint" class="text-center text-xs text-slate-500 mt-3">✈️ 전체: 청주 ↔ 신치토세 항공 구간</p>
                     </div>
 
                     <div class="lg:col-span-7 bg-slate-50 rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
@@ -1063,6 +1077,35 @@
     </div>
 
     <script>
+        const PRINT_FILENAME = '261020_북해도_일정표';
+        const PAGE_TITLE = document.title;
+        window.addEventListener('beforeprint', () => { document.title = PRINT_FILENAME; });
+        window.addEventListener('afterprint', () => { document.title = PAGE_TITLE; });
+
+        const TEST_DATE = "";
+        const EVENT_DAYS = {
+            '2026-10-20': 'day1',
+            '2026-10-21': 'day2',
+            '2026-10-22': 'day3',
+            '2026-10-23': 'day4',
+            '2026-10-27': 'day1',
+            '2026-10-28': 'day2',
+            '2026-10-29': 'day3',
+            '2026-10-30': 'day4'
+        };
+        function getGuidebookToday() {
+            const q = new URLSearchParams(location.search).get('test_date');
+            if (q && /^\d{4}-\d{2}-\d{2}$/.test(q)) return q;
+            if (TEST_DATE) return TEST_DATE;
+            return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
+        }
+        function ymdDiffDays(a, b) {
+            const [ay, am, ad] = a.split('-').map(Number);
+            const [by, bm, bd] = b.split('-').map(Number);
+            return Math.round((Date.UTC(ay, am - 1, ad) - Date.UTC(by, bm - 1, bd)) / 86400000);
+        }
+        function getTodayDayKey() { return EVENT_DAYS[getGuidebookToday()] || null; }
+
         function shareLink(){
             const url = window.location.href;
             if (navigator.share) {
@@ -1074,6 +1117,34 @@
             } else {
                 navigator.clipboard?.writeText(url).then(()=>alert('가이드북 링크가 복사되었습니다.'));
             }
+        }
+
+        function showDayTab(tabId){
+            document.querySelectorAll('.schedule-content').forEach(el => el.classList.add('hidden'));
+            if (tabId && tabId !== 'all') {
+                document.getElementById(tabId)?.classList.remove('hidden');
+            } else {
+                document.getElementById('day1')?.classList.remove('hidden');
+            }
+        }
+        function goToTodaySchedule() {
+            const dayKey = getTodayDayKey();
+            if (dayKey) changeMapAndTab(dayKey);
+            document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' });
+        }
+        function goToTodayRoute() {
+            const dayKey = getTodayDayKey();
+            if (dayKey) changeMapAndTab(dayKey);
+            document.getElementById('map-section')?.scrollIntoView({ behavior: 'smooth' });
+        }
+        function initEventDayUI() {
+            const bar = document.getElementById('event-day-bar');
+            if (!bar) return;
+            const dayKey = getTodayDayKey();
+            const isEventDay = !!dayKey;
+            bar.classList.toggle('hidden', !isEventDay);
+            document.body.classList.toggle('event-day', isEventDay);
+            if (dayKey) showDayTab(dayKey);
         }
 
         const CHECK_KEY = 'jeongseon_economy_hokkaido_chk_v1';
@@ -1126,22 +1197,33 @@
             memo.addEventListener('input', () => localStorage.setItem(MEMO_KEY, memo.value));
         })();
 
-        // D-day
-        (function(){
+        function updateDday(){
             const badge = document.getElementById('d-day-badge');
             if(!badge) return;
-            const first = new Date('2026-10-20T00:00:00+09:00');
-            const second = new Date('2026-10-27T00:00:00+09:00');
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            const d1 = Math.ceil((first - today) / 86400000);
-            const d2 = Math.ceil((second - today) / 86400000);
-            if (d1 > 0) badge.textContent = `1차 D-${d1}`;
-            else if (d1 === 0) badge.textContent = '1차 D-DAY';
-            else if (d2 > 0) badge.textContent = `2차 D-${d2}`;
-            else if (d2 === 0) badge.textContent = '2차 D-DAY';
-            else badge.textContent = '연수 완료';
-        })();
+            const today = getGuidebookToday();
+            const b1s = '2026-10-20', b1e = '2026-10-23';
+            const b2s = '2026-10-27', b2e = '2026-10-30';
+            badge.classList.remove('hidden');
+            if (today < b1s) {
+                badge.className = 'bg-blue-600 text-white text-[10px] px-2.5 py-1 rounded-full font-bold shadow-sm animate-pulse';
+                badge.innerText = '1차 D-' + ymdDiffDays(b1s, today);
+            } else if (today <= b1e) {
+                const d = ymdDiffDays(today, b1s) + 1;
+                badge.className = 'bg-rose-500 text-white text-[10px] px-2.5 py-1 rounded-full font-bold shadow-sm animate-pulse';
+                badge.innerText = '📍 1차 ' + d + '일차 진행중';
+            } else if (today < b2s) {
+                badge.className = 'bg-indigo-600 text-white text-[10px] px-2.5 py-1 rounded-full font-bold shadow-sm animate-pulse';
+                badge.innerText = '2차 D-' + ymdDiffDays(b2s, today);
+            } else if (today <= b2e) {
+                const d = ymdDiffDays(today, b2s) + 1;
+                badge.className = 'bg-rose-500 text-white text-[10px] px-2.5 py-1 rounded-full font-bold shadow-sm animate-pulse';
+                badge.innerText = '📍 2차 ' + d + '일차 진행중';
+            } else {
+                badge.className = 'bg-slate-500 text-white text-[10px] px-2.5 py-1 rounded-full font-bold shadow-sm';
+                badge.innerText = '🏁 여정 종료';
+            }
+        }
+        updateDday();
 
         // FX / Weather / Price / Phrases — live APIs
         let JPY_TO_KRW = 9.5 * 1.015; // fallback until API loads (base × 1.5% fee)
@@ -1310,175 +1392,326 @@
             document.querySelector('#phrase-modal > div')?.scrollTo(0, 1000);
         }
 
-        // Map — Osaka guidebook 동일 품질 (Carto 타일 · 이모지 마커 · 일자별 컬러 동선 · 애니메이션)
-        let map;
-        let mapLayers = [];
-
+        let map, layerGroup, vehicleMarker = null, vehicleMode = null, mapDrawSeq = 0;
+        const osrmCache = {};
         const spots = {
-            cts: { coords: [42.7752, 141.6925], title: '신치토세 국제공항', color: '#64748b', icon: '✈️', isSub: false },
-            jigoku: { coords: [42.4908, 141.1425], title: '노보리베츠 지옥계곡', color: '#ea580c', icon: '♨️', isSub: true },
-            jidaimura: { coords: [42.5186, 141.0203], title: '다테 시대촌', color: '#d97706', icon: '🏯', isSub: true },
-            hotel_toya: { coords: [42.5764, 140.8328], title: '도야 썬팔레스 리조트&스파', color: '#0ea5e9', icon: '🏨', isSub: true },
-            toya_lake: { coords: [42.5618, 140.8445], title: '도야호수 유람선', color: '#0284c7', icon: '🚢', isSub: true },
-            showa: { coords: [42.5494, 140.8678], title: '쇼와신잔', color: '#dc2626', icon: '🌋', isSub: true },
-            silo: { coords: [42.5522, 140.8756], title: '사이로 전망대', color: '#16a34a', icon: '🔭', isSub: true },
-            visit_day2: { coords: [43.0642, 141.3469], title: '<공식방문> 노인일자리·마을기업', color: '#b91c1c', icon: '🏛️', isSub: false },
-            odori: { coords: [43.0598, 141.3469], title: '오도리 공원', color: '#2563eb', icon: '🌳', isSub: true },
-            susukino: { coords: [43.0547, 141.3545], title: '스스키노 번화가', color: '#7c3aed', icon: '🌃', isSub: true },
-            hotel_sapporo: { coords: [43.0029, 141.3682], title: 'APA 호텔 & 리조트 삿포로', color: '#1e293b', icon: '🏨', isSub: true },
-            otaru: { coords: [43.1978, 141.0052], title: '오타루 운하·오르골당', color: '#0891b2', icon: '🎵', isSub: false },
-            visit_day3: { coords: [43.0680, 141.3520], title: '<공식방문> 지역공동체운영기업', color: '#b91c1c', icon: '🏘️', isSub: false },
-            beer: { coords: [43.0717, 141.3687], title: '삿포로 맥주박물관', color: '#b45309', icon: '🍺', isSub: true },
-            clock: { coords: [43.0628, 141.3537], title: '홋카이도 시계탑', color: '#475569', icon: '🕰️', isSub: true },
+            cjj: { c:[36.7166, 127.4991], t:'청주공항', col:'#64748b', i:'✈️' },
+            cts: { c:[42.7752, 141.6925], t:'신치토세 공항', col:'#0ea5e9', i:'🛬' },
+            jigoku: { c:[42.4908, 141.1425], t:'노보리베츠 지옥계곡', col:'#ea580c', i:'♨️' },
+            jidaimura: { c:[42.5186, 141.0203], t:'다테 시대촌', col:'#d97706', i:'🏯' },
+            hotel_toya: { c:[42.5764, 140.8328], t:'도야 썬팔레스', col:'#0ea5e9', i:'🏨' },
+            toya_lake: { c:[42.5618, 140.8445], t:'도야호수 유람선', col:'#0284c7', i:'🚢' },
+            showa: { c:[42.5494, 140.8678], t:'쇼와신잔', col:'#dc2626', i:'🌋' },
+            silo: { c:[42.5522, 140.8756], t:'사이로 전망대', col:'#16a34a', i:'🔭' },
+            visit_day2: { c:[43.0642, 141.3469], t:'공식방문(노인일자리·마을기업)', col:'#b91c1c', i:'🏛️' },
+            odori: { c:[43.0598, 141.3469], t:'오도리 공원', col:'#2563eb', i:'🌳' },
+            susukino: { c:[43.0547, 141.3545], t:'스스키노', col:'#7c3aed', i:'🌃' },
+            hotel_sapporo: { c:[43.0029, 141.3682], t:'APA 삿포로', col:'#1e293b', i:'🏨' },
+            otaru: { c:[43.1978, 141.0052], t:'오타루 운하', col:'#0891b2', i:'🎵' },
+            visit_day3: { c:[43.0680, 141.3520], t:'공식방문(지역공동체)', col:'#b91c1c', i:'🏘️' },
+            beer: { c:[43.0717, 141.3687], t:'삿포로 맥주박물관', col:'#b45309', i:'🍺' },
+            clock: { c:[43.0628, 141.3537], t:'홋카이도 시계탑', col:'#475569', i:'🕰️' }
         };
-
-        const routes = {
-            all: {
-                points: ['cts','jigoku','jidaimura','hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo','otaru','visit_day3','beer','clock','cts'],
-                lines: [
-                    { latlngs: [spots.cts.coords, spots.jigoku.coords, spots.jidaimura.coords, spots.hotel_toya.coords], color: '#64748b', dash: '' },
-                    { latlngs: [spots.hotel_toya.coords, spots.toya_lake.coords, spots.showa.coords, spots.silo.coords, spots.visit_day2.coords, spots.odori.coords, spots.susukino.coords, spots.hotel_sapporo.coords], color: '#2563eb', dash: '' },
-                    { latlngs: [spots.hotel_sapporo.coords, spots.otaru.coords, spots.visit_day3.coords, spots.beer.coords, spots.hotel_sapporo.coords], color: '#ea580c', dash: '' },
-                    { latlngs: [spots.hotel_sapporo.coords, spots.clock.coords, spots.cts.coords], color: '#64748b', dash: '6, 8' },
-                ]
-            },
-            day1: {
-                points: ['cts','jigoku','jidaimura','hotel_toya'],
-                lines: [
-                    { latlngs: [spots.cts.coords, spots.jigoku.coords, spots.jidaimura.coords, spots.hotel_toya.coords], color: '#64748b', dash: '' },
-                ]
-            },
-            day2: {
-                points: ['hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo'],
-                lines: [
-                    { latlngs: [spots.hotel_toya.coords, spots.toya_lake.coords, spots.showa.coords, spots.silo.coords, spots.visit_day2.coords, spots.odori.coords, spots.susukino.coords, spots.hotel_sapporo.coords], color: '#2563eb', dash: '' },
-                ]
-            },
-            day3: {
-                points: ['hotel_sapporo','otaru','visit_day3','beer','hotel_sapporo'],
-                lines: [
-                    { latlngs: [spots.hotel_sapporo.coords, spots.otaru.coords, spots.visit_day3.coords, spots.beer.coords, spots.hotel_sapporo.coords], color: '#ea580c', dash: '' },
-                ]
-            },
-            day4: {
-                points: ['hotel_sapporo','clock','cts'],
-                lines: [
-                    { latlngs: [spots.hotel_sapporo.coords, spots.clock.coords, spots.cts.coords], color: '#64748b', dash: '' },
-                ]
-            },
-        };
-
-        const hints = {
-            all: '📍 전체: 신치토세 → 노보리베츠·도야 → 삿포로 공식방문 → 오타루 → 귀국',
-            day1: '📍 1일차: 신치토세 입국 → 지옥계곡 → 시대촌 → 도야 온천',
-            day2: '📍 2일차: 도야호수 → 공식방문(노인일자리·마을기업) → 오도리·스스키노',
+        const mapHints = {
+            all: '✈️ 전체 보기: 에어로케이 직항 (RF352 · RF351)',
+            day1: '📍 1일차: 청주 → 신치토세 → 지옥계곡 → 시대촌 → 도야 온천',
+            day2: '📍 2일차: 도야호수 → 공식방문 → 오도리·스스키노 → APA 삿포로',
             day3: '📍 3일차: 오타루 상권 → 공식방문 → 맥주박물관',
-            day4: '📍 4일차: 시계탑 → 신치토세 공항 귀국',
+            day4: '📍 4일차: 시계탑 → 신치토세 → 청주 귀국'
+        };
+        const routes = {
+            all: { p:['cjj','cts'], zoom:['cjj','cts'], maxZoom:5, segs:[
+                {from:'cjj', to:'cts', mode:'flight', c:'#004098', label:'RF352 출국'},
+                {from:'cts', to:'cjj', mode:'flight', c:'#64748b', label:'RF351 귀국'}
+            ]},
+            day1: { p:['cjj','cts','jigoku','jidaimura','hotel_toya'], zoom:['cts','jigoku','jidaimura','hotel_toya'], maxZoom:10, segs:[
+                {from:'cjj', to:'cts', mode:'flight', c:'#004098', label:'RF352 출국'},
+                {from:'cts', to:'jigoku', mode:'bus', c:'#ea580c'},
+                {from:'jigoku', to:'jidaimura', mode:'bus', c:'#ea580c'},
+                {from:'jidaimura', to:'hotel_toya', mode:'bus', c:'#ea580c'}
+            ]},
+            day2: { p:['hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo'], zoom:['hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo'], maxZoom:10, segs:[
+                {from:'hotel_toya', to:'toya_lake', mode:'bus', c:'#2563eb'},
+                {from:'toya_lake', to:'showa', mode:'bus', c:'#2563eb'},
+                {from:'showa', to:'silo', mode:'bus', c:'#2563eb'},
+                {from:'silo', to:'visit_day2', mode:'bus', c:'#2563eb'},
+                {from:'visit_day2', to:'odori', mode:'bus', c:'#2563eb'},
+                {from:'odori', to:'susukino', mode:'bus', c:'#2563eb'},
+                {from:'susukino', to:'hotel_sapporo', mode:'bus', c:'#2563eb'}
+            ]},
+            day3: { p:['hotel_sapporo','otaru','visit_day3','beer','hotel_sapporo'], zoom:['hotel_sapporo','otaru','visit_day3','beer'], maxZoom:11, segs:[
+                {from:'hotel_sapporo', to:'otaru', mode:'bus', c:'#ea580c'},
+                {from:'otaru', to:'visit_day3', mode:'bus', c:'#ea580c'},
+                {from:'visit_day3', to:'beer', mode:'bus', c:'#ea580c'},
+                {from:'beer', to:'hotel_sapporo', mode:'bus', c:'#ea580c'}
+            ]},
+            day4: { p:['hotel_sapporo','clock','cts','cjj'], zoom:['hotel_sapporo','clock','cts'], maxZoom:11, segs:[
+                {from:'hotel_sapporo', to:'clock', mode:'bus', c:'#475569'},
+                {from:'clock', to:'cts', mode:'bus', c:'#475569'},
+                {from:'cts', to:'cjj', mode:'flight', c:'#64748b', label:'RF351 귀국'}
+            ]}
         };
 
-        function drawMap(routeKey) {
-            if (!map) return;
-            mapLayers.forEach(layer => map.removeLayer(layer));
-            mapLayers = [];
-
-            const routeData = routes[routeKey] || routes.all;
-
-            routeData.lines.forEach((lineDef) => {
-                const polyline = L.polyline(lineDef.latlngs, {
-                    color: lineDef.color,
-                    weight: 4,
-                    opacity: 0.85,
-                    dashArray: lineDef.dash
-                }).addTo(map);
-
-                setTimeout(() => {
-                    const path = polyline.getElement();
-                    if (path && lineDef.dash === '') {
-                        const length = path.getTotalLength();
-                        path.style.transition = 'none';
-                        path.style.strokeDasharray = length + ' ' + length;
-                        path.style.strokeDashoffset = length;
-                        path.getBoundingClientRect();
-                        path.style.transition = 'stroke-dashoffset 2s ease-in-out';
-                        path.style.strokeDashoffset = '0';
-                    }
-                }, 50);
-
-                mapLayers.push(polyline);
-            });
-
-            let currentBounds = L.latLngBounds();
-            routeData.points.forEach(key => {
-                const spot = spots[key];
-                if (!spot) return;
-                const size = spot.isSub ? 28 : 36;
-                const fontSize = spot.isSub ? 13 : 16;
-                const icon = L.divIcon({
-                    className: 'custom-icon',
-                    html: `<div style="background-color:${spot.color};width:${size}px;height:${size}px;border-radius:50%;border:2px solid white;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:${fontSize}px;">${spot.icon}</div>`,
-                    iconSize: [size, size]
-                });
-                const marker = L.marker(spot.coords, { icon }).addTo(map).bindPopup(`<b>${spot.title}</b>`);
-                mapLayers.push(marker);
-                currentBounds.extend(spot.coords);
-            });
-
-            if (currentBounds.isValid()) {
-                map.fitBounds(currentBounds, { padding: [50, 50], maxZoom: routeKey === 'day4' ? 11 : 10 });
+        function isMobileMap(){ return window.matchMedia('(max-width:768px)').matches; }
+        function segMs(mode, routeKey){
+            const m = isMobileMap();
+            const allView = routeKey === 'all';
+            if(mode === 'flight') return m ? (allView ? 3600 : 5000) : (allView ? 1800 : 2500);
+            return m ? (allView ? 2800 : 4200) : (allView ? 1400 : 2100);
+        }
+        function easeInOut(p){ return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; }
+        function bearingDeg(a, b){
+            const lat1 = (a.lat ?? a[0]) * Math.PI / 180;
+            const lat2 = (b.lat ?? b[0]) * Math.PI / 180;
+            const dLng = ((b.lng ?? b[1]) - (a.lng ?? a[1])) * Math.PI / 180;
+            const y = Math.sin(dLng) * Math.cos(lat2);
+            const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
+            return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+        }
+        function headingParts(mode, bearing){
+            const nose = mode === 'flight' ? 45 : 270;
+            let rot = ((bearing - nose + 540) % 360) - 180;
+            let flip = 1;
+            if(mode !== 'flight' && Math.abs(rot) > 90){
+                flip = -1;
+                rot += rot > 0 ? -180 : 180;
             }
-
-            const hint = document.getElementById('map-hint');
-            if (hint) hint.textContent = hints[routeKey] || hints.all;
+            return { rot, flip };
+        }
+        function travelerIcon(mode, bearing){
+            const emoji = mode === 'flight' ? '✈️' : '🚌';
+            const { rot, flip } = headingParts(mode, bearing);
+            return L.divIcon({
+                className: 'traveler-icon',
+                html: `<div class="map-vehicle traveler-rot" style="transform:rotate(${rot}deg)"><span class="traveler-flip" style="display:inline-block;transform:scaleX(${flip})">${emoji}</span></div>`,
+                iconSize: [44, 44],
+                iconAnchor: [22, 22]
+            });
+        }
+        function densifyLine(a, b, n){
+            const path = [];
+            for(let i = 0; i <= n; i++){
+                const t = i / n;
+                path.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]);
+            }
+            return path;
+        }
+        function latLngAlong(latlngs, t){
+            if(!latlngs.length) return null;
+            const pts = latlngs.map(p => L.latLng(p));
+            if(t <= 0) return pts[0];
+            if(t >= 1) return pts[pts.length - 1];
+            let total = 0;
+            const segs = [];
+            for(let i = 0; i < pts.length - 1; i++){
+                const d = pts[i].distanceTo(pts[i + 1]);
+                segs.push({ a: pts[i], b: pts[i + 1], d });
+                total += d;
+            }
+            if(!total) return pts[0];
+            let remain = total * t;
+            for(const s of segs){
+                if(remain <= s.d || s.d === 0){
+                    const r = s.d ? remain / s.d : 0;
+                    return L.latLng(s.a.lat + (s.b.lat - s.a.lat) * r, s.a.lng + (s.b.lng - s.a.lng) * r);
+                }
+                remain -= s.d;
+            }
+            return pts[pts.length - 1];
+        }
+        function lookAhead(latlngs, t){
+            return { a: latLngAlong(latlngs, Math.max(0, t - 0.015)), b: latLngAlong(latlngs, Math.min(1, t + 0.03)) };
+        }
+        async function roadPath(a, b){
+            const key = a.join(',')+'|'+b.join(',');
+            if(osrmCache[key]) return osrmCache[key];
+            try {
+                const url = `https://router.project-osrm.org/route/v1/driving/${a[1]},${a[0]};${b[1]},${b[0]}?overview=full&geometries=geojson`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if(data.code === 'Ok' && data.routes && data.routes[0]){
+                    const path = data.routes[0].geometry.coordinates.map(([lng,lat]) => [lat,lng]);
+                    osrmCache[key] = path;
+                    return path;
+                }
+            } catch(e) {}
+            return [a, b];
+        }
+        function setMapLeg(fromT, toT){
+            const el = document.getElementById('map-leg');
+            if(!el) return;
+            el.style.display = 'block';
+            el.textContent = fromT + ' → ' + toT;
+        }
+        function pinSpot(key){
+            const s = spots[key];
+            if(!s) return;
+            const htmlStr = `<div class="map-marker-bubble" style="background:${s.col};width:32px;height:32px;animation:popIn 0.5s forwards;color:white;font-size:14px;">${s.i}</div>`;
+            L.marker(s.c, { icon: L.divIcon({ className: '', html: htmlStr, iconSize:[32,32], iconAnchor:[16,16] }) })
+                .bindTooltip('<b>'+s.t+'</b>', { direction:'top' })
+                .addTo(layerGroup);
+        }
+        function moveVehicle(ll, mode, bearing){
+            const { rot, flip } = headingParts(mode, bearing);
+            if(!vehicleMarker){
+                vehicleMode = mode;
+                vehicleMarker = L.marker(ll, { icon: travelerIcon(mode, bearing), zIndexOffset: 1200 }).addTo(layerGroup);
+                return;
+            }
+            vehicleMarker.setLatLng(ll);
+            if(vehicleMode !== mode){
+                vehicleMode = mode;
+                vehicleMarker.setIcon(travelerIcon(mode, bearing));
+                return;
+            }
+            const el = vehicleMarker.getElement();
+            const wrap = el && el.querySelector('.traveler-rot');
+            const span = el && el.querySelector('.traveler-flip');
+            if(wrap) wrap.style.transform = `rotate(${rot}deg)`;
+            if(span) span.style.transform = `scaleX(${flip})`;
+        }
+        function animatePath(path, color, dash, mode, ms, seq){
+            return new Promise(resolve => {
+                const pl = L.polyline(dash ? [path[0]] : path, { color, weight: mode==='flight'?3:4, opacity:0.9, dashArray: dash || null }).addTo(layerGroup);
+                const start = performance.now();
+                function frame(now){
+                    if(seq !== mapDrawSeq){ resolve(); return; }
+                    const p = Math.min(1, (now - start) / ms);
+                    const t = easeInOut(p);
+                    const ll = latLngAlong(path, t);
+                    const hd = lookAhead(path, t);
+                    if(ll && hd.a && hd.b) moveVehicle(ll, mode, bearingDeg(hd.a, hd.b));
+                    if(dash && ll){
+                        const n = Math.max(1, Math.floor(t * (path.length - 1)));
+                        const pts = path.slice(0, n + 1);
+                        pts.push([ll.lat, ll.lng]);
+                        pl.setLatLngs(pts);
+                    } else if(pl._path){
+                        const len = pl._path.getTotalLength();
+                        pl._path.style.strokeDasharray = String(len);
+                        pl._path.style.strokeDashoffset = String(len * (1 - t));
+                    }
+                    if(p < 1) requestAnimationFrame(frame);
+                    else { pl.setLatLngs(path); resolve(); }
+                }
+                requestAnimationFrame(frame);
+            });
+        }
+        function localSpotKeys(route){
+            return (route.zoom || route.p).filter(k => k !== 'cjj');
+        }
+        function boundsOf(keys, extraPts){
+            const b = L.latLngBounds();
+            (keys || []).forEach(k => { if(spots[k]) b.extend(spots[k].c); });
+            (extraPts || []).forEach(pt => b.extend(pt));
+            return b;
+        }
+        function waitSeq(ms, seq){
+            return new Promise(resolve => setTimeout(() => resolve(seq === mapDrawSeq), ms));
+        }
+        function flyMap(b, maxZoom, seq){
+            return new Promise(resolve => {
+                if(seq !== mapDrawSeq || !b || !b.isValid()){ resolve(); return; }
+                let done = false;
+                const finish = () => {
+                    if(done) return;
+                    done = true;
+                    map.off('moveend', finish);
+                    resolve();
+                };
+                map.once('moveend', finish);
+                map.flyToBounds(b, { padding: [48, 48], maxZoom: maxZoom, duration: 1.15 });
+                setTimeout(finish, 1400);
+            });
         }
 
-        function changeMapRoute(dayKey) {
+        function initMap() {
+            if(map || typeof L === 'undefined') return;
+            map = L.map('map', { scrollWheelZoom: false });
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles © Esri'
+            }).addTo(map);
+            layerGroup = L.layerGroup().addTo(map);
+            const startKey = getTodayDayKey() || (isMobileMap() ? 'day1' : 'all');
+            changeMapAndTab(startKey);
+        }
+
+        async function changeMapAndTab(dayId) {
+            showDayTab(dayId);
             document.querySelectorAll('.map-tab-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm');
                 btn.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
             });
-            const activeBtn = document.querySelector(`.map-tab-btn[onclick*="'${dayKey}'"]`);
-            if (activeBtn) {
-                activeBtn.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm');
-                activeBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+            const mapBtn = document.querySelector(`.map-tab-btn[onclick*="'${dayId}'"]`);
+            if(mapBtn){
+                mapBtn.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm');
+                mapBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
             }
-            drawMap(dayKey);
-        }
-
-        function changeMapAndTab(day) {
-            document.querySelectorAll('.schedule-content').forEach(el => el.classList.add('hidden'));
-            if (day !== 'all') {
-                document.getElementById(day)?.classList.remove('hidden');
+            if(!map || !layerGroup) return;
+            const seq = ++mapDrawSeq;
+            layerGroup.clearLayers();
+            vehicleMarker = null;
+            vehicleMode = null;
+            const route = routes[dayId] || routes.all;
+            const hintEl = document.getElementById('map-hint');
+            if (hintEl) hintEl.innerText = mapHints[dayId] || mapHints.all;
+            const localZoom = route.maxZoom || 12;
+            const firstSeg = route.segs[0];
+            if(firstSeg && firstSeg.mode === 'flight'){
+                const fa = spots[firstSeg.from], fb = spots[firstSeg.to];
+                map.fitBounds(L.latLngBounds([fa.c, fb.c]), { padding: [48, 48], maxZoom: 5, animate: false });
             } else {
-                document.getElementById('day1')?.classList.remove('hidden');
+                map.fitBounds(boundsOf(localSpotKeys(route)), { padding: [48, 48], maxZoom: localZoom, animate: false });
             }
-            changeMapRoute(day);
-        }
-
-        let mapInited = false;
-        function initMap() {
-            if (mapInited || !window.L) return;
-            mapInited = true;
-
-            map = L.map('map', { scrollWheelZoom: false });
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap &copy; CARTO',
-                maxZoom: 19
-            }).addTo(map);
-
-            drawMap('day1');
             setTimeout(() => map.invalidateSize(), 300);
+            const first = route.p[0];
+            if(first) pinSpot(first);
+            for(let i = 0; i < route.segs.length; i++){
+                if(seq !== mapDrawSeq) return;
+                const seg = route.segs[i];
+                const next = route.segs[i + 1];
+                const a = spots[seg.from], b = spots[seg.to];
+                if(!a || !b) continue;
+                setMapLeg(a.t, b.t);
+                const path = seg.mode === 'flight' ? densifyLine(a.c, b.c, 72) : await roadPath(a.c, b.c);
+                if(seq !== mapDrawSeq) return;
+                if(seg.mode === 'flight'){
+                    map.fitBounds(L.latLngBounds([a.c, b.c]), { padding: [48, 48], maxZoom: 5, animate: false });
+                } else {
+                    map.fitBounds(boundsOf(localSpotKeys(route), path), { padding: [48, 48], maxZoom: localZoom, animate: false });
+                }
+                await animatePath(path, seg.c, seg.mode==='flight' ? '10,8' : null, seg.mode, segMs(seg.mode, dayId), seq);
+                if(seq !== mapDrawSeq) return;
+                pinSpot(seg.to);
+                if(seg.mode === 'flight' && next && next.mode !== 'flight'){
+                    const ok = await waitSeq(280, seq);
+                    if(!ok) return;
+                    await flyMap(boundsOf(localSpotKeys(route)), localZoom, seq);
+                    if(seq !== mapDrawSeq) return;
+                    await waitSeq(220, seq);
+                } else if(seg.mode !== 'flight' && next && next.mode === 'flight'){
+                    const ok = await waitSeq(280, seq);
+                    if(!ok) return;
+                    const na = spots[next.from], nb = spots[next.to];
+                    await flyMap(L.latLngBounds([na.c, nb.c]), 5, seq);
+                    if(seq !== mapDrawSeq) return;
+                    await waitSeq(220, seq);
+                }
+            }
+            const leg = document.getElementById('map-leg');
+            if(leg && seq === mapDrawSeq) leg.style.display = 'none';
         }
 
-        const mapObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                initMap();
-                mapObserver.disconnect();
-            }
+        const io = new IntersectionObserver((entries)=>{
+            if(entries[0].isIntersecting) { initMap(); io.disconnect(); }
         }, { threshold: 0.1 });
         document.addEventListener('DOMContentLoaded', () => {
             const mapSection = document.getElementById('map-section');
-            if (mapSection) mapObserver.observe(mapSection);
+            if (mapSection) io.observe(mapSection);
+            initEventDayUI();
         });
+        initEventDayUI();
     </script>
 </body>
 </html>
+
