@@ -8,5 +8,5 @@
 | day2-toya.jpg | Wikimedia / existing project asset | See Commons if re-exported |
 | day3-otaru.jpg | Wikimedia / existing project asset | See Commons if re-exported |
 | day4-clock.jpg | Wikimedia / existing project asset | See Commons if re-exported |
-| hotel-toya.jpg | 담당자 제공 | — |
-| hotel-sapporo.jpg | 담당자 제공 | — |
+| hotel-toya.jpg | [洞爺サンパレス 公式 OGP](https://www.toyasunpalace.co.jp/ogp.jpg) — 호수 전망 로비 (1200×630) | 공식 사이트 홍보 이미지 |
+| hotel-sapporo.jpg | 담당자 제공 · APA 호텔 삿포로 전경 (2000×1125) | — |
