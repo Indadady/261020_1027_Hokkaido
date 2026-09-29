@@ -69,7 +69,7 @@
         }
         @media screen { #print-area { display: none !important; } }
         @media print {
-            @page { size: A4 portrait; margin: 12mm 10mm; }
+            @page { size: A4 portrait; margin: 8mm 9mm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             html, body { background: white !important; color: #1e293b !important; }
             header, footer, section:not(#print-area), .no-print, #toast, #phrase-modal, #event-day-bar { display: none !important; }
@@ -83,20 +83,20 @@
             }
             .print-header-top {
                 display: flex; justify-content: space-between; align-items: flex-end;
-                border-bottom: 2px solid #004098; padding-bottom: 10px; margin-bottom: 14px;
+                border-bottom: 2px solid #004098; padding-bottom: 6px; margin-bottom: 8px;
             }
             .print-header-top img { height: 36px; }
             .print-header-top .doc-info { text-align: right; font-size: 11px; color: #475569; line-height: 1.45; }
             .print-title {
-                text-align: center; font-weight: 700; margin: 0 0 12px;
+                text-align: center; font-weight: 700; margin: 0 0 8px;
                 line-height: 1.35; color: #0f172a; letter-spacing: -0.02em;
             }
-            .print-title .print-title-main { display: block; font-size: 17px; }
-            .print-title .print-title-sub { display: block; margin-top: 4px; font-size: 16px; }
+            .print-title .print-title-main { display: block; font-size: 15px; }
+            .print-title .print-title-sub { display: block; margin-top: 2px; font-size: 14px; }
             .print-overview {
                 display: flex; justify-content: space-between; gap: 16px;
                 background: #f8fafc; border: 1px solid #94a3b8; border-radius: 6px;
-                padding: 10px 14px; margin-bottom: 12px; font-size: 12px; line-height: 1.45;
+                padding: 6px 10px; margin-bottom: 8px; font-size: 11px; line-height: 1.4;
             }
             .print-overview > div {
                 flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0;
@@ -112,46 +112,46 @@
                 table-layout: fixed !important;
                 border-collapse: collapse !important;
                 border: 2px solid #1e293b;
-                margin-bottom: 10px;
+                margin-bottom: 6px;
                 word-break: keep-all !important;
-                font-size: 12px;
+                font-size: 10.5px;
             }
             #print-table col.col-date { width: 14% !important; }
             #print-table col.col-desc { width: 70% !important; }
             #print-table col.col-meal { width: 16% !important; }
             #print-table th, #print-table td {
                 border: 1px solid #1e293b !important;
-                padding: 10px 12px !important;
+                padding: 4px 7px !important;
                 vertical-align: top;
             }
             #print-table th {
                 background-color: #f8fafc !important; color: #1e293b !important;
-                font-weight: 700; text-align: center; font-size: 13px; padding: 9px !important;
+                font-weight: 700; text-align: center; font-size: 11px; padding: 4px !important;
             }
             #print-table tbody tr { page-break-inside: avoid; height: auto !important; }
             #print-table tr.day-divider td { border-top: 2px solid #1e293b !important; }
             #print-table td.col-date {
                 text-align: center; vertical-align: middle !important;
-                background-color: #f8fafc !important; font-weight: 700; font-size: 12px; line-height: 1.45;
+                background-color: #f8fafc !important; font-weight: 700; font-size: 10.5px; line-height: 1.35;
             }
-            #print-table td.col-desc { line-height: 1.55; }
+            #print-table td.col-desc { line-height: 1.35; }
             #print-table td.col-meal { vertical-align: middle !important; }
-            #print-table .time-flow { margin-bottom: 6px; font-weight: 500; }
+            #print-table .time-flow { margin-bottom: 2px; font-weight: 500; }
             #print-table .time-tag { display: inline-block; color: #004098; font-weight: 700; margin-right: 4px; }
             #print-table .highlight, #print-table .spot { font-weight: 700; color: #0f172a; }
             #print-table .spot { color: #004098 !important; }
             #print-table .flight { color: #c23b3b !important; font-weight: 700; }
             #print-table .desc-list { list-style: none; margin: 6px 0; padding-left: 4px; }
             #print-table .desc-list li {
-                position: relative; padding-left: 12px; margin-bottom: 5px; line-height: 1.55;
+                position: relative; padding-left: 12px; margin-bottom: 1px; line-height: 1.35;
             }
             #print-table .desc-list li::before {
                 content: '■'; font-size: 7px; position: absolute; left: 0; top: 4px; color: #004098;
             }
             #print-table .hotel-divider {
-                border: 0; border-top: 1px dashed #94a3b8; margin: 10px 0 8px;
+                border: 0; border-top: 1px dashed #94a3b8; margin: 4px 0 3px;
             }
-            #print-table .hotel-info { font-size: 12px; color: #0f172a; font-weight: 700; }
+            #print-table .hotel-info { font-size: 10.5px; color: #0f172a; font-weight: 700; }
             #print-table .hotel-info i { color: #004098; margin-right: 4px; }
             #print-table .meal-wrapper {
                 display: flex; flex-direction: column; gap: 10px;
@@ -166,16 +166,59 @@
             #print-table .meal-menu { display: flex; flex-direction: column; }
             #print-table .meal-sub { font-size: 11px; margin-top: 1px; color: #475569; }
             .print-remarks {
-                font-size: 11px; color: #64748b; text-align: right; font-weight: 500; margin-bottom: 12px; line-height: 1.5;
+                font-size: 9.5px; color: #64748b; text-align: right; font-weight: 500; margin-bottom: 4px; line-height: 1.35;
             }
             .print-footer-area {
-                margin-top: 8px; display: flex; justify-content: space-between; align-items: flex-end;
-                font-size: 11px; border-top: 1px solid #e2e8f0; padding-top: 12px;
+                margin-top: 4px; display: flex; justify-content: space-between; align-items: flex-end;
+                font-size: 10px; border-top: 1px solid #e2e8f0; padding-top: 6px;
             }
             .print-footer-area .brand-link { color: #6c757d; text-decoration: none; }
             .print-footer-area .manager {
                 font-weight: 700; color: #0f172a; border-left: 3px solid #004098; padding-left: 12px; text-align: right;
             }
+            .print-pack {
+                page-break-before: always;
+                break-before: page;
+            }
+            .print-pack-head {
+                display: flex; justify-content: space-between; align-items: flex-end;
+                border-bottom: 2px solid #004098; padding-bottom: 8px; margin-bottom: 12px;
+            }
+            .print-pack-head img { height: 32px; }
+            .print-pack-head .doc-info { text-align: right; font-size: 11px; color: #475569; line-height: 1.45; }
+            .print-pack-title {
+                text-align: center; margin: 0 0 12px; color: #0f172a;
+            }
+            .print-pack-title strong { display: block; font-size: 18px; letter-spacing: -0.02em; }
+            .print-pack-title span { display: block; margin-top: 4px; font-size: 12px; color: #475569; font-weight: 500; }
+            .print-pack-grid {
+                display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+            }
+            .print-pack-card {
+                border: 1px solid #1e293b; border-radius: 6px; padding: 8px 10px 6px;
+                page-break-inside: avoid;
+            }
+            .print-pack-card h3 {
+                margin: 0 0 6px; font-size: 12px; color: #004098;
+                border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;
+            }
+            .print-pack-card ul { list-style: none; margin: 0; padding: 0; }
+            .print-pack-card li {
+                position: relative; padding-left: 12px; margin-bottom: 3px;
+                font-size: 11.5px; line-height: 1.45; color: #1e293b;
+            }
+            .print-pack-card li::before {
+                content: '■'; font-size: 7px; position: absolute; left: 0; top: 4px; color: #004098;
+            }
+            .print-qr {
+                display: flex; align-items: center; gap: 16px;
+                border: 2px solid #004098; border-radius: 8px; padding: 10px 14px;
+                page-break-inside: avoid;
+            }
+            .print-qr img { width: 32mm; height: 32mm; object-fit: contain; background: #fff; }
+            .print-qr h3 { margin: 0 0 4px; font-size: 15px; color: #004098; }
+            .print-qr p { margin: 0; font-size: 12px; line-height: 1.5; color: #1e293b; }
+            .print-qr .qr-url { margin-top: 6px; font-size: 11px; color: #004098; font-weight: 700; word-break: break-all; }
         }
     </style>
 </head>
@@ -1047,6 +1090,64 @@
             <a href="http://tourmaker.kr" target="_blank" class="brand-link"><i class="fa-solid fa-link"></i> [System Powered by TOURMAKER]</a>
             <div class="manager">담당자 : 이재명 010-9443-7881, 조혁 010-4249-4026</div>
         </div>
+
+        <div class="print-pack">
+            <div class="print-pack-head">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker">
+                <div class="doc-info">정선군청 경제과 북해도 선진지견학<br>인쇄 일정표 2페이지</div>
+            </div>
+            <h2 class="print-pack-title">
+                <strong>해외여행 준비물</strong>
+                <span>출국 전에 체크해 주세요. 같은 목록은 스마트 가이드북에서도 확인할 수 있습니다.</span>
+            </h2>
+            <div class="print-pack-grid">
+                <div class="print-pack-card">
+                    <h3>서류 · 출국</h3>
+                    <ul>
+                        <li>여권 (유효기간 6개월 이상)</li>
+                        <li>Visit Japan Web 사전 작성 (입국·세관 QR)</li>
+                        <li>여행자보험 증서</li>
+                        <li>카드 · 소액 엔화</li>
+                    </ul>
+                </div>
+                <div class="print-pack-card">
+                    <h3>의류 · 건강</h3>
+                    <ul>
+                        <li>가디건 · 얇은 패딩 (10월 북해도, 저녁 쌀쌀)</li>
+                        <li>편한 운동화 (오타루 · 상권 도보)</li>
+                        <li>개인 상비약 (소화제, 두통약 등)</li>
+                        <li>온천용 세면도구 (칫솔 · 치약 등)</li>
+                        <li>작은 우산 또는 휴대용 우비</li>
+                    </ul>
+                </div>
+                <div class="print-pack-card">
+                    <h3>전자기기</h3>
+                    <ul>
+                        <li>돼지코 (일본 100V 변환 어댑터)</li>
+                        <li>스마트폰 충전기 · 보조배터리</li>
+                    </ul>
+                </div>
+                <div class="print-pack-card">
+                    <h3>이번 연수</h3>
+                    <ul>
+                        <li>기관 명함 및 정선군 소개자료</li>
+                        <li>필기구 및 벤치마킹 수첩</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="print-qr">
+                <img src="assets/images/guidebook-qr.png" alt="스마트 가이드북 QR코드">
+                <div>
+                    <h3>스마트 가이드북</h3>
+                    <p>스마트폰으로 스캔하면 일정, 지도 동선, 준비물, 비상연락망을 바로 열 수 있습니다.</p>
+                    <p class="qr-url">https://indadady.github.io/261020_1027_Hokkaido/</p>
+                </div>
+            </div>
+            <div class="print-footer-area">
+                <a href="http://tourmaker.kr" target="_blank" class="brand-link"><i class="fa-solid fa-link"></i> [System Powered by TOURMAKER]</a>
+                <div class="manager">담당자 : 이재명 010-9443-7881, 조혁 010-4249-4026</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1128,19 +1229,22 @@
             if (dayKey) showDayTab(dayKey);
         }
 
-        const CHECK_KEY = 'jeongseon_economy_hokkaido_chk_v1';
+        const CHECK_KEY = 'jeongseon_economy_hokkaido_chk_v2';
         const MEMO_KEY = 'jeongseon_economy_hokkaido_memo_v1';
         const CHECK_ITEMS = [
-            'Visit Japan Web 사전 작성 완료 (입국심사·세관신고 QR)',
-            '여권 (유효기간 6개월 이상 필수 확인)',
-            '기관 명함 및 정선군 경제·일자리 관련 소개자료 (교류용)',
-            '필기도구 및 벤치마킹 수첩',
-            '돼지코 (일본 100V 전원 변환 어댑터)',
-            '작은 우산 또는 휴대용 우비',
+            '여권 (유효기간 6개월 이상)',
+            'Visit Japan Web 사전 작성 (입국·세관 QR)',
+            '여행자보험 증서',
+            '카드 · 소액 엔화',
+            '가디건 · 얇은 패딩 (10월 북해도, 저녁 쌀쌀)',
+            '편한 운동화 (오타루 · 상권 도보)',
             '개인 상비약 (소화제, 두통약 등)',
-            '편안한 운동화 (오타루·상권 도보 시찰 대비)',
-            '온천용 간단 세면도구 (칫솔·치약 등)',
-            '스마트폰 보조배터리',
+            '온천용 세면도구 (칫솔 · 치약 등)',
+            '작은 우산 또는 휴대용 우비',
+            '돼지코 (일본 100V 변환 어댑터)',
+            '스마트폰 충전기 · 보조배터리',
+            '기관 명함 및 정선군 소개자료',
+            '필기구 및 벤치마킹 수첩',
         ];
 
         function renderChecklist(){
