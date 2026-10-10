@@ -1283,7 +1283,10 @@
             const isEventDay = !!dayKey;
             bar.classList.toggle('hidden', !isEventDay);
             document.body.classList.toggle('event-day', isEventDay);
-            if (dayKey) showDayTab(dayKey);
+            if (dayKey) {
+                showDayTab(dayKey);
+                if (typeof setMapBtnActive === 'function') setMapBtnActive(dayKey);
+            }
         }
         function isInAppBrowser() {
             const ua = navigator.userAgent.toLowerCase();
