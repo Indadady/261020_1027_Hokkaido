@@ -43,7 +43,7 @@
         .leaflet-control-zoom { display: none !important; }
         #map-distance {
             position: absolute; top: 12px; right: 12px; z-index: 450;
-            min-width: 8rem; max-width: min(46vw, 12.5rem); text-align: right;
+            min-width: 8rem; max-width: min(52vw, 13rem); text-align: right;
             background: rgba(255,255,255,.94); backdrop-filter: blur(8px);
             border-radius: 14px; padding: 10px 12px;
             box-shadow: 0 8px 24px rgba(15,23,42,.14); border: 1px solid rgba(148,163,184,.35);
@@ -63,6 +63,9 @@
         }
         .map-zoom-btns button:active { transform: scale(.96); }
         .custom-icon { background: transparent; border: none; }
+        #map, #map .leaflet-marker-icon { -webkit-tap-highlight-color: transparent; }
+        #map .leaflet-marker-icon:focus, #map .leaflet-marker-icon:focus-visible { outline: none !important; }
+        #map-distance-time { white-space: pre-line; }
         .map-pin-wrap { display: flex; flex-direction: column; align-items: center; }
         .map-pin-dot {
             width: 32px; height: 32px; border-radius: 50%;
@@ -97,14 +100,6 @@
         }
         @media (max-width: 1023px) {
             .timeline-dot { left: -20px; top: 6px; width: 14px; height: 14px; border-width: 2px; }
-        }
-        .custom-icon div {
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
-        }
-        .custom-icon div:hover {
-            transform: scale(1.1);
-            z-index: 100;
         }
         @media screen { #print-area { display: none !important; } }
         @media print {
@@ -319,7 +314,7 @@
                         <p class="text-md text-sky-200 font-bold"><span class="bg-blue-600 text-white px-2 py-0.5 rounded text-sm mr-2">1차</span> 2026.10.20(화) ~ 10.23(금) · 14명</p>
                         <p class="text-md text-sky-200 font-bold"><span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-sm mr-2">2차</span> 2026.10.27(화) ~ 10.30(금) · 15명</p>
                     </div>
-                    <p class="text-xs text-slate-300 mt-3">청주공항 출발 · 에어로케이(RF) · 신치토세</p>
+                    <p class="text-xs text-slate-300 mt-3">정선군청 출발 · 청주공항 · 에어로케이(RF) · 신치토세</p>
                 </div>
             </div>
         </section>
@@ -396,32 +391,55 @@
                 <div class="text-center mb-8">
                     <span class="text-slate-500 font-black tracking-widest text-xs uppercase">FLIGHT SCHEDULE</span>
                     <h2 class="text-3xl font-bold text-slate-800 mt-2">기수별 항공편 안내</h2>
-                    <p class="text-slate-500 mt-2 text-sm">청주공항(CJJ) ↔ 신치토세(CTS) · 에어로케이(RF) · 1·2차 공통 스케줄</p>
+                    <p class="text-slate-500 mt-2 text-sm">정선군청 → 청주공항(CJJ) ↔ 신치토세(CTS) · 에어로케이(RF)</p>
+                    <p class="text-amber-700 mt-1 text-xs font-bold">2차는 동계 항공 스케줄이 적용되어 1차와 출발 시간이 다릅니다.</p>
                 </div>
 
-                <div class="max-w-4xl mx-auto mb-8">
-                    <div class="bg-white rounded-2xl border border-slate-200 shadow-md p-6">
-                        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                            <div class="bg-blue-50 border border-blue-100 rounded-xl p-5 w-full md:w-1/2 text-center relative overflow-hidden">
-                                <div class="absolute -right-4 -top-4 text-blue-100 opacity-50"><i class="fa-solid fa-plane-departure text-6xl"></i></div>
-                                <span class="text-xs bg-blue-600 text-white px-3 py-1 rounded-full font-bold mb-3 inline-block relative z-10">출국 (1차 10.20 / 2차 10.27)</span>
-                                <p class="font-black text-xl text-slate-800 mb-1 relative z-10">에어로케이 RF352</p>
-                                <p class="text-slate-600 font-medium text-lg relative z-10">청주 08:25 <i class="fa-solid fa-arrow-right text-blue-400 mx-2"></i> 신치토세 10:55</p>
-                            </div>
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 w-full md:w-1/2 text-center relative overflow-hidden">
-                                <div class="absolute -right-4 -top-4 text-slate-200 opacity-50"><i class="fa-solid fa-plane-arrival text-6xl"></i></div>
-                                <span class="text-xs bg-slate-600 text-white px-3 py-1 rounded-full font-bold mb-3 inline-block relative z-10">귀국 (1차 10.23 / 2차 10.30)</span>
-                                <p class="font-black text-xl text-slate-800 mb-1 relative z-10">에어로케이 RF351</p>
-                                <p class="text-slate-600 font-medium text-lg relative z-10">신치토세 11:55 <i class="fa-solid fa-arrow-right text-slate-400 mx-2"></i> 청주 14:45</p>
-                            </div>
+                <div class="max-w-4xl mx-auto mb-8 grid md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl border border-blue-200 shadow-md p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="text-sm bg-blue-600 text-white px-3 py-1 rounded-full font-bold whitespace-nowrap">1차</span>
+                            <span class="text-[11px] text-slate-500 font-bold">2026.10.20(화) ~ 10.23(금) · 14명(+1TG)</span>
                         </div>
-                        <div class="mt-6 grid sm:grid-cols-2 gap-3 text-center text-sm">
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl py-3 px-4"><span class="font-bold text-blue-700">1차</span> · 2026.10.20(화) ~ 10.23(금) · 14명(+1TG)</div>
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl py-3 px-4"><span class="font-bold text-blue-700">2차</span> · 2026.10.27(화) ~ 10.30(금) · 15명(+1TG)</div>
+                        <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 mb-3">
+                            <p class="text-xs font-bold text-amber-700 mb-1"><i class="fa-solid fa-bus mr-1"></i> 10.20(화) 정선군청 출발</p>
+                            <p class="text-slate-800 font-bold">정선군청 03:00 출발</p>
+                            <p class="text-xs text-slate-500 mt-1">청주공항 06:00 도착 예정 · 전용차량 약 3시간</p>
                         </div>
-                        <div class="mt-4 text-center text-xs text-slate-500 bg-slate-50 p-3 rounded-lg font-medium">
-                            * 항공 스케줄은 항공사 사정에 따라 변동될 수 있습니다.
+                        <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-3">
+                            <p class="text-xs font-bold text-blue-700 mb-1"><i class="fa-solid fa-plane-departure mr-1"></i> 출국 10.20(화) · RF352</p>
+                            <p class="text-slate-800 font-bold">청주 08:25 <i class="fa-solid fa-arrow-right text-blue-400 mx-1"></i> 신치토세 10:55</p>
+                            <p class="text-xs text-slate-500 mt-1">비행시간 2시간 30분</p>
                         </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                            <p class="text-xs font-bold text-slate-600 mb-1"><i class="fa-solid fa-plane-arrival mr-1"></i> 귀국 10.23(금) · RF351</p>
+                            <p class="text-slate-800 font-bold">신치토세 11:55 <i class="fa-solid fa-arrow-right text-slate-400 mx-1"></i> 청주 14:45</p>
+                            <p class="text-xs text-slate-500 mt-1">비행시간 2시간 50분 · 이후 전용차량으로 정선군청 이동</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-indigo-200 shadow-md p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="text-sm bg-indigo-600 text-white px-3 py-1 rounded-full font-bold whitespace-nowrap">2차 · 동계</span>
+                            <span class="text-[11px] text-slate-500 font-bold">2026.10.27(화) ~ 10.30(금) · 15명(+1TG)</span>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 mb-3">
+                            <p class="text-xs font-bold text-amber-700 mb-1"><i class="fa-solid fa-bus mr-1"></i> 10.27(화) 정선군청 출발</p>
+                            <p class="text-slate-800 font-bold">정선군청 02:30 출발</p>
+                            <p class="text-xs text-slate-500 mt-1">청주공항 05:30 도착 예정 · 전용차량 약 3시간</p>
+                        </div>
+                        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-3">
+                            <p class="text-xs font-bold text-indigo-700 mb-1"><i class="fa-solid fa-plane-departure mr-1"></i> 출국 10.27(화) · RF352</p>
+                            <p class="text-slate-800 font-bold">청주 07:50 <i class="fa-solid fa-arrow-right text-indigo-400 mx-1"></i> 신치토세 10:30</p>
+                            <p class="text-xs text-slate-500 mt-1">비행시간 2시간 40분</p>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                            <p class="text-xs font-bold text-slate-600 mb-1"><i class="fa-solid fa-plane-arrival mr-1"></i> 귀국 10.30(금) · RF351</p>
+                            <p class="text-slate-800 font-bold">신치토세 11:30 <i class="fa-solid fa-arrow-right text-slate-400 mx-1"></i> 청주 14:45</p>
+                            <p class="text-xs text-slate-500 mt-1">비행시간 3시간 15분 · 이후 전용차량으로 정선군청 이동</p>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 text-center text-xs text-slate-500 bg-white border border-slate-200 p-3 rounded-lg font-medium">
+                        * 현지 시각 기준(한국·일본 시차 없음). 항공 스케줄은 항공사 사정에 따라 변동될 수 있습니다.
                     </div>
                 </div>
 
@@ -500,7 +518,7 @@
                             <div class="bg-white rounded-2xl p-5 shadow-sm border border-amber-100">
                                 <p class="text-xs font-bold text-amber-700 mb-2"><i class="fa-solid fa-plane-arrival mr-1"></i> 입국 공항</p>
                                 <p class="text-sm text-slate-700 font-medium">신치토세 국제공항 (CTS)</p>
-                                <p class="text-xs text-slate-500 mt-2">항공편: 에어로케이 RF352 · 청주 08:25 → 신치토세 10:55</p>
+                                <p class="text-xs text-slate-500 mt-2">항공편: 에어로케이 RF352<br>1차 청주 08:25 → 신치토세 10:55<br>2차 청주 07:50 → 신치토세 10:30</p>
                             </div>
                             <div class="mt-4 bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-800 leading-relaxed">
                                 <i class="fa-solid fa-triangle-exclamation mr-1"></i>
@@ -550,7 +568,7 @@
                     <div id="map-distance" class="hidden">
                         <p class="text-[10px] font-bold text-slate-400 tracking-wide">대략 이동</p>
                         <p id="map-distance-leg" class="font-bold text-xs text-slate-800 leading-snug mt-0.5"></p>
-                        <p id="map-distance-time" class="font-black text-sm text-blue-600 mt-0.5"></p>
+                        <p id="map-distance-time" class="font-black text-sm text-blue-600 mt-0.5 leading-snug"></p>
                         <p id="map-distance-km" class="text-[10px] font-bold text-slate-500 mt-0.5"></p>
                     </div>
                     <div class="map-zoom-btns">
@@ -558,7 +576,7 @@
                         <button type="button" onclick="mapZoom(-1)" aria-label="줌아웃">−</button>
                     </div>
                 </div>
-                <p id="map-hint" class="text-center text-xs text-slate-500 mt-3">전체 여정 — 청주 ↔ 신치토세 항공 + 현지 차량 동선</p>
+                <p id="map-hint" class="text-center text-xs text-slate-500 mt-3">전체 여정 — 정선군청 → 청주공항 ↔ 신치토세 항공 + 현지 차량 동선</p>
             </div>
         </section>
 
@@ -591,7 +609,7 @@
                                 <div class="bg-blue-600 text-white text-xl font-bold w-12 h-12 rounded-xl flex items-center justify-center shrink-0">1일</div>
                                 <div>
                                     <h3 class="font-bold text-xl text-slate-800">입국 · 노보리베츠 · 도야 온천</h3>
-                                    <p class="text-blue-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 청주 → 신치토세 → 노보리베츠 → 도야</p>
+                                    <p class="text-blue-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 정선 → 청주 → 신치토세 → 노보리베츠 → 도야</p>
                                     <span class="text-xs font-bold text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 mt-2 inline-block">중: 시대촌 · 석: 호텔 뷔페 · ♨온천</span>
                                 </div>
                             </div>
@@ -602,9 +620,22 @@
                             </div>
                             <div class="relative border-l-2 border-blue-200 ml-4 pl-8 space-y-6">
                                 <div class="relative">
+                                    <div class="timeline-dot bg-amber-500 ring-amber-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🚌 정선군청 출발 → 청주공항</h4>
+                                    <p class="text-slate-600 text-sm mt-1 leading-relaxed">
+                                        <span class="font-bold text-blue-700">1차</span> 03:00 출발 · 06:00 청주공항 도착 예정<br>
+                                        <span class="font-bold text-indigo-700">2차</span> 02:30 출발 · 05:30 청주공항 도착 예정<br>
+                                        전용차량 이동(약 3시간) 후 단체 수속
+                                    </p>
+                                </div>
+                                <div class="relative">
                                     <div class="timeline-dot bg-blue-600 ring-blue-100"></div>
-                                    <h4 class="font-bold text-base text-slate-800">🛫 08:25 청주 출발 / 10:55 신치토세 도착</h4>
-                                    <p class="text-slate-600 text-sm mt-1 leading-relaxed">에어로케이(RF352). 입국 수속 후 스루가이드·전용차량 미팅 → 노보리베츠 이동(약 1시간 10분)</p>
+                                    <h4 class="font-bold text-base text-slate-800">🛫 청주 출발 → 신치토세 도착 (RF352)</h4>
+                                    <p class="text-slate-600 text-sm mt-1 leading-relaxed">
+                                        <span class="font-bold text-blue-700">1차</span> 08:25 → 10:55 (비행 2시간 30분)<br>
+                                        <span class="font-bold text-indigo-700">2차</span> 07:50 → 10:30 (비행 2시간 40분)<br>
+                                        입국 수속 후 스루가이드·전용차량 미팅 → 노보리베츠 이동(약 1시간 10분)
+                                    </p>
                                 </div>
                                 <div class="relative">
                                     <div class="timeline-dot bg-orange-500 ring-orange-100"></div>
@@ -715,7 +746,7 @@
                                 <div class="bg-slate-700 text-white text-xl font-bold w-12 h-12 rounded-xl flex items-center justify-center shrink-0">4일</div>
                                 <div>
                                     <h3 class="font-bold text-xl text-slate-800">시계탑 · 면세 · 귀국</h3>
-                                    <p class="text-slate-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 삿포로 → 신치토세 → 청주</p>
+                                    <p class="text-slate-600 text-sm font-medium mt-1"><i class="fa-solid fa-map-location-dot"></i> 삿포로 → 신치토세 → 청주 → 정선</p>
                                     <span class="text-xs font-bold text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 mt-2 inline-block">조: 호텔식</span>
                                 </div>
                             </div>
@@ -733,8 +764,16 @@
                                 </div>
                                 <div class="relative">
                                     <div class="timeline-dot bg-blue-600 ring-blue-100"></div>
-                                    <h4 class="font-bold text-base text-slate-800">🛬 11:55 신치토세 출발 / 14:45 청주 도착</h4>
-                                    <p class="text-slate-600 text-sm mt-1">에어로케이(RF351) 탑승 · 정선군청 경제과 연수 일정 마무리</p>
+                                    <h4 class="font-bold text-base text-slate-800">🛬 신치토세 출발 → 청주 도착 (RF351)</h4>
+                                    <p class="text-slate-600 text-sm mt-1 leading-relaxed">
+                                        <span class="font-bold text-blue-700">1차</span> 11:55 → 14:45 (비행 2시간 50분)<br>
+                                        <span class="font-bold text-indigo-700">2차</span> 11:30 → 14:45 (비행 3시간 15분)
+                                    </p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot bg-amber-500 ring-amber-100"></div>
+                                    <h4 class="font-bold text-base text-slate-800">🚌 청주공항 → 정선군청</h4>
+                                    <p class="text-slate-600 text-sm mt-1">전용차량 이동(약 3시간) · 정선군청 경제과 연수 일정 마무리</p>
                                 </div>
                             </div>
                         </div>
@@ -1029,7 +1068,7 @@
             </div>
             <div>
                 <span class="label">이용항공</span>
-                <span class="ov-body">에어로케이 RF352 / RF351<br>청주국제공항 직항</span>
+                <span class="ov-body">에어로케이 RF352 / RF351<br>정선군청 출발 · 청주국제공항 직항</span>
             </div>
         </div>
         <table id="print-table">
@@ -1049,8 +1088,9 @@
                 <tr class="day-divider">
                     <td class="col-date"><strong>1일차</strong><br>1차 10.20(화)<br>2차 10.27(화)</td>
                     <td class="col-desc">
-                        <div class="time-flow"><span class="time-tag">08:25</span> 청주국제공항 출발 (에어로케이 RF352)</div>
-                        <div class="time-flow"><span class="time-tag">10:55</span> 신치토세 도착 · 입국 수속 및 가이드 미팅</div>
+                        <div class="time-flow"><span class="time-tag">[1차]</span> 03:00 정선군청 출발 → 06:00 청주공항 도착 예정 → <span class="flight">08:25 RF352 출발</span> → 10:55 신치토세 도착</div>
+                        <div class="time-flow"><span class="time-tag">[2차]</span> 02:30 정선군청 출발 → 05:30 청주공항 도착 예정 → <span class="flight">07:50 RF352 출발</span> → 10:30 신치토세 도착</div>
+                        <div class="time-flow"><span class="time-tag">도착</span> 입국 수속 및 가이드 미팅</div>
                         <ul class="desc-list">
                             <li>[전용차량] 노보리베츠 이동 (약 1시간 10분)</li>
                             <li>연기가 끊임없이 피어오르는 <span class="spot">노보리베츠 지옥계곡</span> 시찰</li>
@@ -1123,8 +1163,9 @@
                             <li><span class="spot">홋카이도 시계탑</span> (차창 관람) · 면세점 1회 · 공항 이동</li>
                             <li>모든 일정 종료 후 신치토세 공항으로 이동</li>
                         </ul>
-                        <div class="time-flow" style="margin-top: 8px;"><span class="time-tag">11:55</span> <span class="flight">신치토세 출발 (에어로케이 RF351)</span></div>
-                        <div class="time-flow"><span class="time-tag">14:45</span> 청주국제공항 도착 후 안전하게 전원 해산</div>
+                        <div class="time-flow" style="margin-top: 8px;"><span class="time-tag">[1차]</span> <span class="flight">11:55 신치토세 출발 (RF351)</span> → 14:45 청주공항 도착</div>
+                        <div class="time-flow"><span class="time-tag">[2차]</span> <span class="flight">11:30 신치토세 출발 (RF351)</span> → 14:45 청주공항 도착</div>
+                        <div class="time-flow"><span class="time-tag">귀환</span> 전용차량으로 정선군청 이동 (약 3시간) 후 해산</div>
                     </td>
                     <td class="col-meal">
                         <div class="meal-wrapper">
@@ -1483,13 +1524,14 @@
         let activeBus = null;
         const osrmCache = {};
         const mapHints = {
-            all: '전체 여정 — 청주 ↔ 신치토세 항공(점선) + 현지 차량 동선',
-            day1: '1일차 동선 — 청주 → 신치토세 → 지옥계곡 → 시대촌 → 도야 온천',
+            all: '전체 여정 — 정선군청 → 청주공항 ↔ 신치토세 항공(점선) + 현지 차량 동선',
+            day1: '1일차 동선 — 정선군청 → 청주공항 → 신치토세 → 지옥계곡 → 시대촌 → 도야 온천',
             day2: '2일차 동선 — 도야 → 사회복지협의회 → 오도리·스스키노 → APA 삿포로',
             day3: '3일차 동선 — 오타루 → 노인클럽연합회 → 맥주박물관',
-            day4: '4일차 동선 — 시계탑 → 신치토세 → 청주 귀국'
+            day4: '4일차 동선 — 시계탑 → 신치토세 → 청주공항 → 정선군청'
         };
         const spots = {
+            jeongseon: { coords: [37.3807, 128.6608], title: '정선군청', color: '#d97706', icon: '🏢' },
             cjj: { coords: [36.7166, 127.4991], title: '청주공항', color: '#64748b', icon: '✈️' },
             cts: { coords: [42.7752, 141.6925], title: '신치토세 공항', color: '#0ea5e9', icon: '🛬' },
             jigoku: { coords: [42.4908, 141.1425], title: '노보리베츠 지옥계곡', color: '#ea580c', icon: '♨️' },
@@ -1507,23 +1549,37 @@
             beer: { coords: [43.0717, 141.3687], title: '삿포로 맥주박물관', color: '#b45309', icon: '🍺' },
             clock: { coords: [43.0628, 141.3537], title: '홋카이도 시계탑', color: '#475569', icon: '🕰️' }
         };
+        const LEG_INFO = {
+            'jeongseon>cjj': { time: '약 3시간\n1차 03:00 · 2차 02:30 출발' },
+            'cjj>jeongseon': { time: '약 3시간' },
+            'cjj>cts': { label: 'RF352', time: '1차 2시간 30분\n2차 2시간 40분' },
+            'cts>cjj': { label: 'RF351', time: '1차 2시간 50분\n2차 3시간 15분' },
+            'cts>jigoku': { time: '약 1시간 10분' },
+            'jidaimura>hotel_toya': { time: '약 1시간' },
+            'silo>visit_day2': { time: '약 1시간 15분' },
+            'hotel_sapporo>otaru': { time: '약 1시간' }
+        };
+        const HOME_KEYS = ['jeongseon', 'cjj'];
         const routes = {
             all: {
-                points: ['cjj','cts','jigoku','jidaimura','hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo','otaru','visit_day3','beer','clock'],
+                points: ['jeongseon','cjj','cts','jigoku','jidaimura','hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo','otaru','visit_day3','beer','clock'],
                 maxZoom: 8,
                 lines: [
+                    { pts: ['jeongseon','cjj'], color: '#d97706' },
                     { pts: ['cjj','cts'], color: '#004098', mode: 'air' },
                     { pts: ['cts','jigoku','jidaimura','hotel_toya'], color: '#ea580c' },
                     { pts: ['hotel_toya','toya_lake','showa','silo','visit_day2','odori','susukino','hotel_sapporo'], color: '#2563eb' },
                     { pts: ['hotel_sapporo','otaru','visit_day3','beer','hotel_sapporo'], color: '#0891b2' },
                     { pts: ['hotel_sapporo','clock','cts'], color: '#475569' },
-                    { pts: ['cts','cjj'], color: '#64748b', mode: 'air' }
+                    { pts: ['cts','cjj'], color: '#64748b', mode: 'air' },
+                    { pts: ['cjj','jeongseon'], color: '#d97706' }
                 ]
             },
             day1: {
-                points: ['cjj','cts','jigoku','jidaimura','hotel_toya'],
+                points: ['jeongseon','cjj','cts','jigoku','jidaimura','hotel_toya'],
                 maxZoom: 12,
                 lines: [
+                    { pts: ['jeongseon','cjj'], color: '#d97706' },
                     { pts: ['cjj','cts'], color: '#004098', mode: 'air' },
                     { pts: ['cts','jigoku','jidaimura','hotel_toya'], color: '#ea580c' }
                 ]
@@ -1539,11 +1595,12 @@
                 lines: [{ pts: ['hotel_sapporo','otaru','visit_day3','beer','hotel_sapporo'], color: '#0891b2' }]
             },
             day4: {
-                points: ['hotel_sapporo','clock','cts','cjj'],
+                points: ['hotel_sapporo','clock','cts','cjj','jeongseon'],
                 maxZoom: 11,
                 lines: [
                     { pts: ['hotel_sapporo','clock','cts'], color: '#475569' },
-                    { pts: ['cts','cjj'], color: '#64748b', mode: 'air' }
+                    { pts: ['cts','cjj'], color: '#64748b', mode: 'air' },
+                    { pts: ['cjj','jeongseon'], color: '#d97706' }
                 ]
             }
         };
@@ -1560,7 +1617,7 @@
             if (km < 10) return '약 ' + (Math.round(km * 2) / 2) + 'km';
             if (km < 50) return '약 ' + Math.round(km) + 'km';
             if (km < 400) return '약 ' + Math.round(km / 5) * 5 + 'km';
-            return '약 ' + Math.round(km / 50) * 50 + 'km';
+            return '약 ' + (Math.round(km / 50) * 50).toLocaleString() + 'km';
         }
         function estimateSeconds(meters, mode) {
             if (!meters || meters <= 0) return 0;
@@ -1589,16 +1646,17 @@
             const timeEl = document.getElementById('map-distance-time');
             const kmEl = document.getElementById('map-distance-km');
             if (!box || !legEl || !timeEl || !kmEl) return;
+            const info = LEG_INFO[fromKey + '>' + toKey] || {};
             const kmLabel = formatApproxKm(meters);
-            const timeLabel = formatApproxTime(groupTravelSeconds(seconds, mode));
+            const timeLabel = info.time || formatApproxTime(groupTravelSeconds(seconds, mode));
             if (!fromKey || (!kmLabel && !timeLabel)) {
                 box.classList.add('hidden');
                 return;
             }
             box.classList.remove('hidden');
-            legEl.textContent = spots[fromKey].title + ' → ' + spots[toKey].title;
+            legEl.textContent = spots[fromKey].title + ' → ' + spots[toKey].title + (info.label ? ' (' + info.label + ')' : '');
             timeEl.textContent = timeLabel;
-            kmEl.textContent = kmLabel;
+            kmEl.textContent = kmLabel && mode === 'air' ? '항공 직선 ' + kmLabel : kmLabel;
         }
         function pinIcon(spot) {
             return L.divIcon({
@@ -1803,7 +1861,7 @@
                 if (!key || placed.has(key)) return;
                 placed.add(key);
                 const spot = spots[key];
-                const marker = L.marker(spot.coords, { icon: pinIcon(spot), zIndexOffset: 200 })
+                const marker = L.marker(spot.coords, { icon: pinIcon(spot), zIndexOffset: 200, keyboard: false })
                     .addTo(currentMap)
                     .bindTooltip(spot.title, { direction: 'top', offset: [0, -16] });
                 mapLayers.push(marker);
@@ -1819,7 +1877,7 @@
             const firstLeg = legs[0];
             const bus = L.marker(spots[firstLeg.from].coords, {
                 icon: vehicleIcon(firstLeg.mode, spots[firstLeg.from].coords, spots[firstLeg.to].coords),
-                zIndexOffset: 900
+                zIndexOffset: 900, keyboard: false, interactive: false
             }).addTo(currentMap);
             bus._aborted = false;
             bus._mode = firstLeg.mode;
@@ -1847,6 +1905,11 @@
                 const ms = lineDuration(ready ? ready.getTotalLength() : 400, routeKey);
                 await Promise.all([animateLine(poly, ms), moveMarkerAlong(bus, path, ms, leg.mode)]);
                 if (seq !== mapDrawSeq) return;
+                if (ready) {
+                    ready.style.transition = 'none';
+                    ready.style.strokeDasharray = '';
+                    ready.style.strokeDashoffset = '';
+                }
                 addPin(leg.to);
                 await new Promise(r => setTimeout(r, isMobileView() ? 280 : 140));
             }
@@ -1854,7 +1917,7 @@
             if (bus && currentMap.hasLayer(bus)) currentMap.removeLayer(bus);
             mapLayers = mapLayers.filter(layer => layer !== bus);
             if (activeBus === bus) activeBus = null;
-            const finalKeys = routeData.points.filter(k => k !== 'cjj');
+            const finalKeys = routeData.points.filter(k => !HOME_KEYS.includes(k));
             const overviewKeys = finalKeys.length ? finalKeys : routeData.points;
             currentMap.fitBounds(L.latLngBounds(overviewKeys.map(k => spots[k].coords)), {
                 padding: [40, 40],
