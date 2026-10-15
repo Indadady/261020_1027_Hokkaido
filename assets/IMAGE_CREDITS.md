@@ -9,4 +9,4 @@
 | day3-otaru.jpg | Wikimedia / existing project asset | See Commons if re-exported |
 | day4-clock.jpg | Wikimedia / existing project asset | See Commons if re-exported |
 | hotel-toya.jpg | [洞爺サンパレス 公式 OGP](https://www.toyasunpalace.co.jp/ogp.jpg) — 호수 전망 로비 (1200×630) | 공식 사이트 홍보 이미지 |
-| hotel-sapporo.jpg | 담당자 제공 · APA 호텔 삿포로 전경 (2000×1125) | — |
+| hotel-sapporo.jpg | [다이와로이넷호텔 삿포로 나카지마공원 공식 포토갤러리(外観)](https://www.daiwaroynet.jp/nakajima-koen/photos/?category=2457) | 공식 사이트 홍보 이미지 |
