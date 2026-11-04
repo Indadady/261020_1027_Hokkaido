@@ -111,20 +111,58 @@
         @media (max-width: 1023px) {
             .timeline-dot { left: -20px; top: 6px; width: 14px; height: 14px; border-width: 2px; }
         }
-        @media screen { #print-area { display: none !important; } }
+        @media screen { #print-area, #print-report-area { display: none !important; } }
         @media print {
             @page { size: A4 portrait; margin: 8mm 9mm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             html, body { background: white !important; color: #1e293b !important; }
-            header, footer, section:not(#print-area), .no-print, #toast, #phrase-modal, #event-day-bar, #guidebook-lock-modal, #tm-inquiry-modal { display: none !important; }
+            header, footer, section, .no-print, #toast, #phrase-modal, #event-day-bar, #guidebook-lock-modal, #tm-inquiry-modal, #visit-report-lock { display: none !important; }
             main, body { padding: 0 !important; margin: 0 !important; width: 100% !important; background: white !important; }
-            #print-area {
-                display: block !important;
+            #print-area, #print-report-area {
+                display: none !important;
                 width: 100%;
                 box-sizing: border-box;
                 font-family: 'Noto Sans KR', sans-serif;
                 color: #1e293b;
             }
+            body:not(.printing-report) #print-area { display: block !important; }
+            body.printing-report #print-report-area { display: block !important; }
+            #print-report-area table.print-report-table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                border-collapse: collapse !important;
+                border: 2px solid #1e293b;
+                margin-bottom: 8px;
+                word-break: keep-all !important;
+                font-size: 10.5px;
+            }
+            #print-report-area table.print-report-table th,
+            #print-report-area table.print-report-table td {
+                border: 1px solid #1e293b !important;
+                padding: 6px 8px !important;
+                vertical-align: top;
+                line-height: 1.4;
+            }
+            #print-report-area table.print-report-table th {
+                background-color: #f8fafc !important;
+                color: #1e293b !important;
+                font-weight: 700;
+                text-align: center;
+                font-size: 11px;
+            }
+            #print-report-area table.print-report-table tbody tr { page-break-inside: avoid; }
+            #print-report-area .col-no { width: 8%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle; }
+            #print-report-area .col-q { width: 28%; }
+            #print-report-area .col-a { width: 64%; }
+            #print-report-area .q-title { font-weight: 700; color: #004098; margin-bottom: 2px; }
+            #print-report-area .sec-head td {
+                background: #eff6ff !important;
+                font-weight: 800;
+                color: #004098;
+                text-align: left;
+                border-top: 2px solid #1e293b !important;
+            }
+            .print-report-break { page-break-before: always; break-before: page; }
             .print-header-top {
                 display: flex; justify-content: space-between; align-items: flex-end;
                 border-bottom: 2px solid #004098; padding-bottom: 6px; margin-bottom: 8px;
@@ -1255,15 +1293,40 @@
         <!-- 현지 방문기관 보고 -->
         <section id="visit-report" class="py-16 bg-white border-t border-slate-200">
             <div class="container mx-auto px-4 max-w-4xl">
-                <div class="text-center mb-10">
-                    <span class="inline-block bg-emerald-50 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold mb-3 border border-emerald-200">FIELD VISIT REPORT</span>
-                    <h2 class="text-3xl font-bold text-slate-800 mb-3">현지 방문기관 질의·응답 보고</h2>
-                    <p class="text-slate-500 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-                        정선군청 경제과 국외연수 중 삿포로시 사회복지협의회·노인클럽연합회(와로카이)에서
-                        공유받은 답변을 보고서 형식으로 정리했습니다.
-                    </p>
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+                    <div class="text-center sm:text-left">
+                        <span class="inline-block bg-emerald-50 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold mb-3 border border-emerald-200">FIELD VISIT REPORT</span>
+                        <h2 class="text-3xl font-bold text-slate-800">현지 방문기관 질의·응답 보고</h2>
+                        <p class="text-slate-500 text-sm md:text-base leading-relaxed mt-2 max-w-2xl">
+                            정선군청 경제과 국외연수 중 삿포로시 사회복지협의회·노인클럽연합회(와로카이)에서
+                            공유받은 답변을 보고서 형식으로 정리했습니다. <span class="font-semibold text-emerald-800">관계자 전용</span> 열람·인쇄 구간입니다.
+                        </p>
+                    </div>
+                    <div id="visit-report-print-wrap" class="hidden text-center sm:text-right shrink-0 no-print">
+                        <button type="button" onclick="handlePrintReport()" class="inline-flex items-center justify-center gap-1.5 bg-slate-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md hover:bg-slate-700">
+                            <i class="fa-solid fa-print"></i> 보고서 인쇄하기
+                        </button>
+                        <p class="mt-2 text-xs text-slate-500 leading-relaxed max-w-[16rem] mx-auto sm:ml-auto sm:mr-0">모바일(카카오톡 등)에서는<br>인쇄가 어려울 수 있어요.<br>다른 브라우저나 PC에서 열어 주세요.</p>
+                    </div>
                 </div>
 
+                <div id="visit-report-lock" class="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-8 text-center shadow-sm mb-8">
+                    <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-xl border border-emerald-100">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-slate-800 mb-1">관계자 전용 열람</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed mb-5">
+                        현지 기관 질의·응답 보고서는 군청·기획 관계자만 열람할 수 있습니다.<br>
+                        <span class="font-bold text-emerald-800 mt-1 inline-block">💡 힌트: 투어메이커 사무실 전화번호 뒷 4자리</span>
+                    </p>
+                    <div class="max-w-xs mx-auto space-y-3">
+                        <input type="password" id="visit-report-password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="비밀번호 4자리" class="w-full text-center tracking-widest text-lg font-bold border-2 border-slate-200 focus:border-emerald-700 rounded-2xl px-4 py-3 outline-none transition" aria-label="방문보고 비밀번호">
+                        <button type="button" onclick="verifyVisitReportPassword()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-2xl shadow-sm transition text-sm">보고서 열기</button>
+                        <p id="visit-report-lock-error" class="text-xs text-rose-600 font-bold hidden">비밀번호가 일치하지 않습니다.</p>
+                    </div>
+                </div>
+
+                <div id="visit-report-body" class="hidden">
                 <div class="grid md:grid-cols-3 gap-3 mb-10">
                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-center">
                         <p class="text-[11px] font-bold text-slate-400 mb-1">방문 ①</p>
@@ -1459,6 +1522,7 @@
                     <p class="text-[11px] text-slate-400 leading-relaxed pt-2">
                         ※ 본 정리는 현지에서 공유받은 일본어 답변서·현장 설명을 한국어로 요약한 것입니다. 사업·제도는 현지 사정에 따라 달라질 수 있습니다.
                     </p>
+                </div>
                 </div>
             </div>
         </section>
@@ -1870,14 +1934,198 @@
         </div>
     </div>
 
+    <!-- Print Area (Visit report — same Tourmaker form tone) -->
+    <div id="print-report-area">
+        <div class="print-header-top">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker">
+            <div class="doc-info">진행 및 수배: 투어메이커<br>비상연락: 이재명 대표 (010-9443-7881)</div>
+        </div>
+        <h1 class="print-title">
+            <span class="print-title-main">[정선군청 경제과] 사회연대경제 활성화를 위한 국외연수</span>
+            <span class="print-title-sub">현지 방문기관 질의·응답 보고</span>
+        </h1>
+        <div class="print-overview">
+            <div>
+                <span class="label">연수기간</span>
+                <span class="ov-body">[1차] 2026.10.20~10.23<br>[2차] 2026.10.27~10.30</span>
+            </div>
+            <div>
+                <span class="label">방문기관</span>
+                <span class="ov-body">삿포로시 사회복지협의회<br>삿포로시 노인클럽연합회·와로카이</span>
+            </div>
+            <div>
+                <span class="label">정리 기준</span>
+                <span class="ov-body">현지 공유 답변서<br>질의 → 답변 요약</span>
+            </div>
+            <div>
+                <span class="label">문서성격</span>
+                <span class="ov-body">관계자 전용<br>벤치마킹 보고</span>
+            </div>
+        </div>
+        <table class="print-report-table">
+            <colgroup>
+                <col class="col-no">
+                <col class="col-q">
+                <col class="col-a">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="col-no">No</th>
+                    <th class="col-q">질의·주제</th>
+                    <th class="col-a">현지 답변 요약</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="sec-head"><td colspan="3">A. 삿포로시 사회복지협의회 (2일차)</td></tr>
+                <tr>
+                    <td class="col-no">1</td>
+                    <td class="col-q"><div class="q-title">협의회↔행정 역할 분담</div>위탁·보조와 자체사업 구분</td>
+                    <td class="col-a">협의회와 행정은 별도 조직·협력 관계. 지역복지는 협의회가 주민자치회와 상부상조를 촉진하고, 행정은 예산·제도로 뒷받침. 위탁·보조는 시 수탁, 자체 예로 개호보험(방문개호·인정조사) 수행.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">2</td>
+                    <td class="col-q"><div class="q-title">복지용구 전시홀 목적</div>대여·판매가 아닌 이유</td>
+                    <td class="col-a">목적은 보급·계몽과 심리적 장벽 완화. 행정 성격이 강한 사업으로 시작. <strong>대여·판매는 하지 않으며</strong> 정보 제공에 집중. 경제효과 수치화는 어렵지만 유지·사용 정보 전달에 유용.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">3</td>
+                    <td class="col-q"><div class="q-title">지역활동 참여 경로</div>일자리 외 참여 형태</td>
+                    <td class="col-a">「후쿠마치」돌봄·교류회 참여를 독려. 자원봉사·주민 상호지원이 활발. 협의회는 유급 취업 알선을 다루지 않으며 관련은 생활지원코디 영역.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">4</td>
+                    <td class="col-q"><div class="q-title">고령화·고립·이동 제약</div>일자리 외 대응</td>
+                    <td class="col-a">사례별 대응. 후쿠마치로 돌봄·거점(居場所)을 만들고, 이동 제약은 상황에 따라 자원봉사 연계.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">5</td>
+                    <td class="col-q"><div class="q-title">정선군에 대한 조언</div>산간·관광 지자체 참고점</td>
+                    <td class="col-a">취업지원은 소관 외라 ‘일자리 통합’은 답변 곤란. 상호부조는 <strong>「내 마을에서 일어나는 일을 내 일로」</strong>라는 인식이 중요.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">6</td>
+                    <td class="col-q"><div class="q-title">생활지원체제 정비</div>주체·현장 결정 범위</td>
+                    <td class="col-a">코디네이터 중심이되 주민·자원 참여가 필수. 자주조직으로서 의사결정·운영 제한은 기본 없으나 법령·영리 목적 등은 제약.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">7</td>
+                    <td class="col-q"><div class="q-title">봉사자 지원·지속성·호응 사업</div></td>
+                    <td class="col-a">직접 금전 지원보다 정보·연수 제공. 전시홀은 별도 예산·평가 없음, 생활지원은 행정 계획 이행으로 연말 평가. 최근 호응은 협회 신사업보다 주민이 만든 <strong>지역 상호부조 조직</strong>(제도로 다루기 어려운 작은 곤란 대응).</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="print-remarks">
+            ※ 본 보고는 현지 공유 일본어 답변·현장 설명을 한국어로 요약한 관계자 전용 문서입니다.<br>
+            ※ 사업·제도는 현지 사정에 따라 달라질 수 있습니다.
+        </div>
+        <div class="print-footer-area">
+            <a href="http://tourmaker.kr" target="_blank" class="brand-link"><i class="fa-solid fa-link"></i> [System Powered by TOURMAKER]</a>
+            <div class="manager">담당자 : 이재명 010-9443-7881, 조혁 010-4249-4026</div>
+        </div>
+
+        <div class="print-report-break"></div>
+        <div class="print-header-top">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker">
+            <div class="doc-info">정선군청 경제과 국외연수<br>방문기관 보고 2페이지</div>
+        </div>
+        <h1 class="print-title">
+            <span class="print-title-main">[정선군청 경제과] 현지 방문기관 질의·응답 보고</span>
+            <span class="print-title-sub">노인클럽·와로카이 및 시사점</span>
+        </h1>
+        <table class="print-report-table">
+            <colgroup>
+                <col class="col-no">
+                <col class="col-q">
+                <col class="col-a">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="col-no">No</th>
+                    <th class="col-q">질의·주제</th>
+                    <th class="col-a">현지 답변 요약</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="sec-head"><td colspan="3">B. 삿포로시 노인클럽연합회 · 와로카이 (3일차 · 링던지기 참관)</td></tr>
+                <tr>
+                    <td class="col-no">1</td>
+                    <td class="col-q"><div class="q-title">회원·회비·임원 운영</div></td>
+                    <td class="col-a">4월 정기총회 후 전단으로 신규·계속 회원 모집. 1998년 창립 이후 연회비는 장기간 동일 수준. 정내회 담당자가 가정 방문 수납, 임기 2년·연임 가능, 이사회 추천 선출.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">2</td>
+                    <td class="col-q"><div class="q-title">활동 목적</div>건강·고립·봉사·교류·소득</td>
+                    <td class="col-a">핵심은 <strong>건강 증진 → 개호 예방</strong>과 ‘나갈 곳’. 도보 이동, 손가락·하체 운동, 발성으로 스트레스 완화. 한국형 노인일자리의 소득보전 비중과는 결이 다름.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">3</td>
+                    <td class="col-q"><div class="q-title">시·구 지원</div>현장 체감</td>
+                    <td class="col-a">오도리 서회관 확보. 노래교실은 휴일 오후 사용 허가로 큰 소리 가능. 시 보조금은 회원 규모에 따른 상한 구조.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">4</td>
+                    <td class="col-q"><div class="q-title">회원·임원 확보 과제</div>60대 유입</td>
+                    <td class="col-a">회원 백 명대·평균 연령 약 80세. 70대 취업 지속으로 60대는 소수. 정내회 임원 겸임으로 클럽 투입이 어려움. 서클 부회장도 70대 후반~80대 초반.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">5</td>
+                    <td class="col-q"><div class="q-title">링던지기·유급 구분</div></td>
+                    <td class="col-a">연간 시설계획으로 매월 1·3주 목 13:30~16:30 확보, 역할 분담 운영. 교통안전·공원청소 등 자원봉사만 하며 <strong>대가·보수 활동은 없음</strong>. 현행 체계로 2028년 창립 30주년 지향.</td>
+                </tr>
+                <tr class="sec-head"><td colspan="3">C. 정선군 적용 시사점</td></tr>
+                <tr>
+                    <td class="col-no">①</td>
+                    <td class="col-q"><div class="q-title">역할 분리 + 협력</div></td>
+                    <td class="col-a">행정과 민간·주민조직의 결정 권한을 먼저 나누고 협력 설계.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">②</td>
+                    <td class="col-q"><div class="q-title">정보·체험 거점</div></td>
+                    <td class="col-a">판매가 아닌 장벽 낮추기·보급·계몽이 우선.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">③</td>
+                    <td class="col-q"><div class="q-title">시니어 모임 목적</div></td>
+                    <td class="col-a">소득과 건강·돌봄·교류 비중을 의도적으로 구분.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">④</td>
+                    <td class="col-q"><div class="q-title">지속성 원칙</div></td>
+                    <td class="col-a">신사업보다 주민 의지·장소 확보·무보수 봉사 축.</td>
+                </tr>
+                <tr>
+                    <td class="col-no">⑤</td>
+                    <td class="col-q"><div class="q-title">핵심 메시지</div></td>
+                    <td class="col-a">「내 마을의 일을 내 일로」— 작은 곤란을 서로 떠안는 문화·조직.</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="print-remarks">
+            ※ 관계자 전용. 외부 배포·무단 복제를 금합니다.<br>
+            ※ 스마트 가이드북: https://indadady.github.io/261020_1027_Hokkaido/
+        </div>
+        <div class="print-footer-area">
+            <a href="http://tourmaker.kr" target="_blank" class="brand-link"><i class="fa-solid fa-link"></i> [System Powered by TOURMAKER]</a>
+            <div class="manager">담당자 : 이재명 010-9443-7881, 조혁 010-4249-4026</div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js"></script>
     <script>
         const PRINT_FILENAME = '261020_북해도_일정표';
+        const REPORT_PRINT_FILENAME = '261020_북해도_방문보고';
         const PAGE_TITLE = document.title;
-        window.addEventListener('beforeprint', () => { document.title = PRINT_FILENAME; });
-        window.addEventListener('afterprint', () => { document.title = PAGE_TITLE; });
+        let tmPrintMode = 'schedule';
+        window.addEventListener('beforeprint', () => {
+            document.title = tmPrintMode === 'report' ? REPORT_PRINT_FILENAME : PRINT_FILENAME;
+        });
+        window.addEventListener('afterprint', () => {
+            document.title = PAGE_TITLE;
+            document.body.classList.remove('printing-report');
+            tmPrintMode = 'schedule';
+        });
 
         const TEST_DATE = "";
         const EVENT_START = '2026-10-20';
@@ -2003,8 +2251,63 @@
                 alert('이 앱에서는 인쇄가 어려워요.\n다른 브라우저나 PC에서 열어 주세요.');
                 return;
             }
+            tmPrintMode = 'schedule';
+            document.body.classList.remove('printing-report');
             window.print();
         }
+        function handlePrintReport() {
+            if (!isVisitReportUnlocked()) {
+                showToast('🔒 관계자 비밀번호를 먼저 입력해 주세요.');
+                document.getElementById('visit-report')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            if (isInAppBrowser()) {
+                alert('이 앱에서는 인쇄가 어려워요.\n다른 브라우저나 PC에서 열어 주세요.');
+                return;
+            }
+            tmPrintMode = 'report';
+            document.body.classList.add('printing-report');
+            window.print();
+        }
+
+        const VISIT_REPORT_PASS = '2551';
+        const VISIT_REPORT_STORAGE_KEY = 'tm_unlocked_report_261020_1027_Hokkaido';
+        function isVisitReportUnlocked() {
+            return localStorage.getItem(VISIT_REPORT_STORAGE_KEY) === 'true';
+        }
+        function setVisitReportUnlockedUI(on) {
+            const lock = document.getElementById('visit-report-lock');
+            const body = document.getElementById('visit-report-body');
+            const printWrap = document.getElementById('visit-report-print-wrap');
+            if (lock) lock.classList.toggle('hidden', on);
+            if (body) body.classList.toggle('hidden', !on);
+            if (printWrap) printWrap.classList.toggle('hidden', !on);
+        }
+        function verifyVisitReportPassword() {
+            const inputEl = document.getElementById('visit-report-password');
+            const errorMsg = document.getElementById('visit-report-lock-error');
+            const val = (inputEl?.value || '').trim();
+            if (val === VISIT_REPORT_PASS) {
+                localStorage.setItem(VISIT_REPORT_STORAGE_KEY, 'true');
+                if (errorMsg) errorMsg.classList.add('hidden');
+                setVisitReportUnlockedUI(true);
+                if (typeof showToast === 'function') showToast('🔓 방문보고 열람이 허가되었습니다.');
+            } else {
+                if (errorMsg) errorMsg.classList.remove('hidden');
+                if (inputEl) {
+                    inputEl.classList.add('border-rose-500', 'shake');
+                    setTimeout(() => inputEl.classList.remove('border-rose-500', 'shake'), 500);
+                    inputEl.select();
+                }
+            }
+        }
+        document.getElementById('visit-report-password')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                verifyVisitReportPassword();
+            }
+        });
+        if (isVisitReportUnlocked()) setVisitReportUnlockedUI(true);
 
         const CHECK_KEY = 'jeongseon_economy_hokkaido_chk_v2';
         const MEMO_KEY = 'jeongseon_economy_hokkaido_memo_v1';
